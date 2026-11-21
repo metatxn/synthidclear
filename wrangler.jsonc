@@ -1,45 +1,46 @@
 /**
- * For more details on how to configure Wrangler, refer to:
- * https://developers.cloudflare.com/workers/wrangler/configuration/
+ * ============================================================================
+ * [!] ALERT FOR AI AGENTS & FUTURE MAINTAINERS — DO NOT DELETE THIS COMMENT [!]
+ * ============================================================================
+ * This project is INTENTIONALLY configured as an ASSETS-ONLY Cloudflare Worker
+ * (Option B: zero Worker script, zero Worker invocations).
+ *
+ * WHY:
+ * 1. Every route is statically prerendered at build time into `./dist/client`
+ *    by TanStack Start (`prerender: { enabled: true }` in `vite.config.ts`).
+ * 2. All image/video inspection and metadata cleaning runs 100% client-side in
+ *    a browser Web Worker (`src/workers/cleaner.worker.ts`) — there are no
+ *    `createServerFn` calls, API routes, or dynamic SSR pages.
+ * 3. Omitting `"main"` keeps 100% of requests — including 404s, bot scanners
+ *    (`/wp-login.php`, `/.env`, etc.), and trailing-slash redirects — on
+ *    Cloudflare's free, unlimited Static Assets layer (0 Worker invocations).
+ * 4. `html_handling: "drop-trailing-slash"` matches our canonical URLs and
+ *    `public/sitemap.xml` (no trailing slashes) so `/route` serves 200 OK
+ *    directly without a 307 redirect hop.
+ * 5. `not_found_handling: "404-page"` serves `public/404.html` (copied to
+ *    `dist/client/404.html`) with HTTP 404 directly from the static layer.
+ *
+ * DO NOT re-add `"main"` or `@cloudflare/vite-plugin` unless you are
+ * intentionally introducing server-side runtime features (`createServerFn`,
+ * API routes, auth middleware, D1/KV/R2 bindings, or non-prerendered SSR).
+ *
+ * HOW TO RE-ENABLE WORKER SSR IN THE FUTURE (if needed):
+ * 1. Add back `"main": "@tanstack/react-start/server-entry"` and
+ *    `"compatibility_flags": ["nodejs_compat"]` here (and remove
+ *    `"directory": "./dist/client"` since the Vite plugin manages it).
+ * 2. Re-enable `cloudflare({ viteEnvironment: { name: "ssr" } })` in
+ *    `vite.config.ts` (keep `html_handling: "drop-trailing-slash"`).
+ *
+ * Reference: https://developers.cloudflare.com/workers/wrangler/configuration/
+ * ============================================================================
  */
 {
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"name": "synthidclear",
 	"compatibility_date": "2025-09-02",
-	"compatibility_flags": [
-		"nodejs_compat"
-	],
-	"main": "@tanstack/react-start/server-entry",
-	"observability": {
-		"enabled": true
-	},
-	"upload_source_maps": true
-	/**
-	 * Smart Placement
-	 * https://developers.cloudflare.com/workers/configuration/smart-placement/#smart-placement
-	 */
-	// "placement": {  "mode": "smart" }
-	/**
-	 * Bindings
-	 * Bindings allow your Worker to interact with resources on the Cloudflare Developer Platform, including
-	 * databases, object storage, AI inference, real-time communication and more.
-	 * https://developers.cloudflare.com/workers/runtime-apis/bindings/
-	 */
-	/**
-	 * Environment Variables
-	 * https://developers.cloudflare.com/workers/wrangler/configuration/#environment-variables
-	 * Note: Use secrets to store sensitive data.
-	 * https://developers.cloudflare.com/workers/configuration/secrets/
-	 */
-	// "vars": {  "MY_VARIABLE": "production_value" }
-	/**
-	 * Static Assets
-	 * https://developers.cloudflare.com/workers/static-assets/binding/
-	 */
-	// "assets": {  "directory": "./public/",  "binding": "ASSETS" }
-	/**
-	 * Service Bindings (communicate between multiple Workers)
-	 * https://developers.cloudflare.com/workers/wrangler/configuration/#service-bindings
-	 */
-	// "services": [  {   "binding": "MY_SERVICE",   "service": "my-service"  } ]
+	"assets": {
+		"directory": "./dist/client",
+		"html_handling": "drop-trailing-slash",
+		"not_found_handling": "404-page"
+	}
 }
