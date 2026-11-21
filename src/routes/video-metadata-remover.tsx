@@ -5,6 +5,7 @@ import { FaqAccordion, type FaqItem } from "#/components/FaqAccordion";
 import { JsonLd } from "#/components/JsonLd";
 import { VideoCliPanel } from "#/components/VideoCliPanel";
 import {
+	buildBreadcrumbSchema,
 	buildFaqSchema,
 	buildRouteHead,
 	buildSoftwareAppSchema,
@@ -36,8 +37,7 @@ const VIDEO_FAQS: readonly FaqItem[] = [
 export const Route = createFileRoute("/video-metadata-remover")({
 	head: () =>
 		buildRouteHead({
-			title:
-				"Video Metadata Remover — Clean MP4 & MOV in Browser | SynthIDClear",
+			title: "Video Metadata Remover — Clean MP4 & MOV | SynthIDClear",
 			description:
 				"Losslessly strip AI tags, C2PA Content Credentials, GPS coordinates, and camera metadata from MP4 and MOV videos directly in your browser with zero uploads.",
 			path: "/video-metadata-remover",
@@ -48,6 +48,12 @@ export const Route = createFileRoute("/video-metadata-remover")({
 function VideoMetadataRemoverPage() {
 	return (
 		<div className="mx-auto max-w-5xl space-y-12 px-4 py-10 sm:px-6">
+			<JsonLd
+				data={buildBreadcrumbSchema([
+					{ name: "Home", path: "/" },
+					{ name: "Video Metadata Remover", path: "/video-metadata-remover" },
+				])}
+			/>
 			<JsonLd
 				data={buildSoftwareAppSchema({
 					name: "SynthIDClear — In-Browser Video Metadata Remover",

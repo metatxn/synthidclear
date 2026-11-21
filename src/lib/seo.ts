@@ -85,7 +85,7 @@ export function buildSoftwareAppSchema({
 		name,
 		applicationCategory: "UtilitiesApplication",
 		operatingSystem: "Any (Web Browser)",
-		url: `${SITE_URL}${path === "/" ? "" : path}`,
+		url: `${SITE_URL}${path === "/" ? "/" : path}`,
 		description,
 		offers: {
 			"@type": "Offer",
@@ -113,6 +113,24 @@ export function buildFaqSchema(items: readonly FaqItem[]) {
 				"@type": "Answer",
 				text: item.answer,
 			},
+		})),
+	};
+}
+
+export interface BreadcrumbItem {
+	name: string;
+	path: string;
+}
+
+export function buildBreadcrumbSchema(items: readonly BreadcrumbItem[]) {
+	return {
+		"@context": "https://schema.org",
+		"@type": "BreadcrumbList",
+		itemListElement: items.map((item, index) => ({
+			"@type": "ListItem",
+			position: index + 1,
+			name: item.name,
+			item: `${SITE_URL}${item.path === "/" ? "/" : item.path}`,
 		})),
 	};
 }

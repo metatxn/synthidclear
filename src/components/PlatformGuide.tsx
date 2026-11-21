@@ -4,7 +4,11 @@ import { CleanerWorkspace } from "#/components/CleanerWorkspace";
 import { FaqAccordion, type FaqItem } from "#/components/FaqAccordion";
 import { JsonLd } from "#/components/JsonLd";
 import { PLATFORM_GUIDES, type PlatformGuidePath } from "#/lib/platformGuides";
-import { buildFaqSchema, buildSoftwareAppSchema } from "#/lib/seo";
+import {
+	buildBreadcrumbSchema,
+	buildFaqSchema,
+	buildSoftwareAppSchema,
+} from "#/lib/seo";
 
 export interface GuideSignal {
 	title: string;
@@ -62,10 +66,17 @@ export function PlatformGuide({
 	schemaName,
 	schemaDescription,
 }: PlatformGuideProps) {
+	const currentGuide = PLATFORM_GUIDES.find((guide) => guide.to === path);
 	const related = PLATFORM_GUIDES.filter((guide) => guide.to !== path);
 
 	return (
 		<div className="mx-auto max-w-5xl space-y-12 px-4 py-10 sm:px-6">
+			<JsonLd
+				data={buildBreadcrumbSchema([
+					{ name: "Home", path: "/" },
+					{ name: currentGuide?.title ?? heading, path },
+				])}
+			/>
 			<JsonLd
 				data={buildSoftwareAppSchema({
 					name: schemaName,

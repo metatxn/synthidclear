@@ -3,7 +3,11 @@ import { ArrowRight } from "lucide-react";
 import { FaqAccordion, type FaqItem } from "#/components/FaqAccordion";
 import { HowItWorksPanel } from "#/components/HowItWorksPanel";
 import { JsonLd } from "#/components/JsonLd";
-import { buildFaqSchema, buildRouteHead } from "#/lib/seo";
+import {
+	buildBreadcrumbSchema,
+	buildFaqSchema,
+	buildRouteHead,
+} from "#/lib/seo";
 
 const HOW_FAQS: readonly FaqItem[] = [
 	{
@@ -28,7 +32,7 @@ export const Route = createFileRoute("/how-it-works")({
 		buildRouteHead({
 			title: "How SynthIDClear Works — Privacy, Quality & Technical Limits",
 			description:
-				"Learn how SynthIDClear strips metadata from JPEG, PNG, WebP, HEIC, AVIF, MP4, and MOV files in your browser, keeps color profiles, and why pixel watermarks differ.",
+				"Learn how SynthIDClear strips metadata from photos and videos in your browser, preserves color profiles, and why pixel watermarks differ.",
 			path: "/how-it-works",
 		}),
 	component: HowItWorksPage,
@@ -37,6 +41,12 @@ export const Route = createFileRoute("/how-it-works")({
 function HowItWorksPage() {
 	return (
 		<div className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
+			<JsonLd
+				data={buildBreadcrumbSchema([
+					{ name: "Home", path: "/" },
+					{ name: "How It Works", path: "/how-it-works" },
+				])}
+			/>
 			<JsonLd data={buildFaqSchema(HOW_FAQS)} />
 
 			<section className="mb-8 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
