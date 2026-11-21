@@ -31,7 +31,7 @@ const FAQS: readonly FaqItem[] = [
 export const Route = createFileRoute("/sora-video-metadata")({
 	head: () =>
 		buildRouteHead({
-			title: "Sora Video Metadata: Check & Remove C2PA from MP4 | SynthIDClear",
+			title: "Sora Video Metadata: Check & Remove C2PA | SynthIDClear",
 			description:
 				"Sora videos carry C2PA Content Credentials and a visible watermark. See what metadata your Sora MP4 holds and remove it in your browser without re-encoding.",
 			path: PATH,

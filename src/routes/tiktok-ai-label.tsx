@@ -31,7 +31,7 @@ const FAQS: readonly FaqItem[] = [
 export const Route = createFileRoute("/tiktok-ai-label")({
 	head: () =>
 		buildRouteHead({
-			title: "TikTok AI-Generated Label: Check & Remove C2PA | SynthIDClear",
+			title: "TikTok AI-Generated Label: Check & Strip C2PA | SynthIDClear",
 			description:
 				"Find out why TikTok tagged your video or photo as AI-generated. Check it for C2PA Content Credentials and remove them from MP4, MOV, and images in your browser.",
 			path: PATH,

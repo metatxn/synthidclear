@@ -3,6 +3,7 @@ import { CleanerWorkspace } from "#/components/CleanerWorkspace";
 import { FaqAccordion, type FaqItem } from "#/components/FaqAccordion";
 import { JsonLd } from "#/components/JsonLd";
 import {
+	buildBreadcrumbSchema,
 	buildFaqSchema,
 	buildRouteHead,
 	buildSoftwareAppSchema,
@@ -41,6 +42,12 @@ export const Route = createFileRoute("/png-prompt-remover")({
 function PngPromptRemoverPage() {
 	return (
 		<div className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
+			<JsonLd
+				data={buildBreadcrumbSchema([
+					{ name: "Home", path: "/" },
+					{ name: "Remove PNG Prompts", path: "/png-prompt-remover" },
+				])}
+			/>
 			<JsonLd
 				data={buildSoftwareAppSchema({
 					name: "SynthIDClear — PNG Prompt Remover",

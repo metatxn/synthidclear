@@ -3,6 +3,7 @@ import { CleanerWorkspace } from "#/components/CleanerWorkspace";
 import { FaqAccordion, type FaqItem } from "#/components/FaqAccordion";
 import { JsonLd } from "#/components/JsonLd";
 import {
+	buildBreadcrumbSchema,
 	buildFaqSchema,
 	buildRouteHead,
 	buildSoftwareAppSchema,
@@ -34,8 +35,7 @@ const C2PA_FAQS: readonly FaqItem[] = [
 export const Route = createFileRoute("/remove-c2pa-metadata")({
 	head: () =>
 		buildRouteHead({
-			title:
-				"Remove C2PA Metadata & AI Content Credentials Online | SynthIDClear",
+			title: "Remove C2PA Metadata & AI Credentials Online | SynthIDClear",
 			description:
 				"Clean C2PA Content Credentials and hidden AI creator labels from PNG, JPEG, WebP, HEIC, and AVIF images 100% locally in your browser with original quality kept.",
 			path: "/remove-c2pa-metadata",
@@ -46,6 +46,12 @@ export const Route = createFileRoute("/remove-c2pa-metadata")({
 function RemoveC2paPage() {
 	return (
 		<div className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
+			<JsonLd
+				data={buildBreadcrumbSchema([
+					{ name: "Home", path: "/" },
+					{ name: "Remove AI Tags (C2PA)", path: "/remove-c2pa-metadata" },
+				])}
+			/>
 			<JsonLd
 				data={buildSoftwareAppSchema({
 					name: "SynthIDClear — C2PA & AI Tag Remover",

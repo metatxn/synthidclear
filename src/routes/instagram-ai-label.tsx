@@ -31,7 +31,7 @@ const FAQS: readonly FaqItem[] = [
 export const Route = createFileRoute("/instagram-ai-label")({
 	head: () =>
 		buildRouteHead({
-			title: "Instagram AI Info Label: Check & Remove Metadata | SynthIDClear",
+			title: "Instagram AI Info Label: Check & Remove Tags | SynthIDClear",
 			description:
 				"See why Instagram put an AI info label on your photo or Reel. Find the C2PA and IPTC tags that trigger it and remove them in your browser with no upload.",
 			path: PATH,

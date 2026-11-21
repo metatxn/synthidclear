@@ -28,13 +28,12 @@ export const Route = createRootRoute({
 				content: "light dark",
 			},
 			{
-				title:
-					"SynthIDClear — Remove Hidden AI Tags from Photos & Videos Privately",
+				title: "SynthIDClear — Remove Hidden AI Tags from Photos & Videos",
 			},
 			{
 				name: "description",
 				content:
-					"Clean AI creator tags, C2PA Content Credentials, saved prompts, EXIF, and GPS location from PNG, JPEG, WebP, HEIC, AVIF, MP4, and MOV files locally in your browser with zero uploads.",
+					"Remove AI tags, C2PA, prompts, GPS, and camera data from PNG, JPEG, WebP, HEIC, AVIF, MP4, and MOV files locally in your browser with zero quality loss.",
 			},
 		],
 		links: [

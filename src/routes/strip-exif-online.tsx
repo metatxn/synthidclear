@@ -3,6 +3,7 @@ import { CleanerWorkspace } from "#/components/CleanerWorkspace";
 import { FaqAccordion, type FaqItem } from "#/components/FaqAccordion";
 import { JsonLd } from "#/components/JsonLd";
 import {
+	buildBreadcrumbSchema,
 	buildFaqSchema,
 	buildRouteHead,
 	buildSoftwareAppSchema,
@@ -29,8 +30,7 @@ const EXIF_FAQS: readonly FaqItem[] = [
 export const Route = createFileRoute("/strip-exif-online")({
 	head: () =>
 		buildRouteHead({
-			title:
-				"Remove EXIF & GPS Location Online — Private & Lossless | SynthIDClear",
+			title: "Remove EXIF & GPS Location Online Privately | SynthIDClear",
 			description:
 				"Scrub EXIF camera data, GPS coordinates, and location tags from JPEG, PNG, WebP, HEIC, and AVIF photos locally in your browser with original quality kept.",
 			path: "/strip-exif-online",
@@ -41,6 +41,12 @@ export const Route = createFileRoute("/strip-exif-online")({
 function StripExifPage() {
 	return (
 		<div className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
+			<JsonLd
+				data={buildBreadcrumbSchema([
+					{ name: "Home", path: "/" },
+					{ name: "Remove EXIF & GPS", path: "/strip-exif-online" },
+				])}
+			/>
 			<JsonLd
 				data={buildSoftwareAppSchema({
 					name: "SynthIDClear — Private EXIF & GPS Scrubber",
