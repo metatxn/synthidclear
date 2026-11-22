@@ -14,7 +14,7 @@
 
 	--text-primary-light: #111110;
 	--text-secondary-light: #4a4843;
-	--text-muted-light: #6e6c65;
+	--text-muted-light: #63615a;
 
 	--text-primary-dark: #f3f1ea;
 	--text-secondary-dark: #b3afa5;
@@ -23,8 +23,8 @@
 	--border-light: #dfdcd3;
 	--border-dark: #2a2925;
 
-	--brand-light: #e03e1a;
-	--brand-hover-light: #c43212;
+	--brand-light: #b82d0e;
+	--brand-hover-light: #99240b;
 	--brand-text-light: #ffffff;
 
 	--brand-dark: #f0522e;
@@ -33,7 +33,7 @@
 
 	--danger-light: #b91c1c;
 	--danger-dark: #f87171;
-	--warning-light: #9a5b07;
+	--warning-light: #8f5406;
 	--warning-dark: #f5b942;
 	--success-light: #166534;
 	--success-dark: #4ade80;
@@ -140,6 +140,20 @@
 		--success-color: light-dark(var(--success-light), var(--success-dark));
 		--scrollbar-track: light-dark(var(--scrollbar-track-light), var(--scrollbar-track-dark));
 		--scrollbar-thumb: light-dark(var(--scrollbar-thumb-light), var(--scrollbar-thumb-dark));
+	}
+
+	@media (forced-colors: active) {
+		--bg-canvas: Canvas;
+		--bg-surface: Canvas;
+		--bg-card: Canvas;
+		--bg-subtle: Canvas;
+		--text-primary: CanvasText;
+		--text-secondary: CanvasText;
+		--text-muted: CanvasText;
+		--border-color: CanvasText;
+		--brand-color: Highlight;
+		--brand-hover: Highlight;
+		--brand-text: HighlightText;
 	}
 
 	accent-color: var(--brand-color);
@@ -290,7 +304,7 @@ p {
 	cursor: pointer;
 }
 
-@supports not (accent-color: #e03e1a) {
+@supports not (accent-color: #b82d0e) {
 	.branded-checkbox-label {
 		position: relative;
 		padding-inline-start: 1.75rem;

@@ -52,12 +52,15 @@ export function buildWebsiteSchema() {
 				logo: {
 					"@type": "ImageObject",
 					url: `${SITE_URL}/icon-512.png`,
+					width: 512,
+					height: 512,
 				},
 			},
 			{
 				"@type": "WebSite",
 				"@id": `${SITE_URL}/#website`,
 				name: SITE_NAME,
+				alternateName: "synthidclear.com",
 				url: `${SITE_URL}/`,
 				description:
 					"100% browser-based metadata cleaner for photos and videos (PNG, JPEG, WebP, HEIC, AVIF, MP4, MOV) with zero uploads and lossless quality.",
