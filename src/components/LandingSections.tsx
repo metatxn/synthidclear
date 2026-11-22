@@ -10,6 +10,7 @@ import {
 	ShieldCheck,
 } from "lucide-react";
 import { PLATFORM_GUIDES } from "#/lib/platformGuides";
+import { TOOL_CATALOG } from "#/lib/toolsCatalog";
 
 const SUPPORTED_TOOLS = [
 	"ChatGPT",
@@ -49,29 +50,6 @@ const WHAT_GETS_CLEANED = [
 			"Phone or camera model, serial numbers, capture timestamps, and editing software history.",
 	},
 ] as const;
-
-const MORE_TOOLS = [
-	{
-		to: "/remove-c2pa-metadata" as const,
-		title: "Remove AI Tags (C2PA)",
-		subtitle: "Strip Content Credentials & AI labels",
-	},
-	{
-		to: "/strip-exif-online" as const,
-		title: "Remove EXIF & GPS",
-		subtitle: "Scrub location & camera details",
-	},
-	{
-		to: "/png-prompt-remover" as const,
-		title: "Remove PNG Prompts",
-		subtitle: "Delete saved Stable Diffusion & ComfyUI prompts",
-	},
-	{
-		to: "/video-metadata-remover" as const,
-		title: "Video Metadata Remover",
-		subtitle: "Clean MP4 & MOV directly in your browser",
-	},
-];
 
 export function LandingSections() {
 	return (
@@ -212,14 +190,23 @@ export function LandingSections() {
 
 			{/* More Tools */}
 			<section aria-labelledby="more-tools-heading" className="space-y-5">
-				<h2
-					id="more-tools-heading"
-					className="m-0 text-xl font-semibold tracking-[-0.02em] text-(--text-primary)"
-				>
-					More tools
-				</h2>
+				<div className="flex flex-wrap items-center justify-between gap-2">
+					<h2
+						id="more-tools-heading"
+						className="m-0 text-xl font-semibold tracking-[-0.02em] text-(--text-primary)"
+					>
+						Specialized tools
+					</h2>
+					<Link
+						to="/tools"
+						className="inline-flex items-center gap-1 text-sm font-medium text-(--brand-color) no-underline hover:underline"
+					>
+						All free tools
+						<ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+					</Link>
+				</div>
 				<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-					{MORE_TOOLS.map((tool) => (
+					{TOOL_CATALOG.map((tool) => (
 						<Link
 							key={tool.to}
 							to={tool.to}
@@ -227,7 +214,7 @@ export function LandingSections() {
 						>
 							<div className="space-y-1">
 								<span className="block text-sm font-semibold text-(--text-primary) group-hover:text-(--brand-color)">
-									{tool.title}
+									{tool.shortTitle}
 								</span>
 								<span className="block text-xs text-(--text-secondary)">
 									{tool.subtitle}
@@ -244,12 +231,21 @@ export function LandingSections() {
 
 			{/* Platform Guides */}
 			<section aria-labelledby="platform-guides-heading" className="space-y-5">
-				<h2
-					id="platform-guides-heading"
-					className="m-0 text-xl font-semibold tracking-[-0.02em] text-(--text-primary)"
-				>
-					Platform guides
-				</h2>
+				<div className="flex flex-wrap items-center justify-between gap-2">
+					<h2
+						id="platform-guides-heading"
+						className="m-0 text-xl font-semibold tracking-[-0.02em] text-(--text-primary)"
+					>
+						Platform &amp; AI generator guides
+					</h2>
+					<Link
+						to="/guides"
+						className="inline-flex items-center gap-1 text-sm font-medium text-(--brand-color) no-underline hover:underline"
+					>
+						All guides
+						<ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+					</Link>
+				</div>
 				<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
 					{PLATFORM_GUIDES.map((guide) => (
 						<Link

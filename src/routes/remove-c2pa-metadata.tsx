@@ -1,4 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowRight } from "lucide-react";
 import { CleanerWorkspace } from "#/components/CleanerWorkspace";
 import { FaqAccordion, type FaqItem } from "#/components/FaqAccordion";
 import { JsonLd } from "#/components/JsonLd";
@@ -73,7 +74,65 @@ function RemoveC2paPage() {
 				</p>
 			</section>
 
-			<CleanerWorkspace />
+			<CleanerWorkspace
+				dropzoneHeading="Drop PNG, JPEG, WebP, HEIC, AVIF, MP4, or MOV files to strip C2PA"
+				dropzoneSubtext="Removes C2PA JUMBF manifests & IPTC DigitalSourceType tags locally · Zero pixel re-encoding"
+			/>
+
+			<section aria-labelledby="c2pa-where-heading" className="mt-12 space-y-4">
+				<h2
+					id="c2pa-where-heading"
+					className="m-0 text-2xl font-semibold tracking-tight text-(--text-primary)"
+				>
+					Where C2PA Content Credentials live in each format
+				</h2>
+				<div className="grid gap-3 md:grid-cols-3">
+					<div className="space-y-1.5 rounded-xl border border-(--border-color) bg-(--bg-card) p-4">
+						<h3 className="m-0 text-sm font-semibold text-(--text-primary)">
+							PNG &amp; WebP
+						</h3>
+						<p className="m-0 text-sm leading-relaxed text-(--text-secondary)">
+							Stored inside PNG <code className="font-mono text-xs">caBX</code>{" "}
+							chunks and WebP C2PA/XMP RIFF chunks alongside IPTC AI source
+							fields.
+						</p>
+					</div>
+					<div className="space-y-1.5 rounded-xl border border-(--border-color) bg-(--bg-card) p-4">
+						<h3 className="m-0 text-sm font-semibold text-(--text-primary)">
+							JPEG, HEIC &amp; AVIF
+						</h3>
+						<p className="m-0 text-sm leading-relaxed text-(--text-secondary)">
+							Embedded in JPEG <code className="font-mono text-xs">APP11</code>{" "}
+							JUMBF segments or ISOBMFF UUID boxes in HEIC and AVIF photos.
+						</p>
+					</div>
+					<div className="space-y-1.5 rounded-xl border border-(--border-color) bg-(--bg-card) p-4">
+						<h3 className="m-0 text-sm font-semibold text-(--text-primary)">
+							MP4 &amp; MOV Videos
+						</h3>
+						<p className="m-0 text-sm leading-relaxed text-(--text-secondary)">
+							Stored as C2PA UUID boxes inside the MP4/MOV container (used by
+							OpenAI Sora and C2PA-enabled video editors).
+						</p>
+					</div>
+				</div>
+				<div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm">
+					<Link
+						to="/ai-only-metadata-remover"
+						className="inline-flex items-center gap-1 font-semibold text-(--brand-color) no-underline hover:underline"
+					>
+						Want to keep camera EXIF? Use AI-Only Remover
+						<ArrowRight className="h-4 w-4" aria-hidden="true" />
+					</Link>
+					<Link
+						to="/ai-metadata-checker"
+						className="inline-flex items-center gap-1 font-semibold text-(--brand-color) no-underline hover:underline"
+					>
+						Inspect C2PA details first
+						<ArrowRight className="h-4 w-4" aria-hidden="true" />
+					</Link>
+				</div>
+			</section>
 
 			<FaqAccordion heading="Common questions" items={C2PA_FAQS} />
 		</div>

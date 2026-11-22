@@ -13,10 +13,13 @@ export const DEFAULT_CLEAN_OPTIONS: CleanOptions = {
 	quality: 0.92,
 };
 
-export function useCleanerState() {
+export function useCleanerState(initialOptions?: Partial<CleanOptions>) {
 	const [items, setItems] = useState<ImageQueueItem[]>([]);
 	const [selectedId, setSelectedId] = useState<string | null>(null);
-	const [options, setOptions] = useState<CleanOptions>(DEFAULT_CLEAN_OPTIONS);
+	const [options, setOptions] = useState<CleanOptions>(() => ({
+		...DEFAULT_CLEAN_OPTIONS,
+		...initialOptions,
+	}));
 	const [suffix, setSuffix] = useState("_clean");
 	const [isLoadingSample, setIsLoadingSample] = useState(false);
 	const [isBatchCleaning, setIsBatchCleaning] = useState(false);

@@ -1,5 +1,8 @@
 export const ACCEPTED_MEDIA_ACCEPT =
-	"image/png,image/jpeg,image/webp,image/heic,image/heif,image/avif,video/mp4,video/quicktime,.png,.jpg,.jpeg,.webp,.heic,.heif,.avif,.mp4,.mov";
+	"image/png,image/jpeg,image/webp,image/heic,image/heif,image/avif,video/mp4,video/quicktime,application/pdf,.png,.jpg,.jpeg,.webp,.heic,.heif,.avif,.mp4,.mov,.pdf";
+
+export const PDF_ACCEPT = "application/pdf,.pdf";
+export const HEIC_ACCEPT = "image/heic,image/heif,.heic,.heif";
 
 const ACCEPTED_MEDIA_MIME_TYPES = new Set([
 	"image/png",
@@ -10,13 +13,14 @@ const ACCEPTED_MEDIA_MIME_TYPES = new Set([
 	"image/avif",
 	"video/mp4",
 	"video/quicktime",
+	"application/pdf",
 ]);
 
 export function filterAcceptedMediaFiles(fileList: FileList | File[]): File[] {
 	return Array.from(fileList).filter(
 		(file) =>
 			ACCEPTED_MEDIA_MIME_TYPES.has(file.type) ||
-			/\.(png|jpe?g|webp|heic|heif|avif|mp4|mov)$/i.test(file.name),
+			/\.(png|jpe?g|webp|heic|heif|avif|mp4|mov|pdf)$/i.test(file.name),
 	);
 }
 

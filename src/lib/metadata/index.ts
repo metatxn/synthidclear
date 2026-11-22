@@ -27,6 +27,7 @@ export {
 	categoryLabel,
 	detectImageFormat,
 	formatToMime,
+	isPdfFormat,
 	isVideoFormat,
 	mimeToExtension,
 } from "./utils";
@@ -63,7 +64,7 @@ export async function parseImageMetadata(
 		aiFlagCount: 0,
 		strippableCount: 0,
 		parseWarnings: [
-			"Unsupported image signature. Supported formats: PNG, JPEG, WebP, HEIC, AVIF.",
+			"Unsupported file signature. Supported formats: PNG, JPEG, WebP, HEIC, AVIF, MP4, MOV, PDF.",
 		],
 	};
 }

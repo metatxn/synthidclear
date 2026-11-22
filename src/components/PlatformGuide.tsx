@@ -3,12 +3,14 @@ import { ArrowRight, Info } from "lucide-react";
 import { CleanerWorkspace } from "#/components/CleanerWorkspace";
 import { FaqAccordion, type FaqItem } from "#/components/FaqAccordion";
 import { JsonLd } from "#/components/JsonLd";
+import type { CleanOptions } from "#/lib/metadata";
 import { PLATFORM_GUIDES, type PlatformGuidePath } from "#/lib/platformGuides";
 import {
 	buildBreadcrumbSchema,
 	buildFaqSchema,
 	buildSoftwareAppSchema,
 } from "#/lib/seo";
+import type { ToolPath } from "#/lib/toolsCatalog";
 
 export interface GuideSignal {
 	title: string;
@@ -16,11 +18,7 @@ export interface GuideSignal {
 }
 
 export interface GuideLink {
-	to:
-		| "/remove-c2pa-metadata"
-		| "/strip-exif-online"
-		| "/png-prompt-remover"
-		| "/video-metadata-remover";
+	to: ToolPath;
 	label: string;
 }
 
@@ -33,6 +31,7 @@ export interface PlatformGuideProps {
 	steps: readonly string[];
 	limits: readonly string[];
 	extraLink?: GuideLink;
+	defaultOptions?: Partial<CleanOptions>;
 	faqs: readonly FaqItem[];
 	schemaName: string;
 	schemaDescription: string;
@@ -62,18 +61,23 @@ export function PlatformGuide({
 	steps,
 	limits,
 	extraLink,
+	defaultOptions,
 	faqs,
 	schemaName,
 	schemaDescription,
 }: PlatformGuideProps) {
 	const currentGuide = PLATFORM_GUIDES.find((guide) => guide.to === path);
-	const related = PLATFORM_GUIDES.filter((guide) => guide.to !== path);
+	const related = PLATFORM_GUIDES.filter((guide) => guide.to !== path).slice(
+		0,
+		6,
+	);
 
 	return (
 		<div className="mx-auto max-w-5xl space-y-12 px-4 py-10 sm:px-6">
 			<JsonLd
 				data={buildBreadcrumbSchema([
 					{ name: "Home", path: "/" },
+					{ name: "Guides", path: "/guides" },
 					{ name: currentGuide?.title ?? heading, path },
 				])}
 			/>
@@ -95,7 +99,7 @@ export function PlatformGuide({
 				</p>
 			</section>
 
-			<CleanerWorkspace hideScopeBanner />
+			<CleanerWorkspace hideScopeBanner defaultOptions={defaultOptions} />
 
 			<section aria-labelledby="signals-heading" className="space-y-5">
 				<h2
@@ -174,13 +178,22 @@ export function PlatformGuide({
 			<FaqAccordion heading="Common questions" items={faqs} className="mt-0" />
 
 			<section aria-labelledby="related-heading" className="space-y-4">
-				<h2
-					id="related-heading"
-					className="m-0 text-xl font-semibold tracking-[-0.02em] text-(--text-primary)"
-				>
-					Other platform guides
-				</h2>
-				<div className="grid gap-3 sm:grid-cols-3">
+				<div className="flex flex-wrap items-center justify-between gap-2">
+					<h2
+						id="related-heading"
+						className="m-0 text-xl font-semibold tracking-[-0.02em] text-(--text-primary)"
+					>
+						Other platform guides
+					</h2>
+					<Link
+						to="/guides"
+						className="inline-flex items-center gap-1 text-sm font-medium text-(--brand-color) no-underline hover:underline"
+					>
+						All platform guides
+						<ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+					</Link>
+				</div>
+				<div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
 					{related.map((guide) => (
 						<Link
 							key={guide.to}

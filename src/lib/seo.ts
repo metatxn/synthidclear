@@ -52,12 +52,15 @@ export function buildWebsiteSchema() {
 				logo: {
 					"@type": "ImageObject",
 					url: `${SITE_URL}/icon-512.png`,
+					width: 512,
+					height: 512,
 				},
 			},
 			{
 				"@type": "WebSite",
 				"@id": `${SITE_URL}/#website`,
 				name: SITE_NAME,
+				alternateName: "synthidclear.com",
 				url: `${SITE_URL}/`,
 				description:
 					"100% browser-based metadata cleaner for photos and videos (PNG, JPEG, WebP, HEIC, AVIF, MP4, MOV) with zero uploads and lossless quality.",
@@ -94,8 +97,9 @@ export function buildSoftwareAppSchema({
 		},
 		featureList: [
 			"100% client-side browser processing with zero server uploads",
-			"Lossless byte-level metadata stripping for PNG, JPEG, WebP, HEIC, AVIF, MP4, and MOV",
-			"Removes C2PA / JUMBF Content Credentials, XMP DigitalSourceType, EXIF, GPS, IPTC, QuickTime tags, and PNG prompt chunks",
+			"Lossless byte-level metadata stripping for PNG, JPEG, WebP, HEIC, AVIF, MP4, MOV, and PDF",
+			"Cross-browser HEIC to JPG conversion with automatic metadata removal",
+			"Removes C2PA / JUMBF Content Credentials, XMP DigitalSourceType, EXIF, GPS, IPTC, QuickTime tags, PDF Info/XMP, and PNG prompt chunks",
 			"Preserves ICC color profiles (Display P3 / sRGB) by default",
 			"Built-in binary re-scan verification confirming 0 metadata items remain",
 		],

@@ -3,6 +3,7 @@ import {
 	CheckCircle2,
 	ChevronDown,
 	Download,
+	FileText,
 	Search,
 	Sparkles,
 } from "lucide-react";
@@ -18,6 +19,7 @@ import { formatBytes } from "#/lib/format";
 import {
 	analyzeCreatorImpact,
 	categoryLabel,
+	isPdfFormat,
 	isVideoFormat,
 	type MetadataCategory,
 	type MetadataEntry,
@@ -28,6 +30,8 @@ interface MetadataInspectorProps {
 	item: ImageQueueItem | null;
 	onCleanSingle: (id: string) => void;
 	onDownloadSingle: (item: ImageQueueItem) => void;
+	defaultDetailsOpen?: boolean;
+	showSizeBreakdown?: boolean;
 }
 
 type InspectorTab = "original" | "verified";
@@ -36,8 +40,10 @@ export function MetadataInspector({
 	item,
 	onCleanSingle,
 	onDownloadSingle,
+	defaultDetailsOpen = false,
+	showSizeBreakdown = false,
 }: MetadataInspectorProps) {
-	const [detailsOpen, setDetailsOpen] = useState(false);
+	const [detailsOpen, setDetailsOpen] = useState(defaultDetailsOpen);
 	const [imgError, setImgError] = useState(false);
 	const [activeTab, setActiveTab] = useState<InspectorTab>("original");
 	const [searchQuery, setSearchQuery] = useState("");
@@ -98,6 +104,46 @@ export function MetadataInspector({
 		[item?.originalMeta],
 	);
 
+	const sizeBreakdown = useMemo(() => {
+		const meta = item?.originalMeta;
+		if (!showSizeBreakdown || !meta) return null;
+
+		const seenXmpBlocks = new Set<string>();
+		const byCategory = new Map<
+			MetadataCategory,
+			{ count: number; bytes: number }
+		>();
+		let totalBytes = 0;
+
+		for (const entry of meta.entries) {
+			const bucket = byCategory.get(entry.category) ?? { count: 0, bytes: 0 };
+			bucket.count += 1;
+
+			// XMP entries parsed from the same packet share the full packet byteSize;
+			// count each XMP packet's byteSize once to avoid over-reporting.
+			const isSharedXmp = entry.id.includes("-xmp-");
+			const xmpKey = `${entry.source}:${entry.byteSize}`;
+			if (!isSharedXmp || !seenXmpBlocks.has(xmpKey)) {
+				if (isSharedXmp) seenXmpBlocks.add(xmpKey);
+				bucket.bytes += entry.byteSize;
+				totalBytes += entry.byteSize;
+			}
+			byCategory.set(entry.category, bucket);
+		}
+
+		const clampedTotal = Math.min(totalBytes, meta.byteLength);
+		const percent =
+			meta.byteLength > 0 ? (clampedTotal / meta.byteLength) * 100 : 0;
+
+		return {
+			totalBytes: clampedTotal,
+			percent,
+			categories: Array.from(byCategory.entries()).sort(
+				(a, b) => b[1].bytes - a[1].bytes,
+			),
+		};
+	}, [item?.originalMeta, showSizeBreakdown]);
+
 	function handleTabKeyDown(e: KeyboardEvent<HTMLButtonElement>) {
 		if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
 			e.preventDefault();
@@ -157,19 +203,41 @@ export function MetadataInspector({
 		isVideoFormat(originalMeta?.format) ||
 		item.file.type.startsWith("video/") ||
 		/\.(mp4|mov)$/i.test(item.file.name);
+	const isPdf =
+		isPdfFormat(originalMeta?.format) ||
+		item.file.type === "application/pdf" ||
+		/\.pdf$/i.test(item.file.name);
 	const formatLabel =
 		originalMeta?.format && originalMeta.format !== "unknown"
 			? originalMeta.format.toUpperCase()
-			: isVideo
-				? "VIDEO"
-				: "IMAGE";
+			: isPdf
+				? "PDF"
+				: isVideo
+					? "VIDEO"
+					: "IMAGE";
 
 	return (
 		<div className="space-y-4 rounded-2xl border border-(--border-color) bg-(--bg-card) p-4 sm:p-5">
 			{/* Specimen Preview + Plain-English Action Header */}
 			<div className="grid gap-5 md:grid-cols-[180px_1fr]">
 				<div className="overflow-hidden rounded-xl border border-(--border-color) bg-(--bg-surface)">
-					{isVideo ? (
+					{isPdf ? (
+						<div className="flex h-44 flex-col items-center justify-center gap-1.5 p-4 text-center md:h-full">
+							<FileText
+								className="h-8 w-8 text-(--text-secondary)"
+								aria-hidden="true"
+							/>
+							<span className="rounded-lg border border-(--border-color) bg-(--bg-card) px-2.5 py-0.5 font-mono text-xs font-semibold text-(--text-primary)">
+								PDF
+							</span>
+							{originalMeta?.pageCount != null && (
+								<span className="text-[11px] text-(--text-muted)">
+									{originalMeta.pageCount}{" "}
+									{originalMeta.pageCount === 1 ? "page" : "pages"}
+								</span>
+							)}
+						</div>
+					) : isVideo ? (
 						<video
 							src={previewSrc}
 							controls
@@ -185,8 +253,8 @@ export function MetadataInspector({
 								{formatLabel}
 							</span>
 							<span className="text-[11px] text-(--text-muted)">
-								Preview unavailable in this browser; cleaning still runs
-								losslessly.
+								Preview unavailable in this browser; cleaning &amp; conversion
+								still run locally.
 							</span>
 						</div>
 					) : (
@@ -207,9 +275,20 @@ export function MetadataInspector({
 							</h3>
 							<p className="tabular mt-0.5 mb-0 text-xs text-(--text-secondary)">
 								{originalMeta
-									? `${originalMeta.width ?? "?"} × ${
-											originalMeta.height ?? "?"
-										} px · ${formatLabel} · ${
+									? `${
+											isPdf
+												? `${originalMeta.pageCount ?? "?"} ${
+														originalMeta.pageCount === 1 ? "page" : "pages"
+													}`
+												: `${originalMeta.width ?? "?"} × ${
+														originalMeta.height ?? "?"
+													} px`
+										} · ${
+											cleanResult &&
+											cleanResult.outputExtension.toUpperCase() !== formatLabel
+												? `${formatLabel} → ${cleanResult.outputExtension.toUpperCase()}`
+												: formatLabel
+										} · ${
 											cleanResult
 												? `${formatBytes(cleanResult.originalSize)} → ${formatBytes(
 														cleanResult.cleanedSize,
@@ -252,7 +331,11 @@ export function MetadataInspector({
 									className="touch-target inline-flex cursor-pointer items-center gap-1.5 rounded-xl bg-(--brand-color) px-4 py-2 text-xs font-semibold text-(--brand-text) hover:bg-(--brand-hover) disabled:cursor-not-allowed disabled:opacity-45"
 								>
 									<Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
-									{isVideo ? "Clean Video" : "Clean Image"}
+									{isPdf
+										? "Clean PDF"
+										: isVideo
+											? "Clean Video"
+											: "Clean Image"}
 								</button>
 							)}
 						</div>
@@ -283,7 +366,7 @@ export function MetadataInspector({
 
 						<div className="rounded-xl border border-(--border-color) bg-(--bg-surface) px-3 py-2.5">
 							<span className="block text-[11px] font-medium text-(--text-secondary)">
-								Camera &amp; GPS
+								{isPdf ? "Author & Doc Info" : "Camera & GPS"}
 							</span>
 							<span
 								className={`tabular mt-0.5 block text-sm font-semibold ${
@@ -310,29 +393,39 @@ export function MetadataInspector({
 
 						<div className="rounded-xl border border-(--border-color) bg-(--bg-surface) px-3 py-2.5">
 							<span className="block text-[11px] font-medium text-(--text-secondary)">
-								{isVideo ? "Video Quality" : "Image Quality"}
+								{isPdf
+									? "Document"
+									: isVideo
+										? "Video Quality"
+										: "Image Quality"}
 							</span>
 							<span className="mt-0.5 block text-sm font-semibold text-(--text-primary)">
-								{!isVideo && cleanResult?.modeUsed === "deep"
-									? "Re-encoded"
+								{!isPdf && !isVideo && cleanResult?.modeUsed === "deep"
+									? `Converted (${cleanResult.outputExtension.toUpperCase()})`
 									: "100% Original"}
 							</span>
 						</div>
 
 						<div className="rounded-xl border border-(--border-color) bg-(--bg-surface) px-3 py-2.5">
 							<span className="block text-[11px] font-medium text-(--text-secondary)">
-								{isVideo ? "Streams" : "Color Profile"}
+								{isPdf ? "Pages" : isVideo ? "Streams" : "Color Profile"}
 							</span>
 							<span className="mt-0.5 block text-sm font-semibold text-(--text-primary)">
-								{isVideo
-									? "Lossless copy"
-									: originalMeta?.hasIccProfile
-										? cleanResult
-											? cleanResult.iccPreserved
-												? "Kept"
-												: "Removed"
-											: "Will keep"
-										: "Standard"}
+								{isPdf
+									? originalMeta?.pageCount != null
+										? `${originalMeta.pageCount} ${
+												originalMeta.pageCount === 1 ? "page" : "pages"
+											}`
+										: "PDF"
+									: isVideo
+										? "Lossless copy"
+										: originalMeta?.hasIccProfile
+											? cleanResult
+												? cleanResult.iccPreserved
+													? "Kept"
+													: "Removed"
+												: "Will keep"
+											: "Standard"}
 							</span>
 						</div>
 					</div>
@@ -377,6 +470,40 @@ export function MetadataInspector({
 						>
 							<AlertTriangle className="h-4 w-4 shrink-0" aria-hidden="true" />
 							<span>{item.error}</span>
+						</div>
+					)}
+
+					{sizeBreakdown && (
+						<div className="space-y-2 rounded-xl border border-(--border-color) bg-(--bg-surface) px-3.5 py-2.5 text-xs">
+							<div className="flex flex-wrap items-center justify-between gap-2">
+								<span className="font-semibold text-(--text-primary)">
+									Metadata footprint
+								</span>
+								<span className="tabular text-(--text-secondary)">
+									{formatBytes(sizeBreakdown.totalBytes)} (
+									{sizeBreakdown.percent < 0.1 && sizeBreakdown.totalBytes > 0
+										? "<0.1"
+										: sizeBreakdown.percent.toFixed(1)}
+									% of file)
+									{cleanResult &&
+										cleanResult.originalSize > cleanResult.cleanedSize &&
+										` · ${formatBytes(cleanResult.originalSize - cleanResult.cleanedSize)} removed`}
+								</span>
+							</div>
+							{sizeBreakdown.categories.length > 0 && (
+								<div className="flex flex-wrap gap-1.5">
+									{sizeBreakdown.categories.map(([cat, stats]) => (
+										<span
+											key={cat}
+											className="tabular rounded-md border border-(--border-color) bg-(--bg-card) px-2 py-0.5 text-[11px] text-(--text-secondary)"
+										>
+											{categoryLabel(cat)}: {stats.count}{" "}
+											{stats.count === 1 ? "item" : "items"} (
+											{formatBytes(stats.bytes)})
+										</span>
+									))}
+								</div>
+							)}
 						</div>
 					)}
 				</div>

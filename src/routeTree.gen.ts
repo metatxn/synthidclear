@@ -10,16 +10,28 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AiMetadataCheckerRouteImport } from './routes/ai-metadata-checker'
+import { Route as AiOnlyMetadataRemoverRouteImport } from './routes/ai-only-metadata-remover'
 import { Route as ChatgptImageMetadataRouteImport } from './routes/chatgpt-image-metadata'
+import { Route as GeminiImageMetadataRouteImport } from './routes/gemini-image-metadata'
+import { Route as GuidesRouteImport } from './routes/guides'
+import { Route as HeicMetadataRemoverRouteImport } from './routes/heic-metadata-remover'
+import { Route as HeicToJpgRouteImport } from './routes/heic-to-jpg'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
 import { Route as InstagramAiLabelRouteImport } from './routes/instagram-ai-label'
+import { Route as MidjourneyMetadataRouteImport } from './routes/midjourney-metadata'
+import { Route as PdfMetadataRemoverRouteImport } from './routes/pdf-metadata-remover'
+import { Route as PhotoshopAiMetadataRouteImport } from './routes/photoshop-ai-metadata'
 import { Route as PngPromptRemoverRouteImport } from './routes/png-prompt-remover'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as RemoveC2paMetadataRouteImport } from './routes/remove-c2pa-metadata'
+import { Route as RemoveGpsFromPhotoRouteImport } from './routes/remove-gps-from-photo'
 import { Route as SoraVideoMetadataRouteImport } from './routes/sora-video-metadata'
 import { Route as StripExifOnlineRouteImport } from './routes/strip-exif-online'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as TiktokAiLabelRouteImport } from './routes/tiktok-ai-label'
+import { Route as ToolsRouteImport } from './routes/tools'
+import { Route as VeoVideoMetadataRouteImport } from './routes/veo-video-metadata'
 import { Route as VideoMetadataRemoverRouteImport } from './routes/video-metadata-remover'
 
 const IndexRoute = IndexRouteImport.update({
@@ -27,9 +39,39 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AiMetadataCheckerRoute = AiMetadataCheckerRouteImport.update({
+  id: '/ai-metadata-checker',
+  path: '/ai-metadata-checker',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AiOnlyMetadataRemoverRoute = AiOnlyMetadataRemoverRouteImport.update({
+  id: '/ai-only-metadata-remover',
+  path: '/ai-only-metadata-remover',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ChatgptImageMetadataRoute = ChatgptImageMetadataRouteImport.update({
   id: '/chatgpt-image-metadata',
   path: '/chatgpt-image-metadata',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GeminiImageMetadataRoute = GeminiImageMetadataRouteImport.update({
+  id: '/gemini-image-metadata',
+  path: '/gemini-image-metadata',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const GuidesRoute = GuidesRouteImport.update({
+  id: '/guides',
+  path: '/guides',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HeicMetadataRemoverRoute = HeicMetadataRemoverRouteImport.update({
+  id: '/heic-metadata-remover',
+  path: '/heic-metadata-remover',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HeicToJpgRoute = HeicToJpgRouteImport.update({
+  id: '/heic-to-jpg',
+  path: '/heic-to-jpg',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HowItWorksRoute = HowItWorksRouteImport.update({
@@ -40,6 +82,21 @@ const HowItWorksRoute = HowItWorksRouteImport.update({
 const InstagramAiLabelRoute = InstagramAiLabelRouteImport.update({
   id: '/instagram-ai-label',
   path: '/instagram-ai-label',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MidjourneyMetadataRoute = MidjourneyMetadataRouteImport.update({
+  id: '/midjourney-metadata',
+  path: '/midjourney-metadata',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PdfMetadataRemoverRoute = PdfMetadataRemoverRouteImport.update({
+  id: '/pdf-metadata-remover',
+  path: '/pdf-metadata-remover',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PhotoshopAiMetadataRoute = PhotoshopAiMetadataRouteImport.update({
+  id: '/photoshop-ai-metadata',
+  path: '/photoshop-ai-metadata',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PngPromptRemoverRoute = PngPromptRemoverRouteImport.update({
@@ -55,6 +112,11 @@ const PrivacyRoute = PrivacyRouteImport.update({
 const RemoveC2paMetadataRoute = RemoveC2paMetadataRouteImport.update({
   id: '/remove-c2pa-metadata',
   path: '/remove-c2pa-metadata',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RemoveGpsFromPhotoRoute = RemoveGpsFromPhotoRouteImport.update({
+  id: '/remove-gps-from-photo',
+  path: '/remove-gps-from-photo',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SoraVideoMetadataRoute = SoraVideoMetadataRouteImport.update({
@@ -77,6 +139,16 @@ const TiktokAiLabelRoute = TiktokAiLabelRouteImport.update({
   path: '/tiktok-ai-label',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ToolsRoute = ToolsRouteImport.update({
+  id: '/tools',
+  path: '/tools',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const VeoVideoMetadataRoute = VeoVideoMetadataRouteImport.update({
+  id: '/veo-video-metadata',
+  path: '/veo-video-metadata',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const VideoMetadataRemoverRoute = VideoMetadataRemoverRouteImport.update({
   id: '/video-metadata-remover',
   path: '/video-metadata-remover',
@@ -85,104 +157,188 @@ const VideoMetadataRemoverRoute = VideoMetadataRemoverRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/ai-metadata-checker': typeof AiMetadataCheckerRoute
+  '/ai-only-metadata-remover': typeof AiOnlyMetadataRemoverRoute
   '/chatgpt-image-metadata': typeof ChatgptImageMetadataRoute
+  '/gemini-image-metadata': typeof GeminiImageMetadataRoute
+  '/guides': typeof GuidesRoute
+  '/heic-metadata-remover': typeof HeicMetadataRemoverRoute
+  '/heic-to-jpg': typeof HeicToJpgRoute
   '/how-it-works': typeof HowItWorksRoute
   '/instagram-ai-label': typeof InstagramAiLabelRoute
+  '/midjourney-metadata': typeof MidjourneyMetadataRoute
+  '/pdf-metadata-remover': typeof PdfMetadataRemoverRoute
+  '/photoshop-ai-metadata': typeof PhotoshopAiMetadataRoute
   '/png-prompt-remover': typeof PngPromptRemoverRoute
   '/privacy': typeof PrivacyRoute
   '/remove-c2pa-metadata': typeof RemoveC2paMetadataRoute
+  '/remove-gps-from-photo': typeof RemoveGpsFromPhotoRoute
   '/sora-video-metadata': typeof SoraVideoMetadataRoute
   '/strip-exif-online': typeof StripExifOnlineRoute
   '/terms': typeof TermsRoute
   '/tiktok-ai-label': typeof TiktokAiLabelRoute
+  '/tools': typeof ToolsRoute
+  '/veo-video-metadata': typeof VeoVideoMetadataRoute
   '/video-metadata-remover': typeof VideoMetadataRemoverRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/ai-metadata-checker': typeof AiMetadataCheckerRoute
+  '/ai-only-metadata-remover': typeof AiOnlyMetadataRemoverRoute
   '/chatgpt-image-metadata': typeof ChatgptImageMetadataRoute
+  '/gemini-image-metadata': typeof GeminiImageMetadataRoute
+  '/guides': typeof GuidesRoute
+  '/heic-metadata-remover': typeof HeicMetadataRemoverRoute
+  '/heic-to-jpg': typeof HeicToJpgRoute
   '/how-it-works': typeof HowItWorksRoute
   '/instagram-ai-label': typeof InstagramAiLabelRoute
+  '/midjourney-metadata': typeof MidjourneyMetadataRoute
+  '/pdf-metadata-remover': typeof PdfMetadataRemoverRoute
+  '/photoshop-ai-metadata': typeof PhotoshopAiMetadataRoute
   '/png-prompt-remover': typeof PngPromptRemoverRoute
   '/privacy': typeof PrivacyRoute
   '/remove-c2pa-metadata': typeof RemoveC2paMetadataRoute
+  '/remove-gps-from-photo': typeof RemoveGpsFromPhotoRoute
   '/sora-video-metadata': typeof SoraVideoMetadataRoute
   '/strip-exif-online': typeof StripExifOnlineRoute
   '/terms': typeof TermsRoute
   '/tiktok-ai-label': typeof TiktokAiLabelRoute
+  '/tools': typeof ToolsRoute
+  '/veo-video-metadata': typeof VeoVideoMetadataRoute
   '/video-metadata-remover': typeof VideoMetadataRemoverRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/ai-metadata-checker': typeof AiMetadataCheckerRoute
+  '/ai-only-metadata-remover': typeof AiOnlyMetadataRemoverRoute
   '/chatgpt-image-metadata': typeof ChatgptImageMetadataRoute
+  '/gemini-image-metadata': typeof GeminiImageMetadataRoute
+  '/guides': typeof GuidesRoute
+  '/heic-metadata-remover': typeof HeicMetadataRemoverRoute
+  '/heic-to-jpg': typeof HeicToJpgRoute
   '/how-it-works': typeof HowItWorksRoute
   '/instagram-ai-label': typeof InstagramAiLabelRoute
+  '/midjourney-metadata': typeof MidjourneyMetadataRoute
+  '/pdf-metadata-remover': typeof PdfMetadataRemoverRoute
+  '/photoshop-ai-metadata': typeof PhotoshopAiMetadataRoute
   '/png-prompt-remover': typeof PngPromptRemoverRoute
   '/privacy': typeof PrivacyRoute
   '/remove-c2pa-metadata': typeof RemoveC2paMetadataRoute
+  '/remove-gps-from-photo': typeof RemoveGpsFromPhotoRoute
   '/sora-video-metadata': typeof SoraVideoMetadataRoute
   '/strip-exif-online': typeof StripExifOnlineRoute
   '/terms': typeof TermsRoute
   '/tiktok-ai-label': typeof TiktokAiLabelRoute
+  '/tools': typeof ToolsRoute
+  '/veo-video-metadata': typeof VeoVideoMetadataRoute
   '/video-metadata-remover': typeof VideoMetadataRemoverRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/ai-metadata-checker'
+    | '/ai-only-metadata-remover'
     | '/chatgpt-image-metadata'
+    | '/gemini-image-metadata'
+    | '/guides'
+    | '/heic-metadata-remover'
+    | '/heic-to-jpg'
     | '/how-it-works'
     | '/instagram-ai-label'
+    | '/midjourney-metadata'
+    | '/pdf-metadata-remover'
+    | '/photoshop-ai-metadata'
     | '/png-prompt-remover'
     | '/privacy'
     | '/remove-c2pa-metadata'
+    | '/remove-gps-from-photo'
     | '/sora-video-metadata'
     | '/strip-exif-online'
     | '/terms'
     | '/tiktok-ai-label'
+    | '/tools'
+    | '/veo-video-metadata'
     | '/video-metadata-remover'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/ai-metadata-checker'
+    | '/ai-only-metadata-remover'
     | '/chatgpt-image-metadata'
+    | '/gemini-image-metadata'
+    | '/guides'
+    | '/heic-metadata-remover'
+    | '/heic-to-jpg'
     | '/how-it-works'
     | '/instagram-ai-label'
+    | '/midjourney-metadata'
+    | '/pdf-metadata-remover'
+    | '/photoshop-ai-metadata'
     | '/png-prompt-remover'
     | '/privacy'
     | '/remove-c2pa-metadata'
+    | '/remove-gps-from-photo'
     | '/sora-video-metadata'
     | '/strip-exif-online'
     | '/terms'
     | '/tiktok-ai-label'
+    | '/tools'
+    | '/veo-video-metadata'
     | '/video-metadata-remover'
   id:
     | '__root__'
     | '/'
+    | '/ai-metadata-checker'
+    | '/ai-only-metadata-remover'
     | '/chatgpt-image-metadata'
+    | '/gemini-image-metadata'
+    | '/guides'
+    | '/heic-metadata-remover'
+    | '/heic-to-jpg'
     | '/how-it-works'
     | '/instagram-ai-label'
+    | '/midjourney-metadata'
+    | '/pdf-metadata-remover'
+    | '/photoshop-ai-metadata'
     | '/png-prompt-remover'
     | '/privacy'
     | '/remove-c2pa-metadata'
+    | '/remove-gps-from-photo'
     | '/sora-video-metadata'
     | '/strip-exif-online'
     | '/terms'
     | '/tiktok-ai-label'
+    | '/tools'
+    | '/veo-video-metadata'
     | '/video-metadata-remover'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AiMetadataCheckerRoute: typeof AiMetadataCheckerRoute
+  AiOnlyMetadataRemoverRoute: typeof AiOnlyMetadataRemoverRoute
   ChatgptImageMetadataRoute: typeof ChatgptImageMetadataRoute
+  GeminiImageMetadataRoute: typeof GeminiImageMetadataRoute
+  GuidesRoute: typeof GuidesRoute
+  HeicMetadataRemoverRoute: typeof HeicMetadataRemoverRoute
+  HeicToJpgRoute: typeof HeicToJpgRoute
   HowItWorksRoute: typeof HowItWorksRoute
   InstagramAiLabelRoute: typeof InstagramAiLabelRoute
+  MidjourneyMetadataRoute: typeof MidjourneyMetadataRoute
+  PdfMetadataRemoverRoute: typeof PdfMetadataRemoverRoute
+  PhotoshopAiMetadataRoute: typeof PhotoshopAiMetadataRoute
   PngPromptRemoverRoute: typeof PngPromptRemoverRoute
   PrivacyRoute: typeof PrivacyRoute
   RemoveC2paMetadataRoute: typeof RemoveC2paMetadataRoute
+  RemoveGpsFromPhotoRoute: typeof RemoveGpsFromPhotoRoute
   SoraVideoMetadataRoute: typeof SoraVideoMetadataRoute
   StripExifOnlineRoute: typeof StripExifOnlineRoute
   TermsRoute: typeof TermsRoute
   TiktokAiLabelRoute: typeof TiktokAiLabelRoute
+  ToolsRoute: typeof ToolsRoute
+  VeoVideoMetadataRoute: typeof VeoVideoMetadataRoute
   VideoMetadataRemoverRoute: typeof VideoMetadataRemoverRoute
 }
 
@@ -195,11 +351,53 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ai-metadata-checker': {
+      id: '/ai-metadata-checker'
+      path: '/ai-metadata-checker'
+      fullPath: '/ai-metadata-checker'
+      preLoaderRoute: typeof AiMetadataCheckerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ai-only-metadata-remover': {
+      id: '/ai-only-metadata-remover'
+      path: '/ai-only-metadata-remover'
+      fullPath: '/ai-only-metadata-remover'
+      preLoaderRoute: typeof AiOnlyMetadataRemoverRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/chatgpt-image-metadata': {
       id: '/chatgpt-image-metadata'
       path: '/chatgpt-image-metadata'
       fullPath: '/chatgpt-image-metadata'
       preLoaderRoute: typeof ChatgptImageMetadataRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/gemini-image-metadata': {
+      id: '/gemini-image-metadata'
+      path: '/gemini-image-metadata'
+      fullPath: '/gemini-image-metadata'
+      preLoaderRoute: typeof GeminiImageMetadataRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/guides': {
+      id: '/guides'
+      path: '/guides'
+      fullPath: '/guides'
+      preLoaderRoute: typeof GuidesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/heic-metadata-remover': {
+      id: '/heic-metadata-remover'
+      path: '/heic-metadata-remover'
+      fullPath: '/heic-metadata-remover'
+      preLoaderRoute: typeof HeicMetadataRemoverRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/heic-to-jpg': {
+      id: '/heic-to-jpg'
+      path: '/heic-to-jpg'
+      fullPath: '/heic-to-jpg'
+      preLoaderRoute: typeof HeicToJpgRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/how-it-works': {
@@ -214,6 +412,27 @@ declare module '@tanstack/react-router' {
       path: '/instagram-ai-label'
       fullPath: '/instagram-ai-label'
       preLoaderRoute: typeof InstagramAiLabelRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/midjourney-metadata': {
+      id: '/midjourney-metadata'
+      path: '/midjourney-metadata'
+      fullPath: '/midjourney-metadata'
+      preLoaderRoute: typeof MidjourneyMetadataRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pdf-metadata-remover': {
+      id: '/pdf-metadata-remover'
+      path: '/pdf-metadata-remover'
+      fullPath: '/pdf-metadata-remover'
+      preLoaderRoute: typeof PdfMetadataRemoverRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/photoshop-ai-metadata': {
+      id: '/photoshop-ai-metadata'
+      path: '/photoshop-ai-metadata'
+      fullPath: '/photoshop-ai-metadata'
+      preLoaderRoute: typeof PhotoshopAiMetadataRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/png-prompt-remover': {
@@ -235,6 +454,13 @@ declare module '@tanstack/react-router' {
       path: '/remove-c2pa-metadata'
       fullPath: '/remove-c2pa-metadata'
       preLoaderRoute: typeof RemoveC2paMetadataRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/remove-gps-from-photo': {
+      id: '/remove-gps-from-photo'
+      path: '/remove-gps-from-photo'
+      fullPath: '/remove-gps-from-photo'
+      preLoaderRoute: typeof RemoveGpsFromPhotoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sora-video-metadata': {
@@ -265,6 +491,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof TiktokAiLabelRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/tools': {
+      id: '/tools'
+      path: '/tools'
+      fullPath: '/tools'
+      preLoaderRoute: typeof ToolsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/veo-video-metadata': {
+      id: '/veo-video-metadata'
+      path: '/veo-video-metadata'
+      fullPath: '/veo-video-metadata'
+      preLoaderRoute: typeof VeoVideoMetadataRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/video-metadata-remover': {
       id: '/video-metadata-remover'
       path: '/video-metadata-remover'
@@ -277,16 +517,28 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AiMetadataCheckerRoute: AiMetadataCheckerRoute,
+  AiOnlyMetadataRemoverRoute: AiOnlyMetadataRemoverRoute,
   ChatgptImageMetadataRoute: ChatgptImageMetadataRoute,
+  GeminiImageMetadataRoute: GeminiImageMetadataRoute,
+  GuidesRoute: GuidesRoute,
+  HeicMetadataRemoverRoute: HeicMetadataRemoverRoute,
+  HeicToJpgRoute: HeicToJpgRoute,
   HowItWorksRoute: HowItWorksRoute,
   InstagramAiLabelRoute: InstagramAiLabelRoute,
+  MidjourneyMetadataRoute: MidjourneyMetadataRoute,
+  PdfMetadataRemoverRoute: PdfMetadataRemoverRoute,
+  PhotoshopAiMetadataRoute: PhotoshopAiMetadataRoute,
   PngPromptRemoverRoute: PngPromptRemoverRoute,
   PrivacyRoute: PrivacyRoute,
   RemoveC2paMetadataRoute: RemoveC2paMetadataRoute,
+  RemoveGpsFromPhotoRoute: RemoveGpsFromPhotoRoute,
   SoraVideoMetadataRoute: SoraVideoMetadataRoute,
   StripExifOnlineRoute: StripExifOnlineRoute,
   TermsRoute: TermsRoute,
   TiktokAiLabelRoute: TiktokAiLabelRoute,
+  ToolsRoute: ToolsRoute,
+  VeoVideoMetadataRoute: VeoVideoMetadataRoute,
   VideoMetadataRemoverRoute: VideoMetadataRemoverRoute,
 }
 export const routeTree = rootRouteImport

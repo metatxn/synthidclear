@@ -5,10 +5,11 @@ import { toggleColorScheme } from "#/lib/theme";
 import { BrandMark } from "./BrandMark";
 
 const NAV_LINKS = [
+	{ to: "/ai-metadata-checker", label: "Checker" },
 	{ to: "/remove-c2pa-metadata", label: "AI Tags" },
-	{ to: "/strip-exif-online", label: "EXIF & GPS" },
-	{ to: "/png-prompt-remover", label: "PNG Prompts" },
 	{ to: "/video-metadata-remover", label: "Video" },
+	{ to: "/tools", label: "All Tools" },
+	{ to: "/guides", label: "Guides" },
 	{ to: "/how-it-works", label: "How It Works" },
 ] as const;
 
