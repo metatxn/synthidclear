@@ -1,6 +1,7 @@
 import { Plus } from "lucide-react";
 import { useId } from "react";
 import { ACCEPTED_MEDIA_ACCEPT } from "#/lib/format";
+import type { CleanOptions } from "#/lib/metadata";
 import { type CleanerState, useCleanerState } from "#/lib/useCleanerState";
 import { ExportSettingsBar } from "./ExportSettingsBar";
 import { FileQueueCard } from "./FileQueueCard";
@@ -12,14 +13,30 @@ interface CleanerWorkspaceProps {
 	externalState?: CleanerState;
 	hideDropzone?: boolean;
 	hideScopeBanner?: boolean;
+	defaultOptions?: Partial<CleanOptions>;
+	defaultOptionsOpen?: boolean;
+	defaultInspectorOpen?: boolean;
+	showSizeBreakdown?: boolean;
+	dropzoneHeading?: string;
+	dropzoneSubtext?: string;
+	accept?: string;
+	hideSampleButton?: boolean;
 }
 
 export function CleanerWorkspace({
 	externalState,
 	hideDropzone = false,
 	hideScopeBanner = false,
+	defaultOptions,
+	defaultOptionsOpen = false,
+	defaultInspectorOpen = false,
+	showSizeBreakdown = false,
+	dropzoneHeading,
+	dropzoneSubtext,
+	accept,
+	hideSampleButton = false,
 }: CleanerWorkspaceProps) {
-	const internalState = useCleanerState();
+	const internalState = useCleanerState(defaultOptions);
 	const state = externalState ?? internalState;
 	const addMoreId = useId();
 
@@ -43,6 +60,10 @@ export function CleanerWorkspace({
 					onFilesAdded={state.handleFilesAdded}
 					onLoadSample={state.handleLoadSample}
 					isLoadingSample={state.isLoadingSample}
+					heading={dropzoneHeading}
+					subtext={dropzoneSubtext}
+					accept={accept}
+					hideSampleButton={hideSampleButton}
 				/>
 			)}
 
@@ -57,6 +78,7 @@ export function CleanerWorkspace({
 				totalCount={state.items.length}
 				cleanedCount={state.stats.cleanedVerified}
 				isBusy={state.isBusy}
+				defaultOptionsOpen={defaultOptionsOpen}
 			/>
 
 			<StatsGrid
@@ -122,6 +144,8 @@ export function CleanerWorkspace({
 					item={state.selectedItem}
 					onCleanSingle={state.handleCleanSingle}
 					onDownloadSingle={state.handleDownloadSingle}
+					defaultDetailsOpen={defaultInspectorOpen}
+					showSizeBreakdown={showSizeBreakdown}
 				/>
 			</section>
 

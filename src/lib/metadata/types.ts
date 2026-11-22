@@ -6,12 +6,14 @@ export type ImageFormat =
 	| "avif"
 	| "mp4"
 	| "mov"
+	| "pdf"
 	| "unknown";
 
 export type MediaFormat = ImageFormat;
 
 export type MetadataCategory =
 	| "ai-provenance"
+	| "document"
 	| "exif"
 	| "xmp"
 	| "iptc"
@@ -38,6 +40,7 @@ export interface ParseResult {
 	mimeType: string;
 	width: number | null;
 	height: number | null;
+	pageCount?: number | null;
 	byteLength: number;
 	hasIccProfile: boolean;
 	iccProfileName: string | null;

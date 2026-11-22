@@ -1,4 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowRight } from "lucide-react";
 import { CleanerWorkspace } from "#/components/CleanerWorkspace";
 import { FaqAccordion, type FaqItem } from "#/components/FaqAccordion";
 import { JsonLd } from "#/components/JsonLd";
@@ -68,7 +69,69 @@ function PngPromptRemoverPage() {
 				</p>
 			</section>
 
-			<CleanerWorkspace />
+			<CleanerWorkspace
+				dropzoneHeading="Drop Stable Diffusion, ComfyUI, or Midjourney PNGs here"
+				dropzoneSubtext="Removes tEXt, iTXt, zTXt prompt chunks & C2PA losslessly · Transparency & 16-bit fidelity kept"
+			/>
+
+			<section aria-labelledby="png-chunks-heading" className="mt-12 space-y-4">
+				<h2
+					id="png-chunks-heading"
+					className="m-0 text-2xl font-semibold tracking-tight text-(--text-primary)"
+				>
+					PNG prompt &amp; workflow chunks removed
+				</h2>
+				<div className="grid gap-3 md:grid-cols-3">
+					<div className="space-y-1.5 rounded-xl border border-(--border-color) bg-(--bg-card) p-4">
+						<h3 className="m-0 text-sm font-semibold text-(--text-primary)">
+							Automatic1111 &amp; Forge
+						</h3>
+						<p className="m-0 text-sm leading-relaxed text-(--text-secondary)">
+							Strips <code className="font-mono text-xs">parameters</code> text
+							chunks holding positive/negative prompts, CFG scale, sampler,
+							seed, and checkpoint hashes.
+						</p>
+					</div>
+					<div className="space-y-1.5 rounded-xl border border-(--border-color) bg-(--bg-card) p-4">
+						<h3 className="m-0 text-sm font-semibold text-(--text-primary)">
+							ComfyUI node graphs
+						</h3>
+						<p className="m-0 text-sm leading-relaxed text-(--text-secondary)">
+							Deletes embedded JSON{" "}
+							<code className="font-mono text-xs">prompt</code> and{" "}
+							<code className="font-mono text-xs">workflow</code> chunks so your
+							custom node pipelines stay private.
+						</p>
+					</div>
+					<div className="space-y-1.5 rounded-xl border border-(--border-color) bg-(--bg-card) p-4">
+						<h3 className="m-0 text-sm font-semibold text-(--text-primary)">
+							NovelAI, Midjourney &amp; C2PA
+						</h3>
+						<p className="m-0 text-sm leading-relaxed text-(--text-secondary)">
+							Cleans plain (<code className="font-mono text-xs">tEXt</code>),
+							international (<code className="font-mono text-xs">iTXt</code>),
+							compressed (<code className="font-mono text-xs">zTXt</code>), and{" "}
+							<code className="font-mono text-xs">caBX</code> C2PA chunks.
+						</p>
+					</div>
+				</div>
+				<div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm">
+					<Link
+						to="/midjourney-metadata"
+						className="inline-flex items-center gap-1 font-semibold text-(--brand-color) no-underline hover:underline"
+					>
+						Guide: Midjourney Image Metadata
+						<ArrowRight className="h-4 w-4" aria-hidden="true" />
+					</Link>
+					<Link
+						to="/ai-metadata-checker"
+						className="inline-flex items-center gap-1 font-semibold text-(--brand-color) no-underline hover:underline"
+					>
+						Inspect PNG Chunks &amp; Size
+						<ArrowRight className="h-4 w-4" aria-hidden="true" />
+					</Link>
+				</div>
+			</section>
 
 			<FaqAccordion heading="Common questions" items={PNG_FAQS} />
 		</div>

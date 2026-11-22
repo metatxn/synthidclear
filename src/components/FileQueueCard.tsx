@@ -1,7 +1,14 @@
-import { CheckCircle2, Download, Film, Loader2, X } from "lucide-react";
+import {
+	CheckCircle2,
+	Download,
+	FileText,
+	Film,
+	Loader2,
+	X,
+} from "lucide-react";
 import { useState } from "react";
 import { formatBytes } from "#/lib/format";
-import { isVideoFormat } from "#/lib/metadata";
+import { isPdfFormat, isVideoFormat } from "#/lib/metadata";
 import type { ImageQueueItem } from "./types";
 
 interface FileQueueCardProps {
@@ -25,12 +32,18 @@ export function FileQueueCard({
 		isVideoFormat(item.originalMeta?.format) ||
 		item.file.type.startsWith("video/") ||
 		/\.(mp4|mov)$/i.test(item.file.name);
+	const isPdf =
+		isPdfFormat(item.originalMeta?.format) ||
+		item.file.type === "application/pdf" ||
+		/\.pdf$/i.test(item.file.name);
 	const formatBadge =
 		item.originalMeta?.format && item.originalMeta.format !== "unknown"
 			? item.originalMeta.format.toUpperCase()
-			: isVideo
-				? "VID"
-				: "IMG";
+			: isPdf
+				? "PDF"
+				: isVideo
+					? "VID"
+					: "IMG";
 
 	return (
 		<div
@@ -46,7 +59,12 @@ export function FileQueueCard({
 				aria-current={isSelected ? "true" : undefined}
 				className="flex min-w-0 flex-1 cursor-pointer items-center gap-3 border-0 bg-transparent p-0 text-left"
 			>
-				{isVideo ? (
+				{isPdf ? (
+					<div className="flex h-12 w-12 shrink-0 flex-col items-center justify-center rounded-lg border border-(--border-color) bg-(--bg-surface) text-(--text-secondary)">
+						<FileText className="h-4 w-4" aria-hidden="true" />
+						<span className="font-mono text-[9px] font-semibold">PDF</span>
+					</div>
+				) : isVideo ? (
 					<div className="flex h-12 w-12 shrink-0 flex-col items-center justify-center rounded-lg border border-(--border-color) bg-(--bg-surface) text-(--text-secondary)">
 						<Film className="h-4 w-4" aria-hidden="true" />
 						<span className="font-mono text-[9px] font-semibold">

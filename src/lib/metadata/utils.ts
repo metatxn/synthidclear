@@ -52,7 +52,37 @@ export function isVideoFormat(format: ImageFormat | undefined): boolean {
 	return format === "mp4" || format === "mov";
 }
 
+export function isPdfFormat(format: ImageFormat | undefined): boolean {
+	return format === "pdf";
+}
+
 export function detectImageFormat(bytes: Uint8Array): ImageFormat {
+	if (bytes.length >= 5) {
+		const pdfScanEnd = Math.min(bytes.length - 5, 1024);
+		for (let i = 0; i <= pdfScanEnd; i++) {
+			if (
+				bytes[i] === 0x25 &&
+				bytes[i + 1] === 0x50 &&
+				bytes[i + 2] === 0x44 &&
+				bytes[i + 3] === 0x46 &&
+				bytes[i + 4] === 0x2d
+			) {
+				return "pdf";
+			}
+			// Only allow leading whitespace / UTF-8 BOM before %PDF-
+			if (
+				bytes[i] !== 0x20 &&
+				bytes[i] !== 0x09 &&
+				bytes[i] !== 0x0a &&
+				bytes[i] !== 0x0d &&
+				bytes[i] !== 0xef &&
+				bytes[i] !== 0xbb &&
+				bytes[i] !== 0xbf
+			) {
+				break;
+			}
+		}
+	}
 	if (
 		bytes.length >= 8 &&
 		bytes[0] === 0x89 &&
@@ -122,6 +152,8 @@ export function formatToMime(format: ImageFormat): string {
 			return "video/mp4";
 		case "mov":
 			return "video/quicktime";
+		case "pdf":
+			return "application/pdf";
 		default:
 			return "application/octet-stream";
 	}
@@ -144,6 +176,8 @@ export function mimeToExtension(mime: string): string {
 			return "mp4";
 		case "video/quicktime":
 			return "mov";
+		case "application/pdf":
+			return "pdf";
 		default:
 			return "bin";
 	}
@@ -706,6 +740,8 @@ export function categoryLabel(category: MetadataCategory): string {
 	switch (category) {
 		case "ai-provenance":
 			return "AI / Provenance";
+		case "document":
+			return "Document Info";
 		case "exif":
 			return "EXIF";
 		case "xmp":

@@ -1,4 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowRight } from "lucide-react";
 import { CleanerWorkspace } from "#/components/CleanerWorkspace";
 import { FaqAccordion, type FaqItem } from "#/components/FaqAccordion";
 import { JsonLd } from "#/components/JsonLd";
@@ -67,7 +68,64 @@ function StripExifPage() {
 				</p>
 			</section>
 
-			<CleanerWorkspace />
+			<CleanerWorkspace
+				dropzoneHeading="Drop JPEG, HEIC, PNG, WebP, or AVIF photos to scrub EXIF & GPS"
+				dropzoneSubtext="Removes camera model, timestamps, GPS & XMP locally · Display P3 / sRGB colors kept"
+			/>
+
+			<section aria-labelledby="exif-what-heading" className="mt-12 space-y-4">
+				<h2
+					id="exif-what-heading"
+					className="m-0 text-2xl font-semibold tracking-tight text-(--text-primary)"
+				>
+					What EXIF &amp; XMP cleaning strips from your photos
+				</h2>
+				<div className="grid gap-3 md:grid-cols-3">
+					<div className="space-y-1.5 rounded-xl border border-(--border-color) bg-(--bg-card) p-4">
+						<h3 className="m-0 text-sm font-semibold text-(--text-primary)">
+							Device &amp; lens fingerprints
+						</h3>
+						<p className="m-0 text-sm leading-relaxed text-(--text-secondary)">
+							Phone or camera make and model, lens specs, serial numbers,
+							exposure settings, and software versions.
+						</p>
+					</div>
+					<div className="space-y-1.5 rounded-xl border border-(--border-color) bg-(--bg-card) p-4">
+						<h3 className="m-0 text-sm font-semibold text-(--text-primary)">
+							GPS &amp; capture timestamps
+						</h3>
+						<p className="m-0 text-sm leading-relaxed text-(--text-secondary)">
+							Exact latitude, longitude, altitude, and date/time stamps embedded
+							automatically by iPhone, Android, and DSLR cameras.
+						</p>
+					</div>
+					<div className="space-y-1.5 rounded-xl border border-(--border-color) bg-(--bg-card) p-4">
+						<h3 className="m-0 text-sm font-semibold text-(--text-primary)">
+							XMP &amp; IPTC edit history
+						</h3>
+						<p className="m-0 text-sm leading-relaxed text-(--text-secondary)">
+							Adobe Lightroom / Photoshop XMP packets, author credits, and AI
+							source tags — while preserving your ICC color profile.
+						</p>
+					</div>
+				</div>
+				<div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm">
+					<Link
+						to="/remove-gps-from-photo"
+						className="inline-flex items-center gap-1 font-semibold text-(--brand-color) no-underline hover:underline"
+					>
+						Remove GPS from Photos &amp; Videos
+						<ArrowRight className="h-4 w-4" aria-hidden="true" />
+					</Link>
+					<Link
+						to="/heic-metadata-remover"
+						className="inline-flex items-center gap-1 font-semibold text-(--brand-color) no-underline hover:underline"
+					>
+						Lossless iPhone HEIC Metadata Remover
+						<ArrowRight className="h-4 w-4" aria-hidden="true" />
+					</Link>
+				</div>
+			</section>
 
 			<FaqAccordion heading="Common questions" items={EXIF_FAQS} />
 		</div>

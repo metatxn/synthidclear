@@ -4,6 +4,7 @@ import {
 	type CleanResult,
 	cleanImageBuffer,
 	detectImageFormat,
+	isPdfFormat,
 	isVideoFormat,
 	type ParseResult,
 	parseImageMetadata,
@@ -64,11 +65,17 @@ class CleanerWorkerClient {
 	}
 
 	async inspect(file: File): Promise<ParseResult> {
-		const headBuf = await file.slice(0, 64).arrayBuffer();
+		const headBuf = await file.slice(0, 1024).arrayBuffer();
 		const format = detectImageFormat(new Uint8Array(headBuf));
 		if (isVideoFormat(format)) {
 			// Videos use zero-copy File.slice() directly so multi-hundred-MB payloads never hit RAM
 			return parseMp4Metadata(file);
+		}
+		if (isPdfFormat(format)) {
+			// Lazy-load pdf-lib only when a user inspects a PDF so image/video bundles stay small
+			const { parsePdfMetadata } = await import("./metadata/pdf");
+			const buffer = await file.arrayBuffer();
+			return parsePdfMetadata(new Uint8Array(buffer));
 		}
 
 		const buffer = await file.arrayBuffer();
@@ -93,15 +100,25 @@ class CleanerWorkerClient {
 	}
 
 	async clean(file: File, options: CleanOptions): Promise<CleanResult> {
-		const headBuf = await file.slice(0, 64).arrayBuffer();
+		const headBuf = await file.slice(0, 1024).arrayBuffer();
 		const format = detectImageFormat(new Uint8Array(headBuf));
 		if (isVideoFormat(format)) {
 			return stripMp4Lossless(file, options.stripScope);
 		}
+		if (isPdfFormat(format)) {
+			const { cleanPdfBuffer } = await import("./metadata/pdf");
+			const buffer = await file.arrayBuffer();
+			return cleanPdfBuffer(buffer, options.stripScope);
+		}
+		if (format === "heic" && options.mode === "deep") {
+			// Lazy-load libheif-backed heic-to/csp only when converting HEIC (keeps main & worker bundles tiny)
+			const { convertHeicBuffer } = await import("./metadata/heicConvert");
+			const buffer = await file.arrayBuffer();
+			return convertHeicBuffer(buffer, options);
+		}
 
 		const buffer = await file.arrayBuffer();
 		const worker = this.getWorker();
-		// If Deep Clean is requested in a browser without OffscreenCanvas, run on main thread canvas directly
 		const canDeepCleanInWorker =
 			options.mode === "lossless" || typeof OffscreenCanvas !== "undefined";
 

@@ -24,6 +24,7 @@ interface ExportSettingsBarProps {
 	totalCount: number;
 	cleanedCount: number;
 	isBusy: boolean;
+	defaultOptionsOpen?: boolean;
 }
 
 export function ExportSettingsBar({
@@ -37,8 +38,9 @@ export function ExportSettingsBar({
 	totalCount,
 	cleanedCount,
 	isBusy,
+	defaultOptionsOpen = false,
 }: ExportSettingsBarProps) {
-	const [optionsOpen, setOptionsOpen] = useState(false);
+	const [optionsOpen, setOptionsOpen] = useState(defaultOptionsOpen);
 	const optionsPanelId = useId();
 	const preserveIccId = useId();
 	const formatId = useId();
@@ -56,9 +58,18 @@ export function ExportSettingsBar({
 		onOptionsChange({ ...options, stripScope });
 	}
 
+	const outputLabel =
+		options.outputFormat === "image/jpeg"
+			? `Convert to JPG (${qualityPercent}%) · Clean metadata`
+			: options.outputFormat === "image/png"
+				? "Convert to PNG · Clean metadata"
+				: options.outputFormat === "image/webp"
+					? `Convert to WebP (${qualityPercent}%) · Clean metadata`
+					: "Re-encoding output · Clean metadata";
+
 	const statusText =
 		options.mode === "deep"
-			? "Re-encoding output"
+			? outputLabel
 			: options.stripScope === "ai-only"
 				? "AI tags only · Original quality"
 				: "Keeping original quality";
