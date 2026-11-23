@@ -45,12 +45,11 @@ function PrivacyPage() {
 						1. Your photos, videos, and PDFs never leave your device
 					</h2>
 					<p className="m-0">
-						All metadata scanning, HEIC conversion, and cleaning in SynthIDClear
-						happens locally inside your web browser using JavaScript and Web
-						Workers. Your files are never uploaded to our servers, cloud
-						storage, or third-party APIs. Once the page loads, you can
-						disconnect your internet connection and continue cleaning files
-						offline.
+						Metadata scanning, HEIC conversion, and visible icon editing in
+						SynthIDClear run locally inside your web browser. Your files are
+						never uploaded to our servers, cloud storage, or third-party APIs.
+						Once the page loads, you can disconnect your internet connection and
+						continue cleaning files offline.
 					</p>
 				</section>
 

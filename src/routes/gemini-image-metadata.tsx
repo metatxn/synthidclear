@@ -19,7 +19,7 @@ const FAQS: readonly FaqItem[] = [
 	{
 		question: "Does this remove the visible Gemini sparkle logo in the corner?",
 		answer:
-			"No. The visible Gemini sparkle mark is painted into the image pixels themselves. SynthIDClear only edits hidden file metadata and never alters or repaints pixels in lossless mode.",
+			"The Visible Icon Remover can repair the area around a Gemini sparkle. The lossless metadata cleaner preserves the original image pixels.",
 	},
 	{
 		question: "Is my Gemini image uploaded to any server?",
@@ -75,6 +75,7 @@ function GeminiImageMetadataPage() {
 				to: "/ai-metadata-checker",
 				label: "Open AI Metadata & C2PA Checker",
 			}}
+			visibleIconEditor
 			faqs={FAQS}
 			schemaName="SynthIDClear Gemini & Imagen Metadata Cleaner"
 			schemaDescription="Inspect and remove IPTC, XMP, and C2PA metadata from Google Gemini and Imagen images locally in your browser, with clear guidance on SynthID pixel watermarks."

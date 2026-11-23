@@ -11,6 +11,7 @@ export interface ImageQueueItem {
 	id: string;
 	file: File;
 	previewUrl: string;
+	thumbnailUrl?: string | null;
 	status: QueueItemStatus;
 	originalMeta: ParseResult | null;
 	cleanResult: CleanResult | null;

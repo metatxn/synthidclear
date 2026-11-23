@@ -10,6 +10,11 @@ const GENERATOR_MATCHERS: Array<{ label: string; pattern: RegExp }> = [
 	{ label: "Runway", pattern: /\brunway\b/i },
 	{ label: "Kling AI", pattern: /\bkling\b/i },
 	{ label: "Google Veo", pattern: /\bveo\b/i },
+	{ label: "Suno AI", pattern: /\bsuno\b/i },
+	{ label: "Udio", pattern: /\budio\b/i },
+	{ label: "ElevenLabs", pattern: /\belevenlabs\b/i },
+	{ label: "Google Lyria / AudioLM", pattern: /\b(?:lyria|audiolm)\b/i },
+	{ label: "Meta MusicGen", pattern: /\bmusicgen\b/i },
 	{ label: "ChatGPT / OpenAI", pattern: /\b(?:chatgpt|openai)\b/i },
 	{ label: "DALL-E", pattern: /\bdall[- ]?e\b/i },
 	{ label: "Google Gemini / Imagen", pattern: /\b(?:gemini|imagen)\b/i },
@@ -125,6 +130,14 @@ export function analyzeCreatorImpact(meta: ParseResult): CreatorImpact {
 	if (hasC2pa || hasIptcAiTag) {
 		warnings.push(
 			"Contains AI creator credentials that Instagram (“AI info”) and TikTok read to label posts.",
+		);
+	} else if (detectedGenerator) {
+		warnings.push(
+			`Contains ${detectedGenerator} metadata tags embedded inside the file header.`,
+		);
+	} else if (meta.aiFlagCount > 0) {
+		warnings.push(
+			"Contains AI-related tags embedded inside the container metadata.",
 		);
 	}
 	if (hasSavedPrompt) {

@@ -31,6 +31,7 @@ export interface PlatformGuideProps {
 	steps: readonly string[];
 	limits: readonly string[];
 	extraLink?: GuideLink;
+	visibleIconEditor?: boolean;
 	defaultOptions?: Partial<CleanOptions>;
 	faqs: readonly FaqItem[];
 	schemaName: string;
@@ -61,6 +62,7 @@ export function PlatformGuide({
 	steps,
 	limits,
 	extraLink,
+	visibleIconEditor,
 	defaultOptions,
 	faqs,
 	schemaName,
@@ -169,6 +171,15 @@ export function PlatformGuide({
 							className="inline-flex items-center gap-1 text-sm font-semibold text-(--brand-color) no-underline hover:underline"
 						>
 							{extraLink.label}
+							<ArrowRight className="h-4 w-4" aria-hidden="true" />
+						</Link>
+					)}
+					{visibleIconEditor && (
+						<Link
+							to="/visible-icon-remover"
+							className="inline-flex items-center gap-1 text-sm font-semibold text-(--brand-color) no-underline hover:underline"
+						>
+							Open Visible Icon Remover
 							<ArrowRight className="h-4 w-4" aria-hidden="true" />
 						</Link>
 					)}

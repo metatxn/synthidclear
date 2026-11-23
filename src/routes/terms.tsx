@@ -42,7 +42,8 @@ function TermsPage() {
 					<p className="m-0">
 						SynthIDClear is provided free of charge for personal and commercial
 						use to inspect, convert, and remove container metadata from your own
-						photo, video, and PDF files directly inside your browser.
+						photo, video, and PDF files. You can also edit visible marks on your
+						photos and videos directly inside your browser.
 					</p>
 				</section>
 

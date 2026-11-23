@@ -4,6 +4,7 @@ import {
 	ChevronDown,
 	Download,
 	FileText,
+	Music,
 	Search,
 	Sparkles,
 } from "lucide-react";
@@ -19,12 +20,24 @@ import { formatBytes } from "#/lib/format";
 import {
 	analyzeCreatorImpact,
 	categoryLabel,
+	isAudioFormat,
 	isPdfFormat,
 	isVideoFormat,
 	type MetadataCategory,
 	type MetadataEntry,
 } from "#/lib/metadata";
 import type { ImageQueueItem } from "./types";
+
+function formatMediaDuration(seconds: number): string {
+	const total = Math.max(0, Math.round(seconds));
+	const hrs = Math.floor(total / 3600);
+	const mins = Math.floor((total % 3600) / 60);
+	const secs = total % 60;
+	if (hrs > 0) {
+		return `${hrs}:${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+	}
+	return `${mins}:${String(secs).padStart(2, "0")}`;
+}
 
 interface MetadataInspectorProps {
 	item: ImageQueueItem | null;
@@ -202,7 +215,11 @@ export function MetadataInspector({
 	const isVideo =
 		isVideoFormat(originalMeta?.format) ||
 		item.file.type.startsWith("video/") ||
-		/\.(mp4|mov)$/i.test(item.file.name);
+		/\.(mp4|mov|webm|mkv)$/i.test(item.file.name);
+	const isAudio =
+		isAudioFormat(originalMeta?.format) ||
+		item.file.type.startsWith("audio/") ||
+		/\.(mp3|wav|flac|ogg|aac|m4a)$/i.test(item.file.name);
 	const isPdf =
 		isPdfFormat(originalMeta?.format) ||
 		item.file.type === "application/pdf" ||
@@ -212,9 +229,12 @@ export function MetadataInspector({
 			? originalMeta.format.toUpperCase()
 			: isPdf
 				? "PDF"
-				: isVideo
-					? "VIDEO"
-					: "IMAGE";
+				: isAudio
+					? "AUDIO"
+					: isVideo
+						? "VIDEO"
+						: "IMAGE";
+	const mediaInfo = originalMeta?.mediaInfo ?? null;
 
 	return (
 		<div className="space-y-4 rounded-2xl border border-(--border-color) bg-(--bg-card) p-4 sm:p-5">
@@ -236,6 +256,25 @@ export function MetadataInspector({
 									{originalMeta.pageCount === 1 ? "page" : "pages"}
 								</span>
 							)}
+						</div>
+					) : isAudio ? (
+						<div className="flex h-44 flex-col items-center justify-center gap-2.5 p-3 text-center md:h-full">
+							<Music
+								className="h-8 w-8 text-(--text-secondary)"
+								aria-hidden="true"
+							/>
+							<span className="rounded-lg border border-(--border-color) bg-(--bg-card) px-2.5 py-0.5 font-mono text-xs font-semibold text-(--text-primary)">
+								{formatLabel}
+							</span>
+							<audio
+								src={previewSrc}
+								controls
+								preload="metadata"
+								aria-label={`Audio preview of ${item.file.name}`}
+								className="w-full max-w-44"
+							>
+								<track kind="captions" />
+							</audio>
 						</div>
 					) : isVideo ? (
 						<video
@@ -280,9 +319,17 @@ export function MetadataInspector({
 												? `${originalMeta.pageCount ?? "?"} ${
 														originalMeta.pageCount === 1 ? "page" : "pages"
 													}`
-												: `${originalMeta.width ?? "?"} × ${
-														originalMeta.height ?? "?"
-													} px`
+												: isAudio
+													? mediaInfo?.durationSeconds != null
+														? formatMediaDuration(mediaInfo.durationSeconds)
+														: "Audio"
+													: `${originalMeta.width ?? "?"} × ${
+															originalMeta.height ?? "?"
+														} px${
+															mediaInfo?.durationSeconds != null
+																? ` · ${formatMediaDuration(mediaInfo.durationSeconds)}`
+																: ""
+														}`
 										} · ${
 											cleanResult &&
 											cleanResult.outputExtension.toUpperCase() !== formatLabel
@@ -333,9 +380,11 @@ export function MetadataInspector({
 									<Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
 									{isPdf
 										? "Clean PDF"
-										: isVideo
-											? "Clean Video"
-											: "Clean Image"}
+										: isAudio
+											? "Clean Audio"
+											: isVideo
+												? "Clean Video"
+												: "Clean Image"}
 								</button>
 							)}
 						</div>
@@ -366,7 +415,11 @@ export function MetadataInspector({
 
 						<div className="rounded-xl border border-(--border-color) bg-(--bg-surface) px-3 py-2.5">
 							<span className="block text-[11px] font-medium text-(--text-secondary)">
-								{isPdf ? "Author & Doc Info" : "Camera & GPS"}
+								{isPdf
+									? "Author & Doc Info"
+									: isAudio
+										? "Tags & Cover Art"
+										: "Camera & GPS"}
 							</span>
 							<span
 								className={`tabular mt-0.5 block text-sm font-semibold ${
@@ -395,12 +448,14 @@ export function MetadataInspector({
 							<span className="block text-[11px] font-medium text-(--text-secondary)">
 								{isPdf
 									? "Document"
-									: isVideo
-										? "Video Quality"
-										: "Image Quality"}
+									: isAudio
+										? "Audio Quality"
+										: isVideo
+											? "Video Quality"
+											: "Image Quality"}
 							</span>
 							<span className="mt-0.5 block text-sm font-semibold text-(--text-primary)">
-								{!isPdf && !isVideo && cleanResult?.modeUsed === "deep"
+								{!isPdf && cleanResult?.modeUsed === "deep"
 									? `Converted (${cleanResult.outputExtension.toUpperCase()})`
 									: "100% Original"}
 							</span>
@@ -408,7 +463,11 @@ export function MetadataInspector({
 
 						<div className="rounded-xl border border-(--border-color) bg-(--bg-surface) px-3 py-2.5">
 							<span className="block text-[11px] font-medium text-(--text-secondary)">
-								{isPdf ? "Pages" : isVideo ? "Streams" : "Color Profile"}
+								{isPdf
+									? "Pages"
+									: isVideo || isAudio
+										? "Streams"
+										: "Color Profile"}
 							</span>
 							<span className="mt-0.5 block text-sm font-semibold text-(--text-primary)">
 								{isPdf
@@ -417,8 +476,10 @@ export function MetadataInspector({
 												originalMeta.pageCount === 1 ? "page" : "pages"
 											}`
 										: "PDF"
-									: isVideo
-										? "Lossless copy"
+									: isVideo || isAudio
+										? cleanResult?.modeUsed === "deep"
+											? "Re-encoded"
+											: "Lossless copy"
 										: originalMeta?.hasIccProfile
 											? cleanResult
 												? cleanResult.iccPreserved
@@ -429,6 +490,66 @@ export function MetadataInspector({
 							</span>
 						</div>
 					</div>
+
+					{/* Stream & Track Forensics (Mediabunny track inspection for video/audio) */}
+					{mediaInfo && (isVideo || isAudio) && (
+						<div className="flex flex-wrap items-center gap-1.5 rounded-xl border border-(--border-color) bg-(--bg-surface)/70 px-3 py-2 text-[11px] text-(--text-secondary)">
+							<span className="font-semibold text-(--text-primary)">
+								Streams:
+							</span>
+							{mediaInfo.videoCodec && (
+								<span className="rounded-md border border-(--border-color) bg-(--bg-card) px-2 py-0.5 font-mono text-(--text-primary)">
+									{mediaInfo.videoCodecString ??
+										mediaInfo.videoCodec.toUpperCase()}
+								</span>
+							)}
+							{mediaInfo.frameRate != null && (
+								<span className="tabular rounded-md border border-(--border-color) bg-(--bg-card) px-2 py-0.5">
+									{mediaInfo.frameRate} fps
+									{mediaInfo.frameRateIsConstant === true
+										? " · CFR"
+										: mediaInfo.frameRateIsConstant === false
+											? " · VFR"
+											: ""}
+								</span>
+							)}
+							{mediaInfo.hasHdr && (
+								<span className="rounded-md border border-(--warning-color)/40 bg-(--warning-color)/10 px-2 py-0.5 font-semibold text-(--warning-color)">
+									HDR
+								</span>
+							)}
+							{mediaInfo.colorSpace && (
+								<span className="rounded-md border border-(--border-color) bg-(--bg-card) px-2 py-0.5 font-mono">
+									{mediaInfo.colorSpace}
+								</span>
+							)}
+							{mediaInfo.rotation != null && mediaInfo.rotation !== 0 && (
+								<span className="rounded-md border border-(--border-color) bg-(--bg-card) px-2 py-0.5">
+									Rotated {mediaInfo.rotation}°
+								</span>
+							)}
+							{mediaInfo.audioCodec && (
+								<span className="rounded-md border border-(--border-color) bg-(--bg-card) px-2 py-0.5 font-mono text-(--text-primary)">
+									{mediaInfo.audioCodec.toUpperCase()}
+									{mediaInfo.audioChannels
+										? ` · ${mediaInfo.audioChannels}ch`
+										: ""}
+									{mediaInfo.audioSampleRate
+										? ` · ${(mediaInfo.audioSampleRate / 1000).toFixed(1)} kHz`
+										: ""}
+								</span>
+							)}
+							<span className="rounded-md border border-(--border-color) bg-(--bg-card) px-2 py-0.5">
+								{mediaInfo.trackCount}{" "}
+								{mediaInfo.trackCount === 1 ? "track" : "tracks"}
+							</span>
+							{mediaInfo.trackNames.length > 0 && (
+								<span className="rounded-md border border-(--brand-color)/35 bg-(--brand-color)/8 px-2 py-0.5 text-(--brand-color)">
+									Track names: {mediaInfo.trackNames.join(", ")}
+								</span>
+							)}
+						</div>
+					)}
 
 					{/* Plain-English Creator Impact Callout (shown before cleaning when risks exist) */}
 					{!cleanResult && impact && impact.warnings.length > 0 && (

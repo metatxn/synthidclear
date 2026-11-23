@@ -6,10 +6,36 @@ export type ImageFormat =
 	| "avif"
 	| "mp4"
 	| "mov"
+	| "webm"
+	| "mkv"
+	| "mp3"
+	| "wav"
+	| "flac"
+	| "ogg"
+	| "aac"
+	| "m4a"
 	| "pdf"
 	| "unknown";
 
 export type MediaFormat = ImageFormat;
+
+export interface MediaTrackSummary {
+	durationSeconds: number | null;
+	videoCodec: string | null;
+	videoCodecString: string | null;
+	audioCodec: string | null;
+	audioCodecString: string | null;
+	frameRate: number | null;
+	frameRateIsConstant: boolean | null;
+	hasHdr: boolean;
+	colorSpace: string | null;
+	rotation: number | null;
+	audioChannels: number | null;
+	audioSampleRate: number | null;
+	trackCount: number;
+	trackNames: string[];
+	hasCoverArt: boolean;
+}
 
 export type MetadataCategory =
 	| "ai-provenance"
@@ -41,6 +67,7 @@ export interface ParseResult {
 	width: number | null;
 	height: number | null;
 	pageCount?: number | null;
+	mediaInfo?: MediaTrackSummary | null;
 	byteLength: number;
 	hasIccProfile: boolean;
 	iccProfileName: string | null;
@@ -58,7 +85,9 @@ export type OutputFormat =
 	| "original"
 	| "image/png"
 	| "image/jpeg"
-	| "image/webp";
+	| "image/webp"
+	| "video/mp4"
+	| "video/webm";
 
 export interface CleanOptions {
 	mode: CleanMode;

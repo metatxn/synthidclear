@@ -4,8 +4,9 @@ import {
 	type CleanResult,
 	cleanImageBuffer,
 	detectImageFormat,
+	isIsobmffVideoFormat,
+	isMediabunnyMediaFormat,
 	isPdfFormat,
-	isVideoFormat,
 	type ParseResult,
 	parseImageMetadata,
 	parseMp4Metadata,
@@ -67,9 +68,23 @@ class CleanerWorkerClient {
 	async inspect(file: File): Promise<ParseResult> {
 		const headBuf = await file.slice(0, 1024).arrayBuffer();
 		const format = detectImageFormat(new Uint8Array(headBuf));
-		if (isVideoFormat(format)) {
+		if (isIsobmffVideoFormat(format)) {
 			// Videos use zero-copy File.slice() directly so multi-hundred-MB payloads never hit RAM
-			return parseMp4Metadata(file);
+			const [parsed, trackSummary] = await Promise.all([
+				parseMp4Metadata(file),
+				import("./metadata/mediabunnyMedia")
+					.then(({ inspectMediaTrackSummary }) =>
+						inspectMediaTrackSummary(file),
+					)
+					.catch(() => null),
+			]);
+			return trackSummary ? { ...parsed, mediaInfo: trackSummary } : parsed;
+		}
+		if (isMediabunnyMediaFormat(format)) {
+			const { parseMediabunnyMetadata } = await import(
+				"./metadata/mediabunnyMedia"
+			);
+			return parseMediabunnyMetadata(file, format);
 		}
 		if (isPdfFormat(format)) {
 			// Lazy-load pdf-lib only when a user inspects a PDF so image/video bundles stay small
@@ -102,8 +117,34 @@ class CleanerWorkerClient {
 	async clean(file: File, options: CleanOptions): Promise<CleanResult> {
 		const headBuf = await file.slice(0, 1024).arrayBuffer();
 		const format = detectImageFormat(new Uint8Array(headBuf));
-		if (isVideoFormat(format)) {
-			return stripMp4Lossless(file, options.stripScope);
+		if (isIsobmffVideoFormat(format)) {
+			if (options.mode === "deep") {
+				const { stripMediabunnyMetadata } = await import(
+					"./metadata/mediabunnyMedia"
+				);
+				return stripMediabunnyMetadata(file, options);
+			}
+			const result = await stripMp4Lossless(file, options.stripScope);
+			if (result.cleanedBlob) {
+				const trackSummary = await import("./metadata/mediabunnyMedia")
+					.then(({ inspectMediaTrackSummary }) =>
+						inspectMediaTrackSummary(result.cleanedBlob as Blob),
+					)
+					.catch(() => null);
+				if (trackSummary) {
+					result.verification = {
+						...result.verification,
+						mediaInfo: trackSummary,
+					};
+				}
+			}
+			return result;
+		}
+		if (isMediabunnyMediaFormat(format)) {
+			const { stripMediabunnyMetadata } = await import(
+				"./metadata/mediabunnyMedia"
+			);
+			return stripMediabunnyMetadata(file, options);
 		}
 		if (isPdfFormat(format)) {
 			const { cleanPdfBuffer } = await import("./metadata/pdf");

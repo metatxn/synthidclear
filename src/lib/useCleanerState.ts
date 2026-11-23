@@ -1,7 +1,12 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import type { ImageQueueItem } from "#/components/types";
 import { buildCleanedFilename } from "./format";
-import { type CleanOptions, createSampleAiImageFile } from "./metadata";
+import {
+	type CleanOptions,
+	createSampleAiImageFile,
+	isVideoFormat,
+} from "./metadata";
+import { extractVideoThumbnailUrl } from "./videoThumbnail";
 import { cleanerClient, runWithConcurrency } from "./workerClient";
 import { createZipBlob } from "./zip";
 
@@ -32,6 +37,7 @@ export function useCleanerState(initialOptions?: Partial<CleanOptions>) {
 		return () => {
 			for (const item of itemsRef.current) {
 				URL.revokeObjectURL(item.previewUrl);
+				if (item.thumbnailUrl) URL.revokeObjectURL(item.thumbnailUrl);
 				if (item.cleanedUrl) URL.revokeObjectURL(item.cleanedUrl);
 			}
 		};
@@ -42,6 +48,7 @@ export function useCleanerState(initialOptions?: Partial<CleanOptions>) {
 			id: `${Date.now()}-${Math.random().toString(36).slice(2, 9)}`,
 			file,
 			previewUrl: URL.createObjectURL(file),
+			thumbnailUrl: null,
 			status: "scanning",
 			originalMeta: null,
 			cleanResult: null,
@@ -62,6 +69,22 @@ export function useCleanerState(initialOptions?: Partial<CleanOptions>) {
 							: it,
 					),
 				);
+				if (isVideoFormat(parsed.format)) {
+					void extractVideoThumbnailUrl(entry.file, 144).then((thumbUrl) => {
+						if (!thumbUrl) return;
+						if (!itemsRef.current.some((it) => it.id === entry.id)) {
+							URL.revokeObjectURL(thumbUrl);
+							return;
+						}
+						setItems((prev) =>
+							prev.map((it) => {
+								if (it.id !== entry.id) return it;
+								if (it.thumbnailUrl) URL.revokeObjectURL(it.thumbnailUrl);
+								return { ...it, thumbnailUrl: thumbUrl };
+							}),
+						);
+					});
+				}
 			} catch (err) {
 				setItems((prev) =>
 					prev.map((it) =>
@@ -257,6 +280,7 @@ export function useCleanerState(initialOptions?: Partial<CleanOptions>) {
 			const target = prev.find((it) => it.id === id);
 			if (target) {
 				URL.revokeObjectURL(target.previewUrl);
+				if (target.thumbnailUrl) URL.revokeObjectURL(target.thumbnailUrl);
 				if (target.cleanedUrl) URL.revokeObjectURL(target.cleanedUrl);
 			}
 			const next = prev.filter((it) => it.id !== id);
@@ -268,6 +292,7 @@ export function useCleanerState(initialOptions?: Partial<CleanOptions>) {
 	const handleClearAll = useCallback(() => {
 		for (const item of itemsRef.current) {
 			URL.revokeObjectURL(item.previewUrl);
+			if (item.thumbnailUrl) URL.revokeObjectURL(item.thumbnailUrl);
 			if (item.cleanedUrl) URL.revokeObjectURL(item.cleanedUrl);
 		}
 		setItems([]);

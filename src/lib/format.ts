@@ -1,8 +1,12 @@
 export const ACCEPTED_MEDIA_ACCEPT =
-	"image/png,image/jpeg,image/webp,image/heic,image/heif,image/avif,video/mp4,video/quicktime,application/pdf,.png,.jpg,.jpeg,.webp,.heic,.heif,.avif,.mp4,.mov,.pdf";
+	"image/png,image/jpeg,image/webp,image/heic,image/heif,image/avif,video/mp4,video/quicktime,video/webm,video/x-matroska,audio/mpeg,audio/wav,audio/flac,audio/ogg,audio/aac,audio/mp4,application/pdf,.png,.jpg,.jpeg,.webp,.heic,.heif,.avif,.mp4,.mov,.webm,.mkv,.mp3,.wav,.flac,.ogg,.aac,.m4a,.pdf";
 
 export const PDF_ACCEPT = "application/pdf,.pdf";
 export const HEIC_ACCEPT = "image/heic,image/heif,.heic,.heif";
+export const VIDEO_ACCEPT =
+	"video/mp4,video/quicktime,video/webm,video/x-matroska,.mp4,.mov,.webm,.mkv";
+export const AUDIO_ACCEPT =
+	"audio/mpeg,audio/wav,audio/flac,audio/ogg,audio/aac,audio/mp4,.mp3,.wav,.flac,.ogg,.aac,.m4a";
 
 const ACCEPTED_MEDIA_MIME_TYPES = new Set([
 	"image/png",
@@ -13,6 +17,21 @@ const ACCEPTED_MEDIA_MIME_TYPES = new Set([
 	"image/avif",
 	"video/mp4",
 	"video/quicktime",
+	"video/webm",
+	"video/x-matroska",
+	"video/matroska",
+	"audio/mpeg",
+	"audio/mp3",
+	"audio/wav",
+	"audio/wave",
+	"audio/x-wav",
+	"audio/flac",
+	"audio/x-flac",
+	"audio/ogg",
+	"application/ogg",
+	"audio/aac",
+	"audio/mp4",
+	"audio/x-m4a",
 	"application/pdf",
 ]);
 
@@ -20,7 +39,9 @@ export function filterAcceptedMediaFiles(fileList: FileList | File[]): File[] {
 	return Array.from(fileList).filter(
 		(file) =>
 			ACCEPTED_MEDIA_MIME_TYPES.has(file.type) ||
-			/\.(png|jpe?g|webp|heic|heif|avif|mp4|mov|pdf)$/i.test(file.name),
+			/\.(png|jpe?g|webp|heic|heif|avif|mp4|mov|webm|mkv|mp3|wav|flac|ogg|aac|m4a|pdf)$/i.test(
+				file.name,
+			),
 	);
 }
 

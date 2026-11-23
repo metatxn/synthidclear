@@ -14,7 +14,7 @@ const FAQS: readonly FaqItem[] = [
 	{
 		question: "Does SynthIDClear remove the Sora watermark?",
 		answer:
-			"No. The watermark is drawn into the video frames. SynthIDClear only edits metadata and never changes frames or audio.",
+			"The Visible Icon Remover lets you select the logo in video frames and mark its position at different times. The metadata cleaner preserves the frames and audio.",
 	},
 	{
 		question: "Is the video re-encoded?",
@@ -53,7 +53,7 @@ function SoraVideoMetadataPage() {
 				},
 				{
 					title: "Visible watermark",
-					body: "The moving Sora logo is part of the video frames. It isn't metadata, and SynthIDClear doesn't remove or alter it.",
+					body: "The moving Sora logo is part of the video frames. Use the Visible Icon Remover to select and repair the area where it appears.",
 				},
 				{
 					title: "OpenAI's own detection",
@@ -67,7 +67,7 @@ function SoraVideoMetadataPage() {
 				"Download the cleaned MP4. The video and audio streams are byte-for-byte the same.",
 			]}
 			limits={[
-				"The visible Sora watermark stays, because it's part of the frames.",
+				"Metadata cleaning leaves the video frames, including the visible Sora watermark, intact.",
 				"OpenAI and other platforms can still identify the video through their own detection.",
 				"Platforms such as TikTok and YouTube ask you to disclose realistic AI-generated video. Removing metadata doesn't change that.",
 			]}
@@ -75,6 +75,7 @@ function SoraVideoMetadataPage() {
 				to: "/video-metadata-remover",
 				label: "Video Metadata Remover (FFmpeg CLI for MKV & WebM)",
 			}}
+			visibleIconEditor
 			faqs={FAQS}
 			schemaName="SynthIDClear Sora Video Metadata Remover"
 			schemaDescription="Inspect and remove the C2PA Content Credentials in Sora MP4 videos without re-encoding, locally in your browser."
