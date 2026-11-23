@@ -59,11 +59,11 @@ function PngPromptRemoverPage() {
 			/>
 			<JsonLd data={buildFaqSchema(PNG_FAQS)} />
 
-			<section className="mb-8 space-y-2">
-				<h1 className="m-0 text-3xl font-semibold tracking-[-0.03em] text-(--text-primary) sm:text-4xl">
+			<section className="mx-auto mb-8 flex max-w-3xl flex-col gap-3 text-center">
+				<h1 className="m-0 text-3xl leading-[1.1] font-semibold tracking-[-0.03em] text-balance text-(--text-primary) sm:text-4xl">
 					Remove PNG Prompts &amp; Workflow Data
 				</h1>
-				<p className="m-0 max-w-2xl text-base leading-relaxed text-(--text-secondary)">
+				<p className="mx-auto my-0 max-w-2xl text-base leading-relaxed text-pretty text-(--text-secondary)">
 					Clean saved prompts, seeds, and ComfyUI workflow graphs out of PNG
 					images locally with zero pixel re-encoding.
 				</p>

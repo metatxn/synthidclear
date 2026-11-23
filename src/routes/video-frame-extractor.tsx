@@ -290,11 +290,11 @@ function VideoFrameExtractorPage() {
 			/>
 			<JsonLd data={buildFaqSchema(FAQS)} />
 
-			<header className="space-y-2">
-				<h1 className="m-0 text-3xl font-semibold tracking-[-0.03em] text-(--text-primary) sm:text-4xl">
+			<header className="mx-auto flex max-w-3xl flex-col gap-3 text-center">
+				<h1 className="m-0 text-3xl leading-[1.1] font-semibold tracking-[-0.03em] text-balance text-(--text-primary) sm:text-4xl">
 					Clean Video Frame Extractor
 				</h1>
-				<p className="m-0 max-w-2xl text-base leading-relaxed text-(--text-secondary)">
+				<p className="mx-auto my-0 max-w-2xl text-base leading-relaxed text-pretty text-(--text-secondary)">
 					Scrub frame-by-frame through any MP4, MOV, WebM, or MKV video and
 					export full-resolution, metadata-free PNG, JPEG, or WebP still images
 					— 100% locally in your browser.

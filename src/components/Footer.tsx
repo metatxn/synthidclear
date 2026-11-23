@@ -229,6 +229,14 @@ export function Footer() {
 								</li>
 								<li>
 									<Link
+										to="/advanced-media-guide"
+										className="text-(--text-secondary) no-underline hover:text-(--text-primary)"
+									>
+										Advanced Media Guide
+									</Link>
+								</li>
+								<li>
+									<Link
 										to="/how-it-works"
 										className="text-(--text-secondary) no-underline hover:text-(--text-primary)"
 									>

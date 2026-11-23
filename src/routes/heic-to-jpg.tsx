@@ -83,11 +83,11 @@ function HeicToJpgPage() {
 			/>
 			<JsonLd data={buildFaqSchema(HEIC_JPG_FAQS)} />
 
-			<section className="space-y-2">
-				<h1 className="m-0 text-3xl font-semibold tracking-[-0.03em] text-(--text-primary) sm:text-4xl">
+			<section className="mx-auto flex max-w-3xl flex-col gap-3 text-center">
+				<h1 className="m-0 text-3xl leading-[1.1] font-semibold tracking-[-0.03em] text-balance text-(--text-primary) sm:text-4xl">
 					HEIC to JPG Converter (Metadata-Clean)
 				</h1>
-				<p className="m-0 max-w-2xl text-base leading-relaxed text-(--text-secondary)">
+				<p className="mx-auto my-0 max-w-2xl text-base leading-relaxed text-pretty text-(--text-secondary)">
 					Convert iPhone HEIC and HEIF photos to universally compatible JPG (or
 					PNG / WebP) right in your browser — works in Chrome, Firefox, Edge,
 					and Safari with GPS location and EXIF metadata automatically stripped.

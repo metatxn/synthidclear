@@ -73,7 +73,7 @@ function VeoVideoMetadataPage() {
 			]}
 			extraLink={{
 				to: "/video-metadata-remover",
-				label: "Video Metadata Remover (MP4, MOV & FFmpeg CLI)",
+				label: "Video Metadata Remover (MP4, MOV, MKV & WebM)",
 			}}
 			visibleIconEditor
 			faqs={FAQS}

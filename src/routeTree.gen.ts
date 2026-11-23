@@ -10,6 +10,8 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdvancedMediaGuideRouteImport } from './routes/advanced-media-guide'
+import { Route as AiAudioMetadataRouteImport } from './routes/ai-audio-metadata'
 import { Route as AiMetadataCheckerRouteImport } from './routes/ai-metadata-checker'
 import { Route as AiMetadataMatrixRouteImport } from './routes/ai-metadata-matrix'
 import { Route as AiOnlyMetadataRemoverRouteImport } from './routes/ai-only-metadata-remover'
@@ -43,6 +45,16 @@ import { Route as VisibleIconRemoverRouteImport } from './routes/visible-icon-re
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdvancedMediaGuideRoute = AdvancedMediaGuideRouteImport.update({
+  id: '/advanced-media-guide',
+  path: '/advanced-media-guide',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AiAudioMetadataRoute = AiAudioMetadataRouteImport.update({
+  id: '/ai-audio-metadata',
+  path: '/ai-audio-metadata',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AiMetadataCheckerRoute = AiMetadataCheckerRouteImport.update({
@@ -193,6 +205,8 @@ const VisibleIconRemoverRoute = VisibleIconRemoverRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/advanced-media-guide': typeof AdvancedMediaGuideRoute
+  '/ai-audio-metadata': typeof AiAudioMetadataRoute
   '/ai-metadata-checker': typeof AiMetadataCheckerRoute
   '/ai-metadata-matrix': typeof AiMetadataMatrixRoute
   '/ai-only-metadata-remover': typeof AiOnlyMetadataRemoverRoute
@@ -225,6 +239,8 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/advanced-media-guide': typeof AdvancedMediaGuideRoute
+  '/ai-audio-metadata': typeof AiAudioMetadataRoute
   '/ai-metadata-checker': typeof AiMetadataCheckerRoute
   '/ai-metadata-matrix': typeof AiMetadataMatrixRoute
   '/ai-only-metadata-remover': typeof AiOnlyMetadataRemoverRoute
@@ -258,6 +274,8 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/advanced-media-guide': typeof AdvancedMediaGuideRoute
+  '/ai-audio-metadata': typeof AiAudioMetadataRoute
   '/ai-metadata-checker': typeof AiMetadataCheckerRoute
   '/ai-metadata-matrix': typeof AiMetadataMatrixRoute
   '/ai-only-metadata-remover': typeof AiOnlyMetadataRemoverRoute
@@ -292,6 +310,8 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/advanced-media-guide'
+    | '/ai-audio-metadata'
     | '/ai-metadata-checker'
     | '/ai-metadata-matrix'
     | '/ai-only-metadata-remover'
@@ -324,6 +344,8 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/advanced-media-guide'
+    | '/ai-audio-metadata'
     | '/ai-metadata-checker'
     | '/ai-metadata-matrix'
     | '/ai-only-metadata-remover'
@@ -356,6 +378,8 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/advanced-media-guide'
+    | '/ai-audio-metadata'
     | '/ai-metadata-checker'
     | '/ai-metadata-matrix'
     | '/ai-only-metadata-remover'
@@ -389,6 +413,8 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdvancedMediaGuideRoute: typeof AdvancedMediaGuideRoute
+  AiAudioMetadataRoute: typeof AiAudioMetadataRoute
   AiMetadataCheckerRoute: typeof AiMetadataCheckerRoute
   AiMetadataMatrixRoute: typeof AiMetadataMatrixRoute
   AiOnlyMetadataRemoverRoute: typeof AiOnlyMetadataRemoverRoute
@@ -427,6 +453,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/advanced-media-guide': {
+      id: '/advanced-media-guide'
+      path: '/advanced-media-guide'
+      fullPath: '/advanced-media-guide'
+      preLoaderRoute: typeof AdvancedMediaGuideRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ai-audio-metadata': {
+      id: '/ai-audio-metadata'
+      path: '/ai-audio-metadata'
+      fullPath: '/ai-audio-metadata'
+      preLoaderRoute: typeof AiAudioMetadataRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/ai-metadata-checker': {
@@ -637,6 +677,8 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdvancedMediaGuideRoute: AdvancedMediaGuideRoute,
+  AiAudioMetadataRoute: AiAudioMetadataRoute,
   AiMetadataCheckerRoute: AiMetadataCheckerRoute,
   AiMetadataMatrixRoute: AiMetadataMatrixRoute,
   AiOnlyMetadataRemoverRoute: AiOnlyMetadataRemoverRoute,

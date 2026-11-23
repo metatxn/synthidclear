@@ -73,7 +73,7 @@ function SoraVideoMetadataPage() {
 			]}
 			extraLink={{
 				to: "/video-metadata-remover",
-				label: "Video Metadata Remover (FFmpeg CLI for MKV & WebM)",
+				label: "Video Metadata Remover (MP4, MOV, MKV & WebM)",
 			}}
 			visibleIconEditor
 			faqs={FAQS}

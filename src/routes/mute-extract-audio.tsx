@@ -138,11 +138,11 @@ function MuteExtractAudioPage() {
 			/>
 			<JsonLd data={buildFaqSchema(FAQS)} />
 
-			<header className="space-y-2">
-				<h1 className="m-0 text-3xl font-semibold tracking-[-0.03em] text-(--text-primary) sm:text-4xl">
+			<header className="mx-auto flex max-w-3xl flex-col gap-3 text-center">
+				<h1 className="m-0 text-3xl leading-[1.1] font-semibold tracking-[-0.03em] text-balance text-(--text-primary) sm:text-4xl">
 					Mute Video &amp; Extract Clean Audio
 				</h1>
-				<p className="m-0 max-w-2xl text-base leading-relaxed text-(--text-secondary)">
+				<p className="mx-auto my-0 max-w-2xl text-base leading-relaxed text-pretty text-(--text-secondary)">
 					Strip private background audio from a video losslessly with zero
 					re-encoding, or extract a clean, metadata-free audio track directly in
 					your browser.

@@ -1,4 +1,5 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowRight } from "lucide-react";
 import { IconRemovalWorkspace } from "#/components/IconRemovalWorkspace";
 import { JsonLd } from "#/components/JsonLd";
 import {
@@ -39,18 +40,21 @@ function VisibleIconRemover() {
 					path: PATH,
 				})}
 			/>
-			<header className="space-y-3">
-				<h1 className="m-0 text-3xl font-semibold tracking-[-0.03em] text-(--text-primary) sm:text-4xl">
+			<header className="mx-auto flex max-w-3xl flex-col gap-3 text-center">
+				<h1 className="m-0 text-3xl leading-[1.1] font-semibold tracking-[-0.03em] text-balance text-(--text-primary) sm:text-4xl">
 					Remove visible icons from photos and videos
 				</h1>
-				<p className="m-0 max-w-2xl text-base leading-relaxed text-(--text-secondary)">
+				<p className="mx-auto my-0 max-w-2xl text-base leading-relaxed text-pretty text-(--text-secondary)">
 					Select a Gemini sparkle, a Veo corner logo, or another visible mark.
 					The editor fills your selection with colors sampled from the
 					surrounding pixels.
 				</p>
 			</header>
 			<IconRemovalWorkspace />
-			<div className="max-w-3xl space-y-2 text-sm leading-relaxed text-(--text-secondary)">
+			<aside
+				aria-label="Scope and export details"
+				className="flex flex-col gap-2.5 rounded-2xl border border-(--border-color) bg-(--bg-surface) px-5 py-4 text-sm leading-relaxed text-(--text-secondary)"
+			>
 				<p className="m-0">
 					Small marks on simple backgrounds work best. Images export as a still
 					PNG. Videos (MP4, MOV, WebM, MKV) are processed locally in a Web
@@ -60,9 +64,16 @@ function VisibleIconRemover() {
 				</p>
 				<p className="m-0">
 					The editor targets visible marks only. Invisible signals such as
-					Google SynthID are outside its scope.
+					Google SynthID are outside its scope.{" "}
+					<Link
+						to="/advanced-media-guide"
+						className="inline-flex items-center gap-1 font-semibold text-(--brand-color) no-underline hover:underline"
+					>
+						Read the Advanced Video &amp; Audio Operations Guide
+						<ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+					</Link>
 				</p>
-			</div>
+			</aside>
 		</div>
 	);
 }

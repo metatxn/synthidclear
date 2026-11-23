@@ -1,3 +1,6 @@
+import { Link } from "@tanstack/react-router";
+import { ArrowRight } from "lucide-react";
+
 export function HowItWorksPanel() {
 	return (
 		<div className="space-y-8">
@@ -48,8 +51,8 @@ export function HowItWorksPanel() {
 				<div className="overflow-x-auto">
 					<table className="w-full border-collapse text-left text-sm">
 						<caption className="visually-hidden">
-							Binary segments and chunks stripped versus preserved for JPEG,
-							PNG, and WebP formats in Lossless mode
+							Binary segments, container atoms, and metadata tags stripped
+							versus preserved across image, video, audio, and PDF formats
 						</caption>
 						<thead>
 							<tr className="border-b border-(--border-color) text-xs font-semibold text-(--text-muted) uppercase">
@@ -192,8 +195,105 @@ export function HowItWorksPanel() {
 									when enabled
 								</td>
 							</tr>
+							<tr>
+								<th
+									scope="row"
+									className="py-3.5 pr-4 font-mono font-bold text-(--text-primary)"
+								>
+									MP4 / MOV
+								</th>
+								<td className="px-4 py-3.5">
+									<code className="font-mono text-xs">udta</code>,{" "}
+									<code className="font-mono text-xs">meta</code> /{" "}
+									<code className="font-mono text-xs">ilst</code> /{" "}
+									<code className="font-mono text-xs">keys</code>,{" "}
+									<code className="font-mono text-xs">c2pa</code> /{" "}
+									<code className="font-mono text-xs">jumb</code> &amp; XMP{" "}
+									<code className="font-mono text-xs">uuid</code> boxes,{" "}
+									<code className="font-mono text-xs">mvhd</code>/
+									<code className="font-mono text-xs">tkhd</code>/
+									<code className="font-mono text-xs">mdhd</code> timestamps,
+									and trailing bytes
+								</td>
+								<td className="py-3.5 pl-4">
+									Zero-copy <code className="font-mono text-xs">mdat</code>{" "}
+									video/audio streams (via{" "}
+									<code className="font-mono text-xs">File.slice()</code> with
+									updated <code className="font-mono text-xs">stco</code>/
+									<code className="font-mono text-xs">co64</code> offsets);
+									optional WebCodecs re-encode in Convert mode
+								</td>
+							</tr>
+							<tr>
+								<th
+									scope="row"
+									className="py-3.5 pr-4 font-mono font-bold text-(--text-primary)"
+								>
+									MKV / WebM
+								</th>
+								<td className="px-4 py-3.5">
+									Matroska <code className="font-mono text-xs">SimpleTag</code>{" "}
+									movie tags,{" "}
+									<code className="font-mono text-xs">AttachedFile</code>{" "}
+									attachments, cover artwork, and container creation dates
+								</td>
+								<td className="py-3.5 pl-4">
+									Encoded video and audio packets remuxed losslessly in-browser
+									via Mediabunny (0% re-encoding)
+								</td>
+							</tr>
+							<tr>
+								<th
+									scope="row"
+									className="py-3.5 pr-4 font-mono font-bold text-(--text-primary)"
+								>
+									MP3 / WAV / FLAC / OGG / M4A / AAC
+								</th>
+								<td className="px-4 py-3.5">
+									<code className="font-mono text-xs">ID3v1</code>/
+									<code className="font-mono text-xs">ID3v2</code> &amp;{" "}
+									<code className="font-mono text-xs">TXXX</code> frames,{" "}
+									<code className="font-mono text-xs">RIFF INFO</code> chunks,
+									Vorbis comments, lyrics, creation dates, and embedded cover
+									art
+								</td>
+								<td className="py-3.5 pl-4">
+									Bit-exact encoded audio packets (PCM, MP3, FLAC, Opus, Vorbis,
+									AAC) copied losslessly into a clean container
+								</td>
+							</tr>
+							<tr>
+								<th
+									scope="row"
+									className="py-3.5 pr-4 font-mono font-bold text-(--text-primary)"
+								>
+									PDF
+								</th>
+								<td className="px-4 py-3.5">
+									Document <code className="font-mono text-xs">Info</code>{" "}
+									dictionary (Author, Creator, Producer, dates), XMP metadata
+									streams, and application{" "}
+									<code className="font-mono text-xs">PieceInfo</code> blocks
+								</td>
+								<td className="py-3.5 pl-4">
+									Original page vector graphics, fonts, text layout, and
+									embedded page content streams untouched
+								</td>
+							</tr>
 						</tbody>
 					</table>
+				</div>
+
+				<div className="mt-4 border-t border-(--border-color) pt-4 text-xs text-(--text-secondary)">
+					Looking for moving-watermark keyframing, 4K direct-to-disk streaming,
+					Streams forensics, or batch FFmpeg recipes?{" "}
+					<Link
+						to="/advanced-media-guide"
+						className="inline-flex items-center gap-1 font-semibold text-(--brand-color) no-underline hover:underline"
+					>
+						Read the Advanced Video &amp; Audio Operations Guide
+						<ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+					</Link>
 				</div>
 			</section>
 

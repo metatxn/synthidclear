@@ -82,11 +82,11 @@ function PdfMetadataRemoverPage() {
 			/>
 			<JsonLd data={buildFaqSchema(PDF_FAQS)} />
 
-			<section className="space-y-2">
-				<h1 className="m-0 text-3xl font-semibold tracking-[-0.03em] text-(--text-primary) sm:text-4xl">
+			<section className="mx-auto flex max-w-3xl flex-col gap-3 text-center">
+				<h1 className="m-0 text-3xl leading-[1.1] font-semibold tracking-[-0.03em] text-balance text-(--text-primary) sm:text-4xl">
 					PDF Metadata Remover
 				</h1>
-				<p className="m-0 max-w-2xl text-base leading-relaxed text-(--text-secondary)">
+				<p className="mx-auto my-0 max-w-2xl text-base leading-relaxed text-pretty text-(--text-secondary)">
 					Inspect and delete hidden Author names, Creator/Producer software
 					tags, creation dates, XMP edit history, and private app data from PDF
 					documents right in your browser — nothing is ever uploaded.

@@ -167,11 +167,11 @@ function CompressVideoPage() {
 			/>
 			<JsonLd data={buildFaqSchema(FAQS)} />
 
-			<header className="space-y-2">
-				<h1 className="m-0 text-3xl font-semibold tracking-[-0.03em] text-(--text-primary) sm:text-4xl">
+			<header className="mx-auto flex max-w-3xl flex-col gap-3 text-center">
+				<h1 className="m-0 text-3xl leading-[1.1] font-semibold tracking-[-0.03em] text-balance text-(--text-primary) sm:text-4xl">
 					Clean Video Compressor &amp; Converter
 				</h1>
-				<p className="m-0 max-w-2xl text-base leading-relaxed text-(--text-secondary)">
+				<p className="mx-auto my-0 max-w-2xl text-base leading-relaxed text-pretty text-(--text-secondary)">
 					Convert MOV, MKV, WebM, or large MP4 clips into compact, web-ready MP4
 					or WebM files with hidden metadata and timestamps automatically
 					stripped — 100% locally in your browser.

@@ -67,11 +67,11 @@ function VideoMetadataRemoverPage() {
 			/>
 			<JsonLd data={buildFaqSchema(VIDEO_FAQS)} />
 
-			<section className="space-y-2">
-				<h1 className="m-0 text-3xl font-semibold tracking-[-0.03em] text-(--text-primary) sm:text-4xl">
+			<section className="mx-auto flex max-w-3xl flex-col gap-3 text-center">
+				<h1 className="m-0 text-3xl leading-[1.1] font-semibold tracking-[-0.03em] text-balance text-(--text-primary) sm:text-4xl">
 					Video Metadata Remover (MP4, MOV, MKV &amp; WebM)
 				</h1>
-				<p className="m-0 max-w-2xl text-base leading-relaxed text-(--text-secondary)">
+				<p className="mx-auto my-0 max-w-2xl text-base leading-relaxed text-pretty text-(--text-secondary)">
 					Remove hidden AI labels, GPS location, camera info, track names, and
 					creation dates from MP4, MOV, MKV, and WebM videos right in your
 					browser — nothing is uploaded and video quality stays 100% original.

@@ -81,11 +81,11 @@ function HeicMetadataRemoverPage() {
 			/>
 			<JsonLd data={buildFaqSchema(HEIC_FAQS)} />
 
-			<section className="space-y-2">
-				<h1 className="m-0 text-3xl font-semibold tracking-[-0.03em] text-(--text-primary) sm:text-4xl">
+			<section className="mx-auto flex max-w-3xl flex-col gap-3 text-center">
+				<h1 className="m-0 text-3xl leading-[1.1] font-semibold tracking-[-0.03em] text-balance text-(--text-primary) sm:text-4xl">
 					HEIC &amp; AVIF Metadata Remover
 				</h1>
-				<p className="m-0 max-w-2xl text-base leading-relaxed text-(--text-secondary)">
+				<p className="mx-auto my-0 max-w-2xl text-base leading-relaxed text-pretty text-(--text-secondary)">
 					Scrub GPS coordinates, iPhone camera EXIF, XMP, and C2PA tags out of
 					HEIC and AVIF photos without converting to JPEG, uploading to a
 					server, or washing out Display P3 colors.
