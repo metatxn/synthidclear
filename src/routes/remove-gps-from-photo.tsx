@@ -81,11 +81,11 @@ function RemoveGpsPage() {
 			/>
 			<JsonLd data={buildFaqSchema(GPS_FAQS)} />
 
-			<section className="space-y-2">
-				<h1 className="m-0 text-3xl font-semibold tracking-[-0.03em] text-(--text-primary) sm:text-4xl">
+			<section className="mx-auto flex max-w-3xl flex-col gap-3 text-center">
+				<h1 className="m-0 text-3xl leading-[1.1] font-semibold tracking-[-0.03em] text-balance text-(--text-primary) sm:text-4xl">
 					Remove GPS Location from Photos &amp; Videos
 				</h1>
-				<p className="m-0 max-w-2xl text-base leading-relaxed text-(--text-secondary)">
+				<p className="mx-auto my-0 max-w-2xl text-base leading-relaxed text-pretty text-(--text-secondary)">
 					Check whether your photos or videos expose exact latitude and
 					longitude coordinates, then scrub all GPS and camera location metadata
 					locally in your browser before sharing online.

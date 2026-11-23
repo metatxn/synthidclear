@@ -80,11 +80,11 @@ function AiOnlyMetadataRemoverPage() {
 			/>
 			<JsonLd data={buildFaqSchema(AI_ONLY_FAQS)} />
 
-			<section className="space-y-2">
-				<h1 className="m-0 text-3xl font-semibold tracking-[-0.03em] text-(--text-primary) sm:text-4xl">
+			<section className="mx-auto flex max-w-3xl flex-col gap-3 text-center">
+				<h1 className="m-0 text-3xl leading-[1.1] font-semibold tracking-[-0.03em] text-balance text-(--text-primary) sm:text-4xl">
 					AI-Only Metadata Remover (Keep Camera EXIF)
 				</h1>
-				<p className="m-0 max-w-2xl text-base leading-relaxed text-(--text-secondary)">
+				<p className="mx-auto my-0 max-w-2xl text-base leading-relaxed text-pretty text-(--text-secondary)">
 					Pre-configured to strip only C2PA credentials, AI source labels, and
 					saved prompts while keeping your camera EXIF, lens data, copyright,
 					and color profile untouched. Ideal for real photos retouched with

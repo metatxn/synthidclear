@@ -7,7 +7,8 @@ export interface PlatformGuideEntry {
 		| "/gemini-image-metadata"
 		| "/photoshop-ai-metadata"
 		| "/midjourney-metadata"
-		| "/veo-video-metadata";
+		| "/veo-video-metadata"
+		| "/ai-audio-metadata";
 	title: string;
 	subtitle: string;
 	group: "social" | "generator";
@@ -60,6 +61,12 @@ export const PLATFORM_GUIDES: readonly PlatformGuideEntry[] = [
 		to: "/veo-video-metadata",
 		title: "Google Veo Video Metadata",
 		subtitle: "MP4 metadata vs. SynthID watermarks",
+		group: "generator",
+	},
+	{
+		to: "/ai-audio-metadata",
+		title: "AI Audio Metadata (Suno, Udio & More)",
+		subtitle: "ID3, Vorbis & RIFF tags vs. SynthID Audio",
 		group: "generator",
 	},
 ] as const;

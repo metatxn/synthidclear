@@ -65,7 +65,11 @@ export function ExportSettingsBar({
 				? "Convert to PNG · Clean metadata"
 				: options.outputFormat === "image/webp"
 					? `Convert to WebP (${qualityPercent}%) · Clean metadata`
-					: "Re-encoding output · Clean metadata";
+					: options.outputFormat === "video/mp4"
+						? `Convert to MP4 (${qualityPercent}%) · Clean metadata`
+						: options.outputFormat === "video/webm"
+							? `Convert to WebM (${qualityPercent}%) · Clean metadata`
+							: "Re-encoding output · Clean metadata";
 
 	const statusText =
 		options.mode === "deep"
@@ -260,9 +264,11 @@ export function ExportSettingsBar({
 										className="rounded-lg border border-(--border-color) bg-(--bg-surface) px-2.5 py-1.5 text-xs font-medium text-(--text-primary)"
 									>
 										<option value="original">Match Original</option>
-										<option value="image/png">PNG</option>
-										<option value="image/jpeg">JPEG</option>
-										<option value="image/webp">WebP</option>
+										<option value="image/png">PNG (Image)</option>
+										<option value="image/jpeg">JPEG (Image)</option>
+										<option value="image/webp">WebP (Image)</option>
+										<option value="video/mp4">MP4 (Video)</option>
+										<option value="video/webm">WebM (Video)</option>
 									</select>
 								</div>
 

@@ -2,9 +2,12 @@
 
 Live at [https://synthidclear.com](https://synthidclear.com)
 
-100% browser-based, lossless metadata cleaner for photos and videos (`PNG`, `JPEG`, `WebP`, `HEIC`, `AVIF`, `MP4`, `MOV`). Inspects and removes C2PA Content Credentials, AI creator tags (`DigitalSourceType`), saved PNG prompts (Stable Diffusion / ComfyUI), EXIF, GPS coordinates, IPTC, and QuickTime tags locally in a Web Worker with zero uploads and original color profiles preserved.
+100% browser-based, lossless metadata cleaner and media privacy toolkit for photos, videos, audio, and PDFs (`PNG`, `JPEG`, `WebP`, `HEIC`, `AVIF`, `MP4`, `MOV`, `MKV`, `WebM`, `MP3`, `WAV`, `FLAC`, `OGG`, `M4A`, `AAC`, `PDF`). Inspects and removes C2PA Content Credentials, AI creator tags (`DigitalSourceType`), saved PNG prompts (Stable Diffusion / ComfyUI), EXIF, GPS coordinates, IPTC, QuickTime/Matroska tags, and ID3/Vorbis/RIFF audio tags locally in-browser with zero uploads and original color profiles preserved.
 
-> **Scope note:** SynthIDClear removes file-container metadata only. Imperceptible pixel- or signal-level watermarks (such as Google SynthID) live inside the media pixels/audio and are not removed by metadata cleaning.
+Powered by `mediabunny` and WebCodecs, SynthIDClear also includes:
+- [Visible Icon Remover](https://synthidclear.com/visible-icon-remover) — frame-accurate filmstrip scrubber, repaired playback preview, trim/crop/rotate/mute controls, Web Worker `OffscreenCanvas` export, and direct-to-disk streaming (`StreamTarget`) for MP4, MOV, WebM, and MKV (plus still PNG for images). Targets visible marks only; invisible signals such as Google SynthID are outside its scope.
+- [Audio Metadata Remover](https://synthidclear.com/audio-metadata-remover) — lossless ID3, Vorbis, RIFF INFO, and cover-art removal for MP3, WAV, FLAC, OGG, M4A, and AAC.
+- [Clean Video Compressor & Converter](https://synthidclear.com/compress-video), [Mute Video & Extract Clean Audio](https://synthidclear.com/mute-extract-audio), and [Clean Video Frame Extractor](https://synthidclear.com/video-frame-extractor) — 100% local media utilities with metadata stripped automatically.
 
 ## Tech Stack
 

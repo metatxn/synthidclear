@@ -58,11 +58,11 @@ function StripExifPage() {
 			/>
 			<JsonLd data={buildFaqSchema(EXIF_FAQS)} />
 
-			<section className="mb-8 space-y-2">
-				<h1 className="m-0 text-3xl font-semibold tracking-[-0.03em] text-(--text-primary) sm:text-4xl">
+			<section className="mx-auto mb-8 flex max-w-3xl flex-col gap-3 text-center">
+				<h1 className="m-0 text-3xl leading-[1.1] font-semibold tracking-[-0.03em] text-balance text-(--text-primary) sm:text-4xl">
 					Remove EXIF &amp; GPS Location Online
 				</h1>
-				<p className="m-0 max-w-2xl text-base leading-relaxed text-(--text-secondary)">
+				<p className="mx-auto my-0 max-w-2xl text-base leading-relaxed text-pretty text-(--text-secondary)">
 					Scrub GPS coordinates, camera serial numbers, and timestamps from your
 					photos in batches without uploading them or losing image quality.
 				</p>

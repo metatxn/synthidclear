@@ -11,7 +11,8 @@ import type {
 import {
 	detectImageFormat,
 	formatToMime,
-	isVideoFormat,
+	isIsobmffVideoFormat,
+	isMediabunnyMediaFormat,
 	mimeToExtension,
 } from "./utils";
 import { parseWebpMetadata, stripWebpLossless } from "./webp";
@@ -27,6 +28,9 @@ export {
 	categoryLabel,
 	detectImageFormat,
 	formatToMime,
+	isAudioFormat,
+	isIsobmffVideoFormat,
+	isMediabunnyMediaFormat,
 	isPdfFormat,
 	isVideoFormat,
 	mimeToExtension,
@@ -227,10 +231,14 @@ export async function cleanImageBuffer(
 }
 
 export async function parseMediaFile(file: Blob): Promise<ParseResult> {
-	const headBuf = await file.slice(0, 64).arrayBuffer();
+	const headBuf = await file.slice(0, 1024).arrayBuffer();
 	const format = detectImageFormat(new Uint8Array(headBuf));
-	if (isVideoFormat(format)) {
+	if (isIsobmffVideoFormat(format)) {
 		return parseMp4Metadata(file);
+	}
+	if (isMediabunnyMediaFormat(format)) {
+		const { parseMediabunnyMetadata } = await import("./mediabunnyMedia");
+		return parseMediabunnyMetadata(file, format);
 	}
 	const buffer = await file.arrayBuffer();
 	return parseImageMetadata(buffer);
@@ -240,10 +248,18 @@ export async function cleanMediaFile(
 	file: Blob,
 	options: CleanOptions,
 ): Promise<CleanResult> {
-	const headBuf = await file.slice(0, 64).arrayBuffer();
+	const headBuf = await file.slice(0, 1024).arrayBuffer();
 	const format = detectImageFormat(new Uint8Array(headBuf));
-	if (isVideoFormat(format)) {
+	if (isIsobmffVideoFormat(format)) {
+		if (options.mode === "deep") {
+			const { stripMediabunnyMetadata } = await import("./mediabunnyMedia");
+			return stripMediabunnyMetadata(file, options);
+		}
 		return stripMp4Lossless(file, options.stripScope);
+	}
+	if (isMediabunnyMediaFormat(format)) {
+		const { stripMediabunnyMetadata } = await import("./mediabunnyMedia");
+		return stripMediabunnyMetadata(file, options);
 	}
 	const buffer = await file.arrayBuffer();
 	return cleanImageBuffer(buffer, options);

@@ -26,6 +26,7 @@ export function crc32(bytes: Uint8Array): number {
 const AVIF_BRANDS = new Set(["avif", "avis"]);
 const HEIC_BRANDS = new Set(["heic", "heix", "hevc", "hevx", "mif1", "msf1"]);
 const MOV_BRANDS = new Set(["qt  "]);
+const M4A_BRANDS = new Set(["M4A ", "M4B "]);
 const MP4_BRANDS = new Set([
 	"isom",
 	"iso2",
@@ -38,7 +39,6 @@ const MP4_BRANDS = new Set([
 	"mp71",
 	"avc1",
 	"M4V ",
-	"M4A ",
 	"f4v ",
 	"dash",
 	"msdh",
@@ -49,7 +49,33 @@ const MP4_BRANDS = new Set([
 ]);
 
 export function isVideoFormat(format: ImageFormat | undefined): boolean {
+	return (
+		format === "mp4" ||
+		format === "mov" ||
+		format === "webm" ||
+		format === "mkv"
+	);
+}
+
+export function isAudioFormat(format: ImageFormat | undefined): boolean {
+	return (
+		format === "mp3" ||
+		format === "wav" ||
+		format === "flac" ||
+		format === "ogg" ||
+		format === "aac" ||
+		format === "m4a"
+	);
+}
+
+export function isIsobmffVideoFormat(format: ImageFormat | undefined): boolean {
 	return format === "mp4" || format === "mov";
+}
+
+export function isMediabunnyMediaFormat(
+	format: ImageFormat | undefined,
+): boolean {
+	return format === "webm" || format === "mkv" || isAudioFormat(format);
 }
 
 export function isPdfFormat(format: ImageFormat | undefined): boolean {
@@ -117,6 +143,117 @@ export function detectImageFormat(bytes: Uint8Array): ImageFormat {
 	) {
 		return "webp";
 	}
+	if (
+		bytes.length >= 12 &&
+		bytes[0] === 0x52 &&
+		bytes[1] === 0x49 &&
+		bytes[2] === 0x46 &&
+		bytes[3] === 0x46 &&
+		bytes[8] === 0x57 &&
+		bytes[9] === 0x41 &&
+		bytes[10] === 0x56 &&
+		bytes[11] === 0x45
+	) {
+		return "wav";
+	}
+	// RF64 WAVE (64-bit WAV)
+	if (
+		bytes.length >= 12 &&
+		bytes[0] === 0x52 &&
+		bytes[1] === 0x46 &&
+		bytes[2] === 0x36 &&
+		bytes[3] === 0x34 &&
+		bytes[8] === 0x57 &&
+		bytes[9] === 0x41 &&
+		bytes[10] === 0x56 &&
+		bytes[11] === 0x45
+	) {
+		return "wav";
+	}
+	// EBML header: WebM or Matroska (MKV)
+	if (
+		bytes.length >= 4 &&
+		bytes[0] === 0x1a &&
+		bytes[1] === 0x45 &&
+		bytes[2] === 0xdf &&
+		bytes[3] === 0xa3
+	) {
+		const headerAscii = readAscii(
+			bytes,
+			0,
+			Math.min(bytes.length, 96),
+		).toLowerCase();
+		if (headerAscii.includes("webm")) return "webm";
+		return "mkv";
+	}
+	// FLAC signature
+	if (
+		bytes.length >= 4 &&
+		bytes[0] === 0x66 &&
+		bytes[1] === 0x4c &&
+		bytes[2] === 0x61 &&
+		bytes[3] === 0x43
+	) {
+		return "flac";
+	}
+	// Ogg container
+	if (
+		bytes.length >= 4 &&
+		bytes[0] === 0x4f &&
+		bytes[1] === 0x67 &&
+		bytes[2] === 0x67 &&
+		bytes[3] === 0x53
+	) {
+		return "ogg";
+	}
+	// ID3v2-tagged audio (MP3, FLAC, or ADTS AAC)
+	if (
+		bytes.length >= 10 &&
+		bytes[0] === 0x49 &&
+		bytes[1] === 0x44 &&
+		bytes[2] === 0x33
+	) {
+		const id3Size =
+			((bytes[6] & 0x7f) << 21) |
+			((bytes[7] & 0x7f) << 14) |
+			((bytes[8] & 0x7f) << 7) |
+			(bytes[9] & 0x7f);
+		const afterId3 = 10 + id3Size;
+		if (
+			afterId3 + 4 <= bytes.length &&
+			bytes[afterId3] === 0x66 &&
+			bytes[afterId3 + 1] === 0x4c &&
+			bytes[afterId3 + 2] === 0x61 &&
+			bytes[afterId3 + 3] === 0x43
+		) {
+			return "flac";
+		}
+		if (
+			afterId3 + 2 <= bytes.length &&
+			bytes[afterId3] === 0xff &&
+			(bytes[afterId3 + 1] & 0xf6) === 0xf0
+		) {
+			return "aac";
+		}
+		return "mp3";
+	}
+	// Raw ADTS AAC frame sync (0xFFF1 / 0xFFF9)
+	if (bytes.length >= 2 && bytes[0] === 0xff && (bytes[1] & 0xf6) === 0xf0) {
+		return "aac";
+	}
+	// Raw MP3 frame sync (MPEG-1/2 Layer III)
+	if (
+		bytes.length >= 2 &&
+		bytes[0] === 0xff &&
+		(bytes[1] === 0xfb ||
+			bytes[1] === 0xf3 ||
+			bytes[1] === 0xf2 ||
+			bytes[1] === 0xfa ||
+			bytes[1] === 0xe3 ||
+			bytes[1] === 0xe2)
+	) {
+		return "mp3";
+	}
 	if (bytes.length >= 12 && readAscii(bytes, 4, 4) === "ftyp") {
 		const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
 		const boxSize = Math.min(bytes.length, view.getUint32(0, false));
@@ -124,12 +261,14 @@ export function detectImageFormat(bytes: Uint8Array): ImageFormat {
 		if (AVIF_BRANDS.has(majorBrand)) return "avif";
 		if (HEIC_BRANDS.has(majorBrand)) return "heic";
 		if (MOV_BRANDS.has(majorBrand)) return "mov";
+		if (M4A_BRANDS.has(majorBrand)) return "m4a";
 		if (MP4_BRANDS.has(majorBrand)) return "mp4";
 		for (let offset = 16; offset + 4 <= boxSize; offset += 4) {
 			const compat = readAscii(bytes, offset, 4);
 			if (AVIF_BRANDS.has(compat)) return "avif";
 			if (HEIC_BRANDS.has(compat)) return "heic";
 			if (MOV_BRANDS.has(compat)) return "mov";
+			if (M4A_BRANDS.has(compat)) return "m4a";
 			if (MP4_BRANDS.has(compat)) return "mp4";
 		}
 	}
@@ -152,6 +291,22 @@ export function formatToMime(format: ImageFormat): string {
 			return "video/mp4";
 		case "mov":
 			return "video/quicktime";
+		case "webm":
+			return "video/webm";
+		case "mkv":
+			return "video/x-matroska";
+		case "mp3":
+			return "audio/mpeg";
+		case "wav":
+			return "audio/wav";
+		case "flac":
+			return "audio/flac";
+		case "ogg":
+			return "audio/ogg";
+		case "aac":
+			return "audio/aac";
+		case "m4a":
+			return "audio/mp4";
 		case "pdf":
 			return "application/pdf";
 		default:
@@ -176,6 +331,30 @@ export function mimeToExtension(mime: string): string {
 			return "mp4";
 		case "video/quicktime":
 			return "mov";
+		case "video/webm":
+			return "webm";
+		case "video/x-matroska":
+		case "video/matroska":
+			return "mkv";
+		case "audio/mpeg":
+		case "audio/mp3":
+			return "mp3";
+		case "audio/wav":
+		case "audio/wave":
+		case "audio/x-wav":
+			return "wav";
+		case "audio/flac":
+		case "audio/x-flac":
+			return "flac";
+		case "audio/ogg":
+		case "application/ogg":
+			return "ogg";
+		case "audio/aac":
+		case "audio/aacp":
+			return "aac";
+		case "audio/mp4":
+		case "audio/x-m4a":
+			return "m4a";
 		case "application/pdf":
 			return "pdf";
 		default:
@@ -234,6 +413,14 @@ const AI_SIGNAL_PATTERNS = [
 	/\brunway\b/i,
 	/\bkling\b/i,
 	/\bveo\b/i,
+	/\bsuno\b/i,
+	/\budio\b/i,
+	/\belevenlabs\b/i,
+	/\blyria\b/i,
+	/\baudiolm\b/i,
+	/\bmusicgen\b/i,
+	/\briffusion\b/i,
+	/\bmubert\b/i,
 	/\bgoogle\s*ai\b/i,
 	/\bgemini\b/i,
 	/\bopenai\b/i,

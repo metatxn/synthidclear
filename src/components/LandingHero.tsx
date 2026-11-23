@@ -1,4 +1,5 @@
-import { FileImage, Lock, Sparkles, Upload } from "lucide-react";
+import { Link } from "@tanstack/react-router";
+import { ArrowRight, FileImage, Lock, Sparkles, Upload } from "lucide-react";
 import { type DragEvent, useId, useState } from "react";
 import { ACCEPTED_MEDIA_ACCEPT, filterAcceptedMediaFiles } from "#/lib/format";
 
@@ -141,6 +142,13 @@ export function LandingHero({
 						</p>
 					</div>
 				</section>
+				<Link
+					to="/visible-icon-remover"
+					className="touch-target mt-3 inline-flex items-center gap-1 text-sm font-semibold text-(--brand-color) no-underline hover:underline"
+				>
+					Remove a visible icon
+					<ArrowRight className="h-4 w-4" aria-hidden="true" />
+				</Link>
 			</div>
 		</section>
 	);

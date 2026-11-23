@@ -31,7 +31,12 @@ export interface PlatformGuideProps {
 	steps: readonly string[];
 	limits: readonly string[];
 	extraLink?: GuideLink;
+	visibleIconEditor?: boolean;
 	defaultOptions?: Partial<CleanOptions>;
+	accept?: string;
+	dropzoneHeading?: string;
+	dropzoneSubtext?: string;
+	hideSampleButton?: boolean;
 	faqs: readonly FaqItem[];
 	schemaName: string;
 	schemaDescription: string;
@@ -61,7 +66,12 @@ export function PlatformGuide({
 	steps,
 	limits,
 	extraLink,
+	visibleIconEditor,
 	defaultOptions,
+	accept,
+	dropzoneHeading,
+	dropzoneSubtext,
+	hideSampleButton,
 	faqs,
 	schemaName,
 	schemaDescription,
@@ -99,9 +109,19 @@ export function PlatformGuide({
 				</p>
 			</section>
 
-			<CleanerWorkspace hideScopeBanner defaultOptions={defaultOptions} />
+			<CleanerWorkspace
+				hideScopeBanner
+				defaultOptions={defaultOptions}
+				accept={accept}
+				dropzoneHeading={dropzoneHeading}
+				dropzoneSubtext={dropzoneSubtext}
+				hideSampleButton={hideSampleButton}
+			/>
 
-			<section aria-labelledby="signals-heading" className="space-y-5">
+			<section
+				aria-labelledby="signals-heading"
+				className="flex flex-col gap-5"
+			>
 				<h2
 					id="signals-heading"
 					className="m-0 text-2xl font-semibold tracking-tight text-(--text-primary)"
@@ -112,7 +132,7 @@ export function PlatformGuide({
 					{signals.map((signal) => (
 						<div
 							key={signal.title}
-							className="space-y-1.5 rounded-xl border border-(--border-color) bg-(--bg-card) p-4"
+							className="flex flex-col gap-2 rounded-xl border border-(--border-color) bg-(--bg-card) p-4"
 						>
 							<h3 className="m-0 text-sm font-semibold text-(--text-primary)">
 								{signal.title}
@@ -125,14 +145,14 @@ export function PlatformGuide({
 				</div>
 			</section>
 
-			<section aria-labelledby="steps-heading" className="space-y-4">
+			<section aria-labelledby="steps-heading" className="flex flex-col gap-4">
 				<h2
 					id="steps-heading"
 					className="m-0 text-2xl font-semibold tracking-tight text-(--text-primary)"
 				>
 					How to check and clean your file
 				</h2>
-				<ol className="m-0 max-w-3xl list-decimal space-y-2 pl-5 text-sm leading-relaxed text-(--text-secondary) marker:font-semibold marker:text-(--text-primary)">
+				<ol className="m-0 flex max-w-3xl list-decimal flex-col gap-2 pl-5 text-sm leading-relaxed text-(--text-secondary) marker:font-semibold marker:text-(--text-primary)">
 					{steps.map((step) => (
 						<li key={step}>{step}</li>
 					))}
@@ -141,7 +161,7 @@ export function PlatformGuide({
 
 			<section
 				aria-labelledby="limits-heading"
-				className="space-y-3 rounded-2xl border border-(--border-color) bg-(--bg-surface) p-6"
+				className="flex flex-col gap-3.5 rounded-2xl border border-(--border-color) bg-(--bg-surface) p-6"
 			>
 				<h2
 					id="limits-heading"
@@ -150,12 +170,12 @@ export function PlatformGuide({
 					<Info className="h-4 w-4 text-(--text-muted)" aria-hidden="true" />
 					What cleaning can't change
 				</h2>
-				<ul className="m-0 list-disc space-y-1.5 pl-5 text-sm leading-relaxed text-(--text-secondary)">
+				<ul className="m-0 flex list-disc flex-col gap-2 pl-5 text-sm leading-relaxed text-(--text-secondary)">
 					{limits.map((limit) => (
 						<li key={limit}>{limit}</li>
 					))}
 				</ul>
-				<div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+				<div className="flex flex-wrap items-center gap-x-5 gap-y-2 pt-1">
 					<Link
 						to="/how-it-works"
 						className="inline-flex items-center gap-1 text-sm font-semibold text-(--brand-color) no-underline hover:underline"
@@ -169,6 +189,15 @@ export function PlatformGuide({
 							className="inline-flex items-center gap-1 text-sm font-semibold text-(--brand-color) no-underline hover:underline"
 						>
 							{extraLink.label}
+							<ArrowRight className="h-4 w-4" aria-hidden="true" />
+						</Link>
+					)}
+					{visibleIconEditor && (
+						<Link
+							to="/visible-icon-remover"
+							className="inline-flex items-center gap-1 text-sm font-semibold text-(--brand-color) no-underline hover:underline"
+						>
+							Open Visible Icon Remover
 							<ArrowRight className="h-4 w-4" aria-hidden="true" />
 						</Link>
 					)}

@@ -86,11 +86,11 @@ function AiMetadataCheckerPage() {
 			/>
 			<JsonLd data={buildFaqSchema(CHECKER_FAQS)} />
 
-			<section className="space-y-2">
-				<h1 className="m-0 text-3xl font-semibold tracking-[-0.03em] text-(--text-primary) sm:text-4xl">
+			<section className="mx-auto flex max-w-3xl flex-col gap-3 text-center">
+				<h1 className="m-0 text-3xl leading-[1.1] font-semibold tracking-[-0.03em] text-balance text-(--text-primary) sm:text-4xl">
 					AI Metadata &amp; C2PA Checker
 				</h1>
-				<p className="m-0 max-w-2xl text-base leading-relaxed text-(--text-secondary)">
+				<p className="mx-auto my-0 max-w-2xl text-base leading-relaxed text-pretty text-(--text-secondary)">
 					See everything hidden inside a photo or video before you publish or
 					share it — C2PA credentials, AI creator tags, saved prompts, GPS
 					coordinates, EXIF camera data, and total metadata footprint. Raw

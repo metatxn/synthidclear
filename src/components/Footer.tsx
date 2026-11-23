@@ -113,7 +113,7 @@ export function Footer() {
 
 					<div>
 						<h2 className="m-0 mb-3 text-xs font-semibold tracking-wide text-(--text-primary) uppercase">
-							HEIC, PDF &amp; video
+							HEIC, PDF, audio &amp; video
 						</h2>
 						<nav aria-label="Footer format-specific tools">
 							<ul className="m-0 list-none space-y-2 p-0 text-sm">
@@ -123,14 +123,6 @@ export function Footer() {
 										className="text-(--text-secondary) no-underline hover:text-(--text-primary)"
 									>
 										HEIC to JPG
-									</Link>
-								</li>
-								<li>
-									<Link
-										to="/heic-metadata-remover"
-										className="text-(--text-secondary) no-underline hover:text-(--text-primary)"
-									>
-										HEIC Metadata Remover
 									</Link>
 								</li>
 								<li>
@@ -147,6 +139,38 @@ export function Footer() {
 										className="text-(--text-secondary) no-underline hover:text-(--text-primary)"
 									>
 										Video Metadata Remover
+									</Link>
+								</li>
+								<li>
+									<Link
+										to="/audio-metadata-remover"
+										className="text-(--text-secondary) no-underline hover:text-(--text-primary)"
+									>
+										Audio Metadata Remover
+									</Link>
+								</li>
+								<li>
+									<Link
+										to="/compress-video"
+										className="text-(--text-secondary) no-underline hover:text-(--text-primary)"
+									>
+										Clean Video Compressor
+									</Link>
+								</li>
+								<li>
+									<Link
+										to="/mute-extract-audio"
+										className="text-(--text-secondary) no-underline hover:text-(--text-primary)"
+									>
+										Mute Video / Extract Audio
+									</Link>
+								</li>
+								<li>
+									<Link
+										to="/video-frame-extractor"
+										className="text-(--text-secondary) no-underline hover:text-(--text-primary)"
+									>
+										Video Frame Extractor
 									</Link>
 								</li>
 								<li className="pt-1">
@@ -201,6 +225,14 @@ export function Footer() {
 										className="text-(--text-secondary) no-underline hover:text-(--text-primary)"
 									>
 										2026 AI Metadata Matrix
+									</Link>
+								</li>
+								<li>
+									<Link
+										to="/advanced-media-guide"
+										className="text-(--text-secondary) no-underline hover:text-(--text-primary)"
+									>
+										Advanced Media Guide
 									</Link>
 								</li>
 								<li>

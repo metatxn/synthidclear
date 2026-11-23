@@ -4,11 +4,13 @@ import {
 	FileText,
 	Film,
 	Loader2,
+	Music,
 	X,
 } from "lucide-react";
 import { useState } from "react";
 import { formatBytes } from "#/lib/format";
-import { isPdfFormat, isVideoFormat } from "#/lib/metadata";
+import { isAudioFormat, isPdfFormat, isVideoFormat } from "#/lib/metadata";
+import { toSafeBlobUrl } from "#/lib/safeUrl";
 import type { ImageQueueItem } from "./types";
 
 interface FileQueueCardProps {
@@ -31,7 +33,11 @@ export function FileQueueCard({
 	const isVideo =
 		isVideoFormat(item.originalMeta?.format) ||
 		item.file.type.startsWith("video/") ||
-		/\.(mp4|mov)$/i.test(item.file.name);
+		/\.(mp4|mov|webm|mkv)$/i.test(item.file.name);
+	const isAudio =
+		isAudioFormat(item.originalMeta?.format) ||
+		item.file.type.startsWith("audio/") ||
+		/\.(mp3|wav|flac|ogg|aac|m4a)$/i.test(item.file.name);
 	const isPdf =
 		isPdfFormat(item.originalMeta?.format) ||
 		item.file.type === "application/pdf" ||
@@ -41,9 +47,11 @@ export function FileQueueCard({
 			? item.originalMeta.format.toUpperCase()
 			: isPdf
 				? "PDF"
-				: isVideo
-					? "VID"
-					: "IMG";
+				: isAudio
+					? "AUD"
+					: isVideo
+						? "VID"
+						: "IMG";
 
 	return (
 		<div
@@ -64,20 +72,40 @@ export function FileQueueCard({
 						<FileText className="h-4 w-4" aria-hidden="true" />
 						<span className="font-mono text-[9px] font-semibold">PDF</span>
 					</div>
-				) : isVideo ? (
+				) : isAudio ? (
 					<div className="flex h-12 w-12 shrink-0 flex-col items-center justify-center rounded-lg border border-(--border-color) bg-(--bg-surface) text-(--text-secondary)">
-						<Film className="h-4 w-4" aria-hidden="true" />
+						<Music className="h-4 w-4" aria-hidden="true" />
 						<span className="font-mono text-[9px] font-semibold">
 							{formatBadge}
 						</span>
 					</div>
+				) : isVideo ? (
+					item.thumbnailUrl ? (
+						<div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-lg border border-(--border-color) bg-black">
+							<img
+								src={toSafeBlobUrl(item.thumbnailUrl)}
+								alt={item.file.name}
+								className="h-full w-full object-cover"
+							/>
+							<span className="absolute right-0.5 bottom-0.5 rounded bg-black/75 px-1 py-0 font-mono text-[8px] font-semibold text-white">
+								{formatBadge}
+							</span>
+						</div>
+					) : (
+						<div className="flex h-12 w-12 shrink-0 flex-col items-center justify-center rounded-lg border border-(--border-color) bg-(--bg-surface) text-(--text-secondary)">
+							<Film className="h-4 w-4" aria-hidden="true" />
+							<span className="font-mono text-[9px] font-semibold">
+								{formatBadge}
+							</span>
+						</div>
+					)
 				) : imgError ? (
 					<div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg border border-(--border-color) bg-(--bg-surface) font-mono text-[10px] font-semibold text-(--text-secondary)">
 						{formatBadge}
 					</div>
 				) : (
 					<img
-						src={item.previewUrl}
+						src={toSafeBlobUrl(item.previewUrl)}
 						alt={item.file.name}
 						onError={() => setImgError(true)}
 						className="h-12 w-12 shrink-0 rounded-lg border border-(--border-color) bg-(--bg-surface) object-cover"

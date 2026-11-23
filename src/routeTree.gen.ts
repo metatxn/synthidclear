@@ -10,10 +10,14 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AdvancedMediaGuideRouteImport } from './routes/advanced-media-guide'
+import { Route as AiAudioMetadataRouteImport } from './routes/ai-audio-metadata'
 import { Route as AiMetadataCheckerRouteImport } from './routes/ai-metadata-checker'
 import { Route as AiMetadataMatrixRouteImport } from './routes/ai-metadata-matrix'
 import { Route as AiOnlyMetadataRemoverRouteImport } from './routes/ai-only-metadata-remover'
+import { Route as AudioMetadataRemoverRouteImport } from './routes/audio-metadata-remover'
 import { Route as ChatgptImageMetadataRouteImport } from './routes/chatgpt-image-metadata'
+import { Route as CompressVideoRouteImport } from './routes/compress-video'
 import { Route as GeminiImageMetadataRouteImport } from './routes/gemini-image-metadata'
 import { Route as GuidesRouteImport } from './routes/guides'
 import { Route as HeicMetadataRemoverRouteImport } from './routes/heic-metadata-remover'
@@ -21,6 +25,7 @@ import { Route as HeicToJpgRouteImport } from './routes/heic-to-jpg'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
 import { Route as InstagramAiLabelRouteImport } from './routes/instagram-ai-label'
 import { Route as MidjourneyMetadataRouteImport } from './routes/midjourney-metadata'
+import { Route as MuteExtractAudioRouteImport } from './routes/mute-extract-audio'
 import { Route as PdfMetadataRemoverRouteImport } from './routes/pdf-metadata-remover'
 import { Route as PhotoshopAiMetadataRouteImport } from './routes/photoshop-ai-metadata'
 import { Route as PngPromptRemoverRouteImport } from './routes/png-prompt-remover'
@@ -33,11 +38,23 @@ import { Route as TermsRouteImport } from './routes/terms'
 import { Route as TiktokAiLabelRouteImport } from './routes/tiktok-ai-label'
 import { Route as ToolsRouteImport } from './routes/tools'
 import { Route as VeoVideoMetadataRouteImport } from './routes/veo-video-metadata'
+import { Route as VideoFrameExtractorRouteImport } from './routes/video-frame-extractor'
 import { Route as VideoMetadataRemoverRouteImport } from './routes/video-metadata-remover'
+import { Route as VisibleIconRemoverRouteImport } from './routes/visible-icon-remover'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdvancedMediaGuideRoute = AdvancedMediaGuideRouteImport.update({
+  id: '/advanced-media-guide',
+  path: '/advanced-media-guide',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AiAudioMetadataRoute = AiAudioMetadataRouteImport.update({
+  id: '/ai-audio-metadata',
+  path: '/ai-audio-metadata',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AiMetadataCheckerRoute = AiMetadataCheckerRouteImport.update({
@@ -55,9 +72,19 @@ const AiOnlyMetadataRemoverRoute = AiOnlyMetadataRemoverRouteImport.update({
   path: '/ai-only-metadata-remover',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AudioMetadataRemoverRoute = AudioMetadataRemoverRouteImport.update({
+  id: '/audio-metadata-remover',
+  path: '/audio-metadata-remover',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ChatgptImageMetadataRoute = ChatgptImageMetadataRouteImport.update({
   id: '/chatgpt-image-metadata',
   path: '/chatgpt-image-metadata',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompressVideoRoute = CompressVideoRouteImport.update({
+  id: '/compress-video',
+  path: '/compress-video',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GeminiImageMetadataRoute = GeminiImageMetadataRouteImport.update({
@@ -93,6 +120,11 @@ const InstagramAiLabelRoute = InstagramAiLabelRouteImport.update({
 const MidjourneyMetadataRoute = MidjourneyMetadataRouteImport.update({
   id: '/midjourney-metadata',
   path: '/midjourney-metadata',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MuteExtractAudioRoute = MuteExtractAudioRouteImport.update({
+  id: '/mute-extract-audio',
+  path: '/mute-extract-audio',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PdfMetadataRemoverRoute = PdfMetadataRemoverRouteImport.update({
@@ -155,18 +187,32 @@ const VeoVideoMetadataRoute = VeoVideoMetadataRouteImport.update({
   path: '/veo-video-metadata',
   getParentRoute: () => rootRouteImport,
 } as any)
+const VideoFrameExtractorRoute = VideoFrameExtractorRouteImport.update({
+  id: '/video-frame-extractor',
+  path: '/video-frame-extractor',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const VideoMetadataRemoverRoute = VideoMetadataRemoverRouteImport.update({
   id: '/video-metadata-remover',
   path: '/video-metadata-remover',
   getParentRoute: () => rootRouteImport,
 } as any)
+const VisibleIconRemoverRoute = VisibleIconRemoverRouteImport.update({
+  id: '/visible-icon-remover',
+  path: '/visible-icon-remover',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/advanced-media-guide': typeof AdvancedMediaGuideRoute
+  '/ai-audio-metadata': typeof AiAudioMetadataRoute
   '/ai-metadata-checker': typeof AiMetadataCheckerRoute
   '/ai-metadata-matrix': typeof AiMetadataMatrixRoute
   '/ai-only-metadata-remover': typeof AiOnlyMetadataRemoverRoute
+  '/audio-metadata-remover': typeof AudioMetadataRemoverRoute
   '/chatgpt-image-metadata': typeof ChatgptImageMetadataRoute
+  '/compress-video': typeof CompressVideoRoute
   '/gemini-image-metadata': typeof GeminiImageMetadataRoute
   '/guides': typeof GuidesRoute
   '/heic-metadata-remover': typeof HeicMetadataRemoverRoute
@@ -174,6 +220,7 @@ export interface FileRoutesByFullPath {
   '/how-it-works': typeof HowItWorksRoute
   '/instagram-ai-label': typeof InstagramAiLabelRoute
   '/midjourney-metadata': typeof MidjourneyMetadataRoute
+  '/mute-extract-audio': typeof MuteExtractAudioRoute
   '/pdf-metadata-remover': typeof PdfMetadataRemoverRoute
   '/photoshop-ai-metadata': typeof PhotoshopAiMetadataRoute
   '/png-prompt-remover': typeof PngPromptRemoverRoute
@@ -186,14 +233,20 @@ export interface FileRoutesByFullPath {
   '/tiktok-ai-label': typeof TiktokAiLabelRoute
   '/tools': typeof ToolsRoute
   '/veo-video-metadata': typeof VeoVideoMetadataRoute
+  '/video-frame-extractor': typeof VideoFrameExtractorRoute
   '/video-metadata-remover': typeof VideoMetadataRemoverRoute
+  '/visible-icon-remover': typeof VisibleIconRemoverRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/advanced-media-guide': typeof AdvancedMediaGuideRoute
+  '/ai-audio-metadata': typeof AiAudioMetadataRoute
   '/ai-metadata-checker': typeof AiMetadataCheckerRoute
   '/ai-metadata-matrix': typeof AiMetadataMatrixRoute
   '/ai-only-metadata-remover': typeof AiOnlyMetadataRemoverRoute
+  '/audio-metadata-remover': typeof AudioMetadataRemoverRoute
   '/chatgpt-image-metadata': typeof ChatgptImageMetadataRoute
+  '/compress-video': typeof CompressVideoRoute
   '/gemini-image-metadata': typeof GeminiImageMetadataRoute
   '/guides': typeof GuidesRoute
   '/heic-metadata-remover': typeof HeicMetadataRemoverRoute
@@ -201,6 +254,7 @@ export interface FileRoutesByTo {
   '/how-it-works': typeof HowItWorksRoute
   '/instagram-ai-label': typeof InstagramAiLabelRoute
   '/midjourney-metadata': typeof MidjourneyMetadataRoute
+  '/mute-extract-audio': typeof MuteExtractAudioRoute
   '/pdf-metadata-remover': typeof PdfMetadataRemoverRoute
   '/photoshop-ai-metadata': typeof PhotoshopAiMetadataRoute
   '/png-prompt-remover': typeof PngPromptRemoverRoute
@@ -213,15 +267,21 @@ export interface FileRoutesByTo {
   '/tiktok-ai-label': typeof TiktokAiLabelRoute
   '/tools': typeof ToolsRoute
   '/veo-video-metadata': typeof VeoVideoMetadataRoute
+  '/video-frame-extractor': typeof VideoFrameExtractorRoute
   '/video-metadata-remover': typeof VideoMetadataRemoverRoute
+  '/visible-icon-remover': typeof VisibleIconRemoverRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/advanced-media-guide': typeof AdvancedMediaGuideRoute
+  '/ai-audio-metadata': typeof AiAudioMetadataRoute
   '/ai-metadata-checker': typeof AiMetadataCheckerRoute
   '/ai-metadata-matrix': typeof AiMetadataMatrixRoute
   '/ai-only-metadata-remover': typeof AiOnlyMetadataRemoverRoute
+  '/audio-metadata-remover': typeof AudioMetadataRemoverRoute
   '/chatgpt-image-metadata': typeof ChatgptImageMetadataRoute
+  '/compress-video': typeof CompressVideoRoute
   '/gemini-image-metadata': typeof GeminiImageMetadataRoute
   '/guides': typeof GuidesRoute
   '/heic-metadata-remover': typeof HeicMetadataRemoverRoute
@@ -229,6 +289,7 @@ export interface FileRoutesById {
   '/how-it-works': typeof HowItWorksRoute
   '/instagram-ai-label': typeof InstagramAiLabelRoute
   '/midjourney-metadata': typeof MidjourneyMetadataRoute
+  '/mute-extract-audio': typeof MuteExtractAudioRoute
   '/pdf-metadata-remover': typeof PdfMetadataRemoverRoute
   '/photoshop-ai-metadata': typeof PhotoshopAiMetadataRoute
   '/png-prompt-remover': typeof PngPromptRemoverRoute
@@ -241,16 +302,22 @@ export interface FileRoutesById {
   '/tiktok-ai-label': typeof TiktokAiLabelRoute
   '/tools': typeof ToolsRoute
   '/veo-video-metadata': typeof VeoVideoMetadataRoute
+  '/video-frame-extractor': typeof VideoFrameExtractorRoute
   '/video-metadata-remover': typeof VideoMetadataRemoverRoute
+  '/visible-icon-remover': typeof VisibleIconRemoverRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/advanced-media-guide'
+    | '/ai-audio-metadata'
     | '/ai-metadata-checker'
     | '/ai-metadata-matrix'
     | '/ai-only-metadata-remover'
+    | '/audio-metadata-remover'
     | '/chatgpt-image-metadata'
+    | '/compress-video'
     | '/gemini-image-metadata'
     | '/guides'
     | '/heic-metadata-remover'
@@ -258,6 +325,7 @@ export interface FileRouteTypes {
     | '/how-it-works'
     | '/instagram-ai-label'
     | '/midjourney-metadata'
+    | '/mute-extract-audio'
     | '/pdf-metadata-remover'
     | '/photoshop-ai-metadata'
     | '/png-prompt-remover'
@@ -270,14 +338,20 @@ export interface FileRouteTypes {
     | '/tiktok-ai-label'
     | '/tools'
     | '/veo-video-metadata'
+    | '/video-frame-extractor'
     | '/video-metadata-remover'
+    | '/visible-icon-remover'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/advanced-media-guide'
+    | '/ai-audio-metadata'
     | '/ai-metadata-checker'
     | '/ai-metadata-matrix'
     | '/ai-only-metadata-remover'
+    | '/audio-metadata-remover'
     | '/chatgpt-image-metadata'
+    | '/compress-video'
     | '/gemini-image-metadata'
     | '/guides'
     | '/heic-metadata-remover'
@@ -285,6 +359,7 @@ export interface FileRouteTypes {
     | '/how-it-works'
     | '/instagram-ai-label'
     | '/midjourney-metadata'
+    | '/mute-extract-audio'
     | '/pdf-metadata-remover'
     | '/photoshop-ai-metadata'
     | '/png-prompt-remover'
@@ -297,14 +372,20 @@ export interface FileRouteTypes {
     | '/tiktok-ai-label'
     | '/tools'
     | '/veo-video-metadata'
+    | '/video-frame-extractor'
     | '/video-metadata-remover'
+    | '/visible-icon-remover'
   id:
     | '__root__'
     | '/'
+    | '/advanced-media-guide'
+    | '/ai-audio-metadata'
     | '/ai-metadata-checker'
     | '/ai-metadata-matrix'
     | '/ai-only-metadata-remover'
+    | '/audio-metadata-remover'
     | '/chatgpt-image-metadata'
+    | '/compress-video'
     | '/gemini-image-metadata'
     | '/guides'
     | '/heic-metadata-remover'
@@ -312,6 +393,7 @@ export interface FileRouteTypes {
     | '/how-it-works'
     | '/instagram-ai-label'
     | '/midjourney-metadata'
+    | '/mute-extract-audio'
     | '/pdf-metadata-remover'
     | '/photoshop-ai-metadata'
     | '/png-prompt-remover'
@@ -324,15 +406,21 @@ export interface FileRouteTypes {
     | '/tiktok-ai-label'
     | '/tools'
     | '/veo-video-metadata'
+    | '/video-frame-extractor'
     | '/video-metadata-remover'
+    | '/visible-icon-remover'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdvancedMediaGuideRoute: typeof AdvancedMediaGuideRoute
+  AiAudioMetadataRoute: typeof AiAudioMetadataRoute
   AiMetadataCheckerRoute: typeof AiMetadataCheckerRoute
   AiMetadataMatrixRoute: typeof AiMetadataMatrixRoute
   AiOnlyMetadataRemoverRoute: typeof AiOnlyMetadataRemoverRoute
+  AudioMetadataRemoverRoute: typeof AudioMetadataRemoverRoute
   ChatgptImageMetadataRoute: typeof ChatgptImageMetadataRoute
+  CompressVideoRoute: typeof CompressVideoRoute
   GeminiImageMetadataRoute: typeof GeminiImageMetadataRoute
   GuidesRoute: typeof GuidesRoute
   HeicMetadataRemoverRoute: typeof HeicMetadataRemoverRoute
@@ -340,6 +428,7 @@ export interface RootRouteChildren {
   HowItWorksRoute: typeof HowItWorksRoute
   InstagramAiLabelRoute: typeof InstagramAiLabelRoute
   MidjourneyMetadataRoute: typeof MidjourneyMetadataRoute
+  MuteExtractAudioRoute: typeof MuteExtractAudioRoute
   PdfMetadataRemoverRoute: typeof PdfMetadataRemoverRoute
   PhotoshopAiMetadataRoute: typeof PhotoshopAiMetadataRoute
   PngPromptRemoverRoute: typeof PngPromptRemoverRoute
@@ -352,7 +441,9 @@ export interface RootRouteChildren {
   TiktokAiLabelRoute: typeof TiktokAiLabelRoute
   ToolsRoute: typeof ToolsRoute
   VeoVideoMetadataRoute: typeof VeoVideoMetadataRoute
+  VideoFrameExtractorRoute: typeof VideoFrameExtractorRoute
   VideoMetadataRemoverRoute: typeof VideoMetadataRemoverRoute
+  VisibleIconRemoverRoute: typeof VisibleIconRemoverRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -362,6 +453,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/advanced-media-guide': {
+      id: '/advanced-media-guide'
+      path: '/advanced-media-guide'
+      fullPath: '/advanced-media-guide'
+      preLoaderRoute: typeof AdvancedMediaGuideRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ai-audio-metadata': {
+      id: '/ai-audio-metadata'
+      path: '/ai-audio-metadata'
+      fullPath: '/ai-audio-metadata'
+      preLoaderRoute: typeof AiAudioMetadataRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/ai-metadata-checker': {
@@ -385,11 +490,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AiOnlyMetadataRemoverRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/audio-metadata-remover': {
+      id: '/audio-metadata-remover'
+      path: '/audio-metadata-remover'
+      fullPath: '/audio-metadata-remover'
+      preLoaderRoute: typeof AudioMetadataRemoverRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/chatgpt-image-metadata': {
       id: '/chatgpt-image-metadata'
       path: '/chatgpt-image-metadata'
       fullPath: '/chatgpt-image-metadata'
       preLoaderRoute: typeof ChatgptImageMetadataRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/compress-video': {
+      id: '/compress-video'
+      path: '/compress-video'
+      fullPath: '/compress-video'
+      preLoaderRoute: typeof CompressVideoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/gemini-image-metadata': {
@@ -439,6 +558,13 @@ declare module '@tanstack/react-router' {
       path: '/midjourney-metadata'
       fullPath: '/midjourney-metadata'
       preLoaderRoute: typeof MidjourneyMetadataRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mute-extract-audio': {
+      id: '/mute-extract-audio'
+      path: '/mute-extract-audio'
+      fullPath: '/mute-extract-audio'
+      preLoaderRoute: typeof MuteExtractAudioRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/pdf-metadata-remover': {
@@ -525,6 +651,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VeoVideoMetadataRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/video-frame-extractor': {
+      id: '/video-frame-extractor'
+      path: '/video-frame-extractor'
+      fullPath: '/video-frame-extractor'
+      preLoaderRoute: typeof VideoFrameExtractorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/video-metadata-remover': {
       id: '/video-metadata-remover'
       path: '/video-metadata-remover'
@@ -532,15 +665,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VideoMetadataRemoverRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/visible-icon-remover': {
+      id: '/visible-icon-remover'
+      path: '/visible-icon-remover'
+      fullPath: '/visible-icon-remover'
+      preLoaderRoute: typeof VisibleIconRemoverRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdvancedMediaGuideRoute: AdvancedMediaGuideRoute,
+  AiAudioMetadataRoute: AiAudioMetadataRoute,
   AiMetadataCheckerRoute: AiMetadataCheckerRoute,
   AiMetadataMatrixRoute: AiMetadataMatrixRoute,
   AiOnlyMetadataRemoverRoute: AiOnlyMetadataRemoverRoute,
+  AudioMetadataRemoverRoute: AudioMetadataRemoverRoute,
   ChatgptImageMetadataRoute: ChatgptImageMetadataRoute,
+  CompressVideoRoute: CompressVideoRoute,
   GeminiImageMetadataRoute: GeminiImageMetadataRoute,
   GuidesRoute: GuidesRoute,
   HeicMetadataRemoverRoute: HeicMetadataRemoverRoute,
@@ -548,6 +692,7 @@ const rootRouteChildren: RootRouteChildren = {
   HowItWorksRoute: HowItWorksRoute,
   InstagramAiLabelRoute: InstagramAiLabelRoute,
   MidjourneyMetadataRoute: MidjourneyMetadataRoute,
+  MuteExtractAudioRoute: MuteExtractAudioRoute,
   PdfMetadataRemoverRoute: PdfMetadataRemoverRoute,
   PhotoshopAiMetadataRoute: PhotoshopAiMetadataRoute,
   PngPromptRemoverRoute: PngPromptRemoverRoute,
@@ -560,7 +705,9 @@ const rootRouteChildren: RootRouteChildren = {
   TiktokAiLabelRoute: TiktokAiLabelRoute,
   ToolsRoute: ToolsRoute,
   VeoVideoMetadataRoute: VeoVideoMetadataRoute,
+  VideoFrameExtractorRoute: VideoFrameExtractorRoute,
   VideoMetadataRemoverRoute: VideoMetadataRemoverRoute,
+  VisibleIconRemoverRoute: VisibleIconRemoverRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -4,22 +4,28 @@ import { ACCEPTED_MEDIA_ACCEPT, filterAcceptedMediaFiles } from "#/lib/format";
 
 interface UploadDropzoneProps {
 	onFilesAdded: (files: File[]) => void;
-	onLoadSample: () => void;
-	isLoadingSample: boolean;
+	onLoadSample?: () => void;
+	isLoadingSample?: boolean;
 	heading?: string;
 	subtext?: string;
 	accept?: string;
 	hideSampleButton?: boolean;
+	singleFile?: boolean;
+	ariaLabel?: string;
+	filterFiles?: (files: FileList | File[]) => File[];
 }
 
 export function UploadDropzone({
 	onFilesAdded,
 	onLoadSample,
 	isLoadingSample,
-	heading = "Drop PNG, JPEG, WebP, HEIC, AVIF, MP4, MOV, or PDF files here",
-	subtext = "Runs 100% locally in your browser · Original quality & colors kept",
+	heading = "Drop photos, videos, audio, or PDF files here",
+	subtext = "PNG, JPEG, WebP, HEIC, AVIF, MP4, MOV, MKV, WebM, MP3, WAV, FLAC, OGG, M4A & PDF · 100% local",
 	accept = ACCEPTED_MEDIA_ACCEPT,
 	hideSampleButton = false,
+	singleFile = false,
+	ariaLabel = "Upload photos, videos, audio, or PDFs to clean hidden metadata",
+	filterFiles = filterAcceptedMediaFiles,
 }: UploadDropzoneProps) {
 	const inputId = useId();
 	const [isDragging, setIsDragging] = useState(false);
@@ -39,14 +45,16 @@ export function UploadDropzone({
 	function handleDrop(e: DragEvent<HTMLElement>) {
 		e.preventDefault();
 		setIsDragging(false);
-		const files = filterAcceptedMediaFiles(e.dataTransfer.files);
+		const filtered = filterFiles(e.dataTransfer.files);
+		const files = singleFile ? filtered.slice(0, 1) : filtered;
 		if (files.length > 0) {
 			onFilesAdded(files);
 		}
 	}
 
 	function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
-		const files = e.target.files ? Array.from(e.target.files) : [];
+		const raw = e.target.files ? Array.from(e.target.files) : [];
+		const files = singleFile ? raw.slice(0, 1) : raw;
 		if (files.length > 0) {
 			onFilesAdded(files);
 		}
@@ -55,7 +63,7 @@ export function UploadDropzone({
 
 	return (
 		<section
-			aria-label="Upload photos or videos to clean hidden metadata"
+			aria-label={ariaLabel}
 			onDragOver={handleDragOver}
 			onDragLeave={handleDragLeave}
 			onDrop={handleDrop}
@@ -65,7 +73,7 @@ export function UploadDropzone({
 				id={inputId}
 				type="file"
 				accept={accept}
-				multiple
+				multiple={!singleFile}
 				onChange={handleFileChange}
 				className="visually-hidden"
 			/>
@@ -94,10 +102,10 @@ export function UploadDropzone({
 						className="touch-target inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-(--brand-color) px-5 py-2.5 text-sm font-semibold text-(--brand-text) hover:bg-(--brand-hover)"
 					>
 						<FileImage className="h-4 w-4" aria-hidden="true" />
-						Choose Files
+						{singleFile ? "Choose a file" : "Choose Files"}
 					</label>
 
-					{!hideSampleButton && (
+					{!hideSampleButton && onLoadSample && (
 						<button
 							type="button"
 							onClick={onLoadSample}

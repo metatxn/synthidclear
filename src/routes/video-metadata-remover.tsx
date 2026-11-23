@@ -4,6 +4,7 @@ import { CleanerWorkspace } from "#/components/CleanerWorkspace";
 import { FaqAccordion, type FaqItem } from "#/components/FaqAccordion";
 import { JsonLd } from "#/components/JsonLd";
 import { VideoCliPanel } from "#/components/VideoCliPanel";
+import { VIDEO_ACCEPT } from "#/lib/format";
 import {
 	buildBreadcrumbSchema,
 	buildFaqSchema,
@@ -13,19 +14,20 @@ import {
 
 const VIDEO_FAQS: readonly FaqItem[] = [
 	{
-		question: "How can my browser clean large MP4 or MOV files so quickly?",
+		question:
+			"How can my browser clean MP4, MOV, MKV, and WebM files so quickly?",
 		answer:
-			"SynthIDClear only reads the small file header where hidden metadata lives while leaving the video and audio streams untouched on your device. Even large 500 MB clips clean in under a second with zero re-encoding.",
+			"SynthIDClear strips container headers and remuxes video and audio streams directly on your device without re-encoding pixels. Even large clips clean quickly with zero quality loss.",
 	},
 	{
 		question: "Does cleaning video metadata lose any video or audio quality?",
 		answer:
-			"No. Your original video and audio frames stay 100% untouched — only the hidden metadata tags are removed.",
+			"No. In the default lossless mode, your original video and audio frames stay 100% untouched — only hidden metadata tags, C2PA labels, GPS, and timestamps are removed. You can also switch to Convert / Re-encode mode if you want to convert MOV, MKV, or WebM to MP4.",
 	},
 	{
-		question: "What if I have an MKV, WebM, or multi-gigabyte video file?",
+		question: "What if I have a multi-gigabyte video file?",
 		answer:
-			"You can expand the advanced terminal helper at the bottom of this page for offline FFmpeg commands that handle MKV, WebM, and extra-large exports.",
+			"MP4, MOV, MKV, and WebM all clean directly in your browser. If you are processing massive multi-GB 4K archives offline, you can still expand the terminal helper at the bottom of this page for FFmpeg CLI commands.",
 	},
 	{
 		question: "Will removing video metadata erase invisible AI watermarks?",
@@ -37,9 +39,10 @@ const VIDEO_FAQS: readonly FaqItem[] = [
 export const Route = createFileRoute("/video-metadata-remover")({
 	head: () =>
 		buildRouteHead({
-			title: "Video Metadata Remover: MP4 & MOV (No Upload) | SynthIDClear",
+			title:
+				"Video Metadata Remover: MP4, MOV, MKV & WebM (No Upload) | SynthIDClear",
 			description:
-				"Losslessly strip AI tags, C2PA Content Credentials, GPS coordinates & camera metadata from MP4 and MOV videos in your browser. Zero uploads, zero re-encoding.",
+				"Losslessly strip AI tags, C2PA Content Credentials, GPS coordinates & camera metadata from MP4, MOV, MKV, and WebM videos in your browser. Zero uploads, zero re-encoding.",
 			path: "/video-metadata-remover",
 		}),
 	component: VideoMetadataRemoverPage,
@@ -58,24 +61,29 @@ function VideoMetadataRemoverPage() {
 				data={buildSoftwareAppSchema({
 					name: "SynthIDClear — In-Browser Video Metadata Remover",
 					description:
-						"Lossless in-browser MP4 and MOV metadata remover with zero uploads.",
+						"Lossless in-browser MP4, MOV, MKV, and WebM metadata remover with zero uploads.",
 					path: "/video-metadata-remover",
 				})}
 			/>
 			<JsonLd data={buildFaqSchema(VIDEO_FAQS)} />
 
-			<section className="space-y-2">
-				<h1 className="m-0 text-3xl font-semibold tracking-[-0.03em] text-(--text-primary) sm:text-4xl">
-					Video Metadata Remover (MP4 &amp; MOV)
+			<section className="mx-auto flex max-w-3xl flex-col gap-3 text-center">
+				<h1 className="m-0 text-3xl leading-[1.1] font-semibold tracking-[-0.03em] text-balance text-(--text-primary) sm:text-4xl">
+					Video Metadata Remover (MP4, MOV, MKV &amp; WebM)
 				</h1>
-				<p className="m-0 max-w-2xl text-base leading-relaxed text-(--text-secondary)">
-					Remove hidden AI labels, GPS location, camera info, and creation dates
-					from MP4 and MOV videos right in your browser — nothing is uploaded
-					and video quality stays 100% original.
+				<p className="mx-auto my-0 max-w-2xl text-base leading-relaxed text-pretty text-(--text-secondary)">
+					Remove hidden AI labels, GPS location, camera info, track names, and
+					creation dates from MP4, MOV, MKV, and WebM videos right in your
+					browser — nothing is uploaded and video quality stays 100% original.
 				</p>
 			</section>
 
-			<CleanerWorkspace />
+			<CleanerWorkspace
+				accept={VIDEO_ACCEPT}
+				dropzoneHeading="Drop MP4, MOV, MKV, or WebM videos here"
+				dropzoneSubtext="Lossless metadata strip or clean MP4/WebM re-encode · Stays on your device"
+				hideSampleButton
+			/>
 
 			<FaqAccordion heading="Common questions" items={VIDEO_FAQS} />
 
@@ -88,7 +96,7 @@ function VideoMetadataRemoverPage() {
 							aria-hidden="true"
 						/>
 						<span>
-							Advanced: Need MKV, WebM, or multi-GB terminal commands?
+							Advanced: Need multi-GB offline FFmpeg terminal commands?
 						</span>
 					</span>
 					<ChevronDown

@@ -13,6 +13,11 @@ const TOOL_GROUPS: ReadonlyArray<{
 	description: string;
 }> = [
 	{
+		key: "visual",
+		heading: "Edit Photos & Videos",
+		description: "Remove visible icons and logos from media.",
+	},
+	{
 		key: "ai-metadata",
 		heading: "Remove AI Metadata",
 		description:
@@ -32,18 +37,18 @@ const TOOL_GROUPS: ReadonlyArray<{
 	},
 	{
 		key: "formats",
-		heading: "HEIC, PDF & Video",
+		heading: "HEIC, PDF, Audio & Video",
 		description:
-			"Dedicated local tools for iPhone HEIC photos (lossless clean or JPG conversion), PDF documents, and MP4/MOV video files.",
+			"Dedicated local tools for iPhone HEIC photos, PDF documents, MP3/WAV/FLAC/OGG/M4A audio, and MP4/MOV/MKV/WebM video files.",
 	},
 ];
 
 export const Route = createFileRoute("/tools")({
 	head: () =>
 		buildRouteHead({
-			title: "All Free Metadata Tools — C2PA, EXIF, PDF | SynthIDClear",
+			title: "Free Metadata & Visible Icon Tools | SynthIDClear",
 			description:
-				"Browse every free, 100% browser-based metadata cleaner and checker: C2PA remover, AI-only remover, AI metadata checker, EXIF/GPS scrubber, HEIC, PDF & MP4.",
+				"Edit visible icons and browse free, browser-based tools for C2PA, AI metadata, EXIF, GPS, HEIC, PDF, and MP4 files.",
 			path: PATH,
 		}),
 	component: ToolsHubPage,
@@ -62,11 +67,11 @@ function ToolsHubPage() {
 			<section className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
 				<div className="space-y-2">
 					<h1 className="m-0 text-3xl font-semibold tracking-[-0.03em] text-(--text-primary) sm:text-4xl">
-						All Free Metadata Tools
+						All Free Tools
 					</h1>
 					<p className="m-0 max-w-2xl text-base leading-relaxed text-(--text-secondary)">
-						Every tool runs 100% locally inside your browser with zero uploads,
-						zero sign-ups, and lossless pixel quality by default.
+						Edit visible marks or clean hidden metadata entirely in your
+						browser, with zero uploads and zero sign-ups.
 					</p>
 				</div>
 

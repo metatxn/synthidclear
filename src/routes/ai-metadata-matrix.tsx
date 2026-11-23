@@ -385,14 +385,14 @@ function AiMetadataMatrixPage() {
 			/>
 			<JsonLd data={buildFaqSchema(MATRIX_FAQS)} />
 
-			<section className="space-y-4">
+			<section className="mx-auto flex max-w-3xl flex-col items-center gap-3.5 text-center">
 				<div className="inline-flex items-center gap-2 rounded-full border border-(--border-color) bg-(--bg-surface) px-3 py-1 text-xs font-medium text-(--text-secondary)">
 					<span>Technical Reference · Updated November 2026</span>
 				</div>
-				<h1 className="m-0 text-3xl leading-tight font-semibold tracking-[-0.03em] text-(--text-primary) sm:text-4xl">
+				<h1 className="m-0 text-3xl leading-[1.1] font-semibold tracking-[-0.03em] text-balance text-(--text-primary) sm:text-4xl">
 					2026 AI Metadata Matrix: C2PA, Prompts &amp; SynthID by Generator
 				</h1>
-				<p className="m-0 max-w-3xl text-base leading-relaxed text-(--text-secondary)">
+				<p className="mx-auto my-0 max-w-2xl text-base leading-relaxed text-pretty text-(--text-secondary)">
 					A practical reference comparing what hidden provenance metadata — and
 					what pixel or frame watermarks — major AI image and video tools write
 					into exported files, plus what lossless metadata cleaning can and

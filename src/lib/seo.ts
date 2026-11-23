@@ -63,7 +63,7 @@ export function buildWebsiteSchema() {
 				alternateName: "synthidclear.com",
 				url: `${SITE_URL}/`,
 				description:
-					"100% browser-based metadata cleaner for photos and videos (PNG, JPEG, WebP, HEIC, AVIF, MP4, MOV) with zero uploads and lossless quality.",
+					"100% browser-based metadata cleaner and media privacy toolkit for photos, videos, audio, and PDFs (PNG, JPEG, WebP, HEIC, AVIF, MP4, MOV, MKV, WebM, MP3, WAV, FLAC, OGG, M4A, AAC, PDF) with zero uploads and lossless quality.",
 				inLanguage: "en-US",
 				publisher: {
 					"@id": `${SITE_URL}/#organization`,
@@ -97,11 +97,12 @@ export function buildSoftwareAppSchema({
 		},
 		featureList: [
 			"100% client-side browser processing with zero server uploads",
-			"Lossless byte-level metadata stripping for PNG, JPEG, WebP, HEIC, AVIF, MP4, MOV, and PDF",
-			"Cross-browser HEIC to JPG conversion with automatic metadata removal",
-			"Removes C2PA / JUMBF Content Credentials, XMP DigitalSourceType, EXIF, GPS, IPTC, QuickTime tags, PDF Info/XMP, and PNG prompt chunks",
+			"Lossless metadata stripping for PNG, JPEG, WebP, HEIC, AVIF, MP4, MOV, MKV, WebM, MP3, WAV, FLAC, OGG, M4A, AAC, and PDF",
+			"Cross-browser HEIC to JPG and clean MOV/MKV/WebM to MP4 conversion with automatic metadata removal",
+			"Removes C2PA / JUMBF Content Credentials, XMP DigitalSourceType, EXIF, GPS, IPTC, QuickTime & Matroska tags, ID3/Vorbis/RIFF audio tags, cover art, PDF Info/XMP, and PNG prompt chunks",
+			"Local WebCodecs Visible Icon Remover with filmstrip scrubber, repaired playback, trim, crop, rotate, mute, and clean video frame extraction",
 			"Preserves ICC color profiles (Display P3 / sRGB) by default",
-			"Built-in binary re-scan verification confirming 0 metadata items remain",
+			"Built-in re-scan verification confirming 0 metadata items remain",
 		],
 	};
 }

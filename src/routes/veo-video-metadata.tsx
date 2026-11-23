@@ -15,7 +15,7 @@ const FAQS: readonly FaqItem[] = [
 		question:
 			"Does SynthIDClear remove SynthID or visible watermarks from Veo videos?",
 		answer:
-			"No. Google Veo embeds invisible SynthID watermarks directly into the video frames and audio waveform, and some tiers also render a visible Veo corner mark. Metadata cleaning never modifies video frames or audio tracks, so those remain intact.",
+			"The Visible Icon Remover can repair the area around a Veo corner mark. SynthID is a separate, invisible signal embedded in the frames and audio.",
 	},
 	{
 		question: "Will cleaning a Veo MP4 re-encode the video or lower bitrate?",
@@ -57,7 +57,7 @@ function VeoVideoMetadataPage() {
 				},
 				{
 					title: "Visible Veo watermark",
-					body: "When rendered into the corner of the frame, it is part of the video pixels and is never altered by SynthIDClear.",
+					body: "When rendered into the corner of the frame, the logo is part of the video pixels. Use the Visible Icon Remover to edit that area.",
 				},
 			]}
 			steps={[
@@ -73,8 +73,9 @@ function VeoVideoMetadataPage() {
 			]}
 			extraLink={{
 				to: "/video-metadata-remover",
-				label: "Video Metadata Remover (MP4, MOV & FFmpeg CLI)",
+				label: "Video Metadata Remover (MP4, MOV, MKV & WebM)",
 			}}
+			visibleIconEditor
 			faqs={FAQS}
 			schemaName="SynthIDClear Google Veo Video Metadata Cleaner"
 			schemaDescription="Inspect and losslessly remove MP4 container metadata and C2PA boxes from Google Veo videos locally in your browser without re-encoding."

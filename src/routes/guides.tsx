@@ -53,28 +53,53 @@ function GuidesHubPage() {
 				</Link>
 			</section>
 
-			<Link
-				to="/ai-metadata-matrix"
-				className="group flex flex-col justify-between gap-4 rounded-2xl border border-(--brand-color)/30 bg-(--bg-surface) p-5 text-(--text-primary) no-underline hover:border-(--brand-color) sm:flex-row sm:items-center"
-			>
-				<div className="space-y-1">
-					<span className="inline-block text-xs font-semibold tracking-wide text-(--brand-color) uppercase">
-						2026 Reference Table
+			<div className="grid gap-4 md:grid-cols-2">
+				<Link
+					to="/ai-metadata-matrix"
+					className="group flex flex-col justify-between gap-4 rounded-2xl border border-(--brand-color)/30 bg-(--bg-surface) p-5 text-(--text-primary) no-underline hover:border-(--brand-color)"
+				>
+					<div className="space-y-1">
+						<span className="inline-block text-xs font-semibold tracking-wide text-(--brand-color) uppercase">
+							2026 Reference Table
+						</span>
+						<h2 className="m-0 text-lg font-semibold text-(--text-primary) group-hover:text-(--brand-color)">
+							2026 AI Metadata Matrix: C2PA, Prompts &amp; SynthID
+						</h2>
+						<p className="m-0 text-sm text-(--text-secondary)">
+							Compare ChatGPT, Sora, Gemini, Veo, Adobe Firefly, Photoshop,
+							Midjourney, ComfyUI, Stable Diffusion, Flux &amp; Runway side by
+							side.
+						</p>
+					</div>
+					<span className="inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-(--brand-color)">
+						View matrix
+						<ArrowRight className="h-4 w-4" aria-hidden="true" />
 					</span>
-					<h2 className="m-0 text-lg font-semibold text-(--text-primary) group-hover:text-(--brand-color)">
-						2026 AI Metadata Matrix: C2PA, Prompts &amp; SynthID by Generator
-					</h2>
-					<p className="m-0 text-sm text-(--text-secondary)">
-						Compare ChatGPT, Sora, Gemini, Veo, Adobe Firefly, Photoshop,
-						Midjourney, ComfyUI, Stable Diffusion, Flux &amp; Runway side by
-						side.
-					</p>
-				</div>
-				<span className="inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-(--brand-color)">
-					View matrix
-					<ArrowRight className="h-4 w-4" aria-hidden="true" />
-				</span>
-			</Link>
+				</Link>
+
+				<Link
+					to="/advanced-media-guide"
+					className="group flex flex-col justify-between gap-4 rounded-2xl border border-(--border-color) bg-(--bg-card) p-5 text-(--text-primary) no-underline hover:border-(--brand-color)"
+				>
+					<div className="space-y-1">
+						<span className="inline-block text-xs font-semibold tracking-wide text-(--brand-color) uppercase">
+							Power-User Playbook
+						</span>
+						<h2 className="m-0 text-lg font-semibold text-(--text-primary) group-hover:text-(--brand-color)">
+							Advanced Video &amp; Audio Operations Guide
+						</h2>
+						<p className="m-0 text-sm text-(--text-secondary)">
+							Moving-watermark keyframing, lossless trim/mute vs. WebCodecs
+							re-encode, 4K direct-to-disk streaming, Streams forensics &amp;
+							batch FFmpeg recipes.
+						</p>
+					</div>
+					<span className="inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-(--brand-color)">
+						Read guide
+						<ArrowRight className="h-4 w-4" aria-hidden="true" />
+					</span>
+				</Link>
+			</div>
 
 			<section aria-labelledby="social-guides-heading" className="space-y-4">
 				<div className="space-y-1">
@@ -119,7 +144,7 @@ function GuidesHubPage() {
 						id="generator-guides-heading"
 						className="m-0 text-xl font-semibold tracking-[-0.02em] text-(--text-primary)"
 					>
-						AI image &amp; video generators
+						AI image, video &amp; audio generators
 					</h2>
 					<p className="m-0 text-sm text-(--text-secondary)">
 						Exactly which C2PA manifests, IPTC tags, prompts, or watermarks each
