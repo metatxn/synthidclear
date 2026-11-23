@@ -53,10 +53,9 @@ const HEIC_BENEFITS = [
 export const Route = createFileRoute("/heic-metadata-remover")({
 	head: () =>
 		buildRouteHead({
-			title:
-				"HEIC & AVIF Metadata Remover — Lossless iPhone EXIF & GPS Cleaner | SynthIDClear",
+			title: "HEIC Metadata Remover — Lossless iPhone EXIF | SynthIDClear",
 			description:
-				"Remove EXIF, GPS location, XMP, and C2PA metadata from iPhone HEIC and AVIF photos locally in any browser without converting to JPEG or losing Display P3 colors.",
+				"Strip EXIF, GPS, XMP & C2PA from iPhone HEIC & AVIF photos locally in Chrome, Firefox, Safari & Edge. No JPEG conversion, Display P3 kept, zero uploads.",
 			path: PATH,
 		}),
 	component: HeicMetadataRemoverPage,

@@ -138,3 +138,50 @@ export function buildBreadcrumbSchema(items: readonly BreadcrumbItem[]) {
 		})),
 	};
 }
+
+export function buildArticleSchema({
+	headline,
+	description,
+	path,
+	datePublished,
+	dateModified,
+}: {
+	headline: string;
+	description: string;
+	path: string;
+	datePublished: string;
+	dateModified: string;
+}) {
+	const url = `${SITE_URL}${path === "/" ? "/" : path}`;
+	return {
+		"@context": "https://schema.org",
+		"@type": "TechArticle",
+		headline,
+		description,
+		url,
+		mainEntityOfPage: {
+			"@type": "WebPage",
+			"@id": url,
+		},
+		image: `${SITE_URL}/og-image.png`,
+		datePublished,
+		dateModified,
+		inLanguage: "en-US",
+		author: {
+			"@type": "Organization",
+			name: SITE_NAME,
+			url: `${SITE_URL}/`,
+		},
+		publisher: {
+			"@type": "Organization",
+			name: SITE_NAME,
+			url: `${SITE_URL}/`,
+			logo: {
+				"@type": "ImageObject",
+				url: `${SITE_URL}/icon-512.png`,
+				width: 512,
+				height: 512,
+			},
+		},
+	};
+}

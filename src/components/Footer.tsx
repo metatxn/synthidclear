@@ -197,6 +197,14 @@ export function Footer() {
 							<ul className="m-0 list-none space-y-2 p-0 text-sm">
 								<li>
 									<Link
+										to="/ai-metadata-matrix"
+										className="text-(--text-secondary) no-underline hover:text-(--text-primary)"
+									>
+										2026 AI Metadata Matrix
+									</Link>
+								</li>
+								<li>
+									<Link
 										to="/how-it-works"
 										className="text-(--text-secondary) no-underline hover:text-(--text-primary)"
 									>

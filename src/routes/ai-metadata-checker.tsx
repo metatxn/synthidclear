@@ -58,10 +58,9 @@ const CHECKED_LAYERS = [
 export const Route = createFileRoute("/ai-metadata-checker")({
 	head: () =>
 		buildRouteHead({
-			title:
-				"AI Metadata & C2PA Checker — View Hidden Image & Video Tags | SynthIDClear",
+			title: "AI Metadata & C2PA Checker (Free, No Upload) | SynthIDClear",
 			description:
-				"Inspect any PNG, JPEG, WebP, HEIC, AVIF, MP4, or MOV file for C2PA Content Credentials, AI generator tags, prompts, GPS, EXIF, and metadata size locally in your browser.",
+				"Inspect PNG, JPEG, WebP, HEIC, MP4, MOV & PDF files for C2PA, AI generator tags, prompts, GPS, EXIF & metadata size. 100% free & private in your browser.",
 			path: PATH,
 		}),
 	component: AiMetadataCheckerPage,
@@ -169,6 +168,13 @@ function AiMetadataCheckerPage() {
 						className="inline-flex items-center gap-1 text-sm font-semibold text-(--brand-color) no-underline hover:underline"
 					>
 						Remove AI Tags Only (Keep EXIF)
+						<ArrowRight className="h-4 w-4" aria-hidden="true" />
+					</Link>
+					<Link
+						to="/ai-metadata-matrix"
+						className="inline-flex items-center gap-1 text-sm font-semibold text-(--brand-color) no-underline hover:underline"
+					>
+						2026 AI Metadata Matrix
 						<ArrowRight className="h-4 w-4" aria-hidden="true" />
 					</Link>
 				</div>

@@ -32,10 +32,9 @@ const FAQS: readonly FaqItem[] = [
 export const Route = createFileRoute("/midjourney-metadata")({
 	head: () =>
 		buildRouteHead({
-			title:
-				"Midjourney Image Metadata: View & Remove Prompts & AI Tags | SynthIDClear",
+			title: "Midjourney Metadata: Remove Prompts & AI Tags | SynthIDClear",
 			description:
-				"Inspect and remove hidden prompts, job IDs, Author fields, and IPTC DigitalSourceType tags from Midjourney PNG, JPEG, and WebP images locally in your browser.",
+				"Inspect and remove hidden prompts, Job IDs, Author fields & IPTC DigitalSourceType tags from Midjourney PNG, JPEG & WebP images locally with no uploads.",
 			path: PATH,
 		}),
 	component: MidjourneyMetadataPage,

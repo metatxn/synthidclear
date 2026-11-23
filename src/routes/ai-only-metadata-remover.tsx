@@ -52,10 +52,9 @@ const KEPT_ITEMS = [
 export const Route = createFileRoute("/ai-only-metadata-remover")({
 	head: () =>
 		buildRouteHead({
-			title:
-				"AI-Only Metadata Remover — Strip AI Tags & Keep Camera EXIF | SynthIDClear",
+			title: "AI-Only Metadata Remover: Keep Camera EXIF | SynthIDClear",
 			description:
-				"Remove only C2PA Content Credentials, AI creator labels, and prompts while preserving your camera EXIF, lens info, copyright, and color profile locally in your browser.",
+				"Remove only C2PA, AI creator labels, and prompts while keeping camera EXIF, lens info, copyright & colors intact. Free, lossless & local in your browser.",
 			path: PATH,
 		}),
 	component: AiOnlyMetadataRemoverPage,

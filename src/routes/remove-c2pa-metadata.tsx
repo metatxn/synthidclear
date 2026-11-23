@@ -36,9 +36,9 @@ const C2PA_FAQS: readonly FaqItem[] = [
 export const Route = createFileRoute("/remove-c2pa-metadata")({
 	head: () =>
 		buildRouteHead({
-			title: "Remove C2PA Metadata & AI Credentials Online | SynthIDClear",
+			title: "Remove C2PA Metadata & AI Tags (Free, Local) | SynthIDClear",
 			description:
-				"Clean C2PA Content Credentials and hidden AI creator labels from PNG, JPEG, WebP, HEIC, and AVIF images 100% locally in your browser with original quality kept.",
+				"Strip C2PA Content Credentials and hidden AI creator labels from PNG, JPEG, WebP, HEIC, AVIF, MP4 & MOV locally in your browser with zero quality loss.",
 			path: "/remove-c2pa-metadata",
 		}),
 	component: RemoveC2paPage,
