@@ -42,6 +42,7 @@ import {
 	pickVideoSaveHandle,
 	supportsDirectDiskSave,
 } from "#/lib/iconVideoExport";
+import { toSafeBlobUrl } from "#/lib/safeUrl";
 import {
 	type FilmstripFrame,
 	VideoPreviewSession,
@@ -57,14 +58,14 @@ const coordinateKeys = ["x", "y", "width", "height"] as const;
 type RotationDegrees = 0 | 90 | 180 | 270;
 
 function useObjectUrl(blob: Blob | null) {
-	const [url, setUrl] = useState("");
+	const [url, setUrl] = useState<string | undefined>(undefined);
 	useEffect(() => {
 		if (!blob) {
-			setUrl("");
+			setUrl(undefined);
 			return;
 		}
 		const objectUrl = URL.createObjectURL(blob);
-		setUrl(objectUrl);
+		setUrl(toSafeBlobUrl(objectUrl));
 		return () => URL.revokeObjectURL(objectUrl);
 	}, [blob]);
 	return url;
@@ -782,7 +783,7 @@ function IconEditor({
 					useVideoFallback && (
 						<video
 							ref={videoRef}
-							src={sourceUrl}
+							src={toSafeBlobUrl(sourceUrl)}
 							preload="auto"
 							playsInline
 							muted
@@ -821,7 +822,7 @@ function IconEditor({
 				) : (
 					<img
 						ref={imageRef}
-						src={sourceUrl}
+						src={toSafeBlobUrl(sourceUrl)}
 						alt=""
 						hidden
 						onLoad={({ currentTarget: image }) =>
@@ -994,7 +995,7 @@ function IconEditor({
 												className="group relative block h-11 cursor-pointer overflow-hidden border-0 bg-transparent p-0 focus-visible:z-10"
 											>
 												<img
-													src={frame.url}
+													src={toSafeBlobUrl(frame.url)}
 													alt=""
 													className="h-full w-full object-cover opacity-90 transition-opacity group-hover:opacity-100"
 												/>
@@ -1374,7 +1375,7 @@ function IconEditor({
 						{result && resultUrl ? (
 							<a
 								className={primaryButton}
-								href={resultUrl}
+								href={toSafeBlobUrl(resultUrl)}
 								download={buildCleanedFilename(
 									file.name,
 									"_edited",

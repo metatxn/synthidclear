@@ -26,6 +26,7 @@ import {
 	type MetadataCategory,
 	type MetadataEntry,
 } from "#/lib/metadata";
+import { toSafeBlobUrl } from "#/lib/safeUrl";
 import type { ImageQueueItem } from "./types";
 
 function formatMediaDuration(seconds: number): string {
@@ -73,7 +74,7 @@ export function MetadataInspector({
 	const origTabRef = useRef<HTMLButtonElement>(null);
 	const verifTabRef = useRef<HTMLButtonElement>(null);
 
-	const previewSrc = item?.cleanedUrl ?? item?.previewUrl ?? "";
+	const previewSrc = toSafeBlobUrl(item?.cleanedUrl ?? item?.previewUrl);
 	useEffect(() => {
 		if (previewSrc) {
 			setImgError(false);

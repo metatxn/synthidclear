@@ -15,6 +15,7 @@ import {
 	pickVideoSaveHandle,
 	supportsDirectDiskSave,
 } from "#/lib/iconVideoExport";
+import { toSafeBlobUrl } from "#/lib/safeUrl";
 import {
 	buildBreadcrumbSchema,
 	buildFaqSchema,
@@ -423,7 +424,7 @@ function CompressVideoPage() {
 							</div>
 							{resultUrl && (
 								<a
-									href={resultUrl}
+									href={toSafeBlobUrl(resultUrl)}
 									download={buildCleanedFilename(
 										file.name,
 										"_compressed",

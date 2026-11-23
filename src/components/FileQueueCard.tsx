@@ -10,6 +10,7 @@ import {
 import { useState } from "react";
 import { formatBytes } from "#/lib/format";
 import { isAudioFormat, isPdfFormat, isVideoFormat } from "#/lib/metadata";
+import { toSafeBlobUrl } from "#/lib/safeUrl";
 import type { ImageQueueItem } from "./types";
 
 interface FileQueueCardProps {
@@ -82,7 +83,7 @@ export function FileQueueCard({
 					item.thumbnailUrl ? (
 						<div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-lg border border-(--border-color) bg-black">
 							<img
-								src={item.thumbnailUrl}
+								src={toSafeBlobUrl(item.thumbnailUrl)}
 								alt={item.file.name}
 								className="h-full w-full object-cover"
 							/>
@@ -104,7 +105,7 @@ export function FileQueueCard({
 					</div>
 				) : (
 					<img
-						src={item.previewUrl}
+						src={toSafeBlobUrl(item.previewUrl)}
 						alt={item.file.name}
 						onError={() => setImgError(true)}
 						className="h-12 w-12 shrink-0 rounded-lg border border-(--border-color) bg-(--bg-surface) object-cover"

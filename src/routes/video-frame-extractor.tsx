@@ -19,6 +19,7 @@ import { JsonLd } from "#/components/JsonLd";
 import { UploadDropzone } from "#/components/UploadDropzone";
 import { buildCleanedFilename, VIDEO_ACCEPT } from "#/lib/format";
 import { clamp } from "#/lib/iconRemoval";
+import { toSafeBlobUrl } from "#/lib/safeUrl";
 import {
 	buildBreadcrumbSchema,
 	buildFaqSchema,
@@ -411,7 +412,7 @@ function VideoFrameExtractorPage() {
 												className="block h-12 cursor-pointer overflow-hidden border-0 bg-transparent p-0 focus-visible:z-10"
 											>
 												<img
-													src={frame.url}
+													src={toSafeBlobUrl(frame.url)}
 													alt=""
 													className="h-full w-full object-cover opacity-90 hover:opacity-100"
 												/>

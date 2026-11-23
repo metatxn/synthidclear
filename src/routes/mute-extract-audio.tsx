@@ -5,6 +5,7 @@ import { FaqAccordion, type FaqItem } from "#/components/FaqAccordion";
 import { JsonLd } from "#/components/JsonLd";
 import { UploadDropzone } from "#/components/UploadDropzone";
 import { buildCleanedFilename, formatBytes, VIDEO_ACCEPT } from "#/lib/format";
+import { toSafeBlobUrl } from "#/lib/safeUrl";
 import {
 	buildBreadcrumbSchema,
 	buildFaqSchema,
@@ -341,7 +342,7 @@ function MuteExtractAudioPage() {
 								</div>
 
 								<a
-									href={resultUrl}
+									href={toSafeBlobUrl(resultUrl)}
 									download={buildCleanedFilename(
 										file.name,
 										mode === "mute" ? "_muted" : "_audio",
@@ -356,7 +357,7 @@ function MuteExtractAudioPage() {
 
 							{mode === "extract" && (
 								<audio
-									src={resultUrl}
+									src={toSafeBlobUrl(resultUrl)}
 									controls
 									className="w-full"
 									aria-label="Extracted audio preview"
