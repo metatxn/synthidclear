@@ -1,6 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useCallback, useRef } from "react";
-import { CleanerWorkspace } from "#/components/CleanerWorkspace";
 import { FaqAccordion, type FaqItem } from "#/components/FaqAccordion";
 import { JsonLd } from "#/components/JsonLd";
 import { LandingHero } from "#/components/LandingHero";
@@ -55,29 +53,6 @@ export const Route = createFileRoute("/")({
 
 function HomePage() {
 	const cleaner = useCleanerState();
-	const studioRef = useRef<HTMLDivElement>(null);
-
-	const scrollToStudio = useCallback(() => {
-		requestAnimationFrame(() => {
-			studioRef.current?.scrollIntoView({
-				behavior: "smooth",
-				block: "start",
-			});
-		});
-	}, []);
-
-	const handleHeroFilesAdded = useCallback(
-		async (files: File[]) => {
-			await cleaner.handleFilesAdded(files);
-			scrollToStudio();
-		},
-		[cleaner, scrollToStudio],
-	);
-
-	const handleHeroSample = useCallback(async () => {
-		await cleaner.handleLoadSample();
-		scrollToStudio();
-	}, [cleaner, scrollToStudio]);
 
 	return (
 		<div>
@@ -92,29 +67,7 @@ function HomePage() {
 			/>
 			<JsonLd data={buildFaqSchema(HOME_FAQS)} />
 
-			<LandingHero
-				onFilesAdded={handleHeroFilesAdded}
-				onLoadSample={handleHeroSample}
-				isLoadingSample={cleaner.isLoadingSample}
-				queuedCount={cleaner.items.length}
-			/>
-
-			<div ref={studioRef} className="scroll-mt-16">
-				{cleaner.items.length > 0 && (
-					<section
-						aria-label="Image cleaner workspace"
-						className="border-y border-(--border-color) bg-(--bg-surface) py-8"
-					>
-						<div className="mx-auto max-w-5xl px-4 sm:px-6">
-							<CleanerWorkspace
-								externalState={cleaner}
-								hideDropzone
-								hideScopeBanner
-							/>
-						</div>
-					</section>
-				)}
-			</div>
+			<LandingHero cleaner={cleaner} />
 
 			<LandingSections />
 
