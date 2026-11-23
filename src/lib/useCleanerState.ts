@@ -57,7 +57,9 @@ export function useCleanerState(initialOptions?: Partial<CleanOptions>) {
 		}));
 
 		setItems((prev) => [...newItems, ...prev]);
-		setSelectedId((prev) => prev ?? newItems[0]?.id ?? null);
+		if (newItems[0]) {
+			setSelectedId(newItems[0].id);
+		}
 
 		await runWithConcurrency(newItems, 2, async (entry) => {
 			try {

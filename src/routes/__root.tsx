@@ -2,6 +2,7 @@ import { TanStackDevtools } from "@tanstack/react-devtools";
 import {
 	createRootRoute,
 	HeadContent,
+	Link,
 	Outlet,
 	Scripts,
 } from "@tanstack/react-router";
@@ -81,8 +82,42 @@ export const Route = createRootRoute({
 		],
 	}),
 	component: RootLayout,
+	notFoundComponent: RootNotFound,
 	shellComponent: RootDocument,
 });
+
+function RootNotFound() {
+	return (
+		<div className="mx-auto flex max-w-md flex-col items-center px-4 py-20 text-center sm:px-6">
+			<div className="w-full rounded-2xl border border-(--border-color) bg-(--bg-card) p-8">
+				<p className="m-0 text-xs font-semibold tracking-[0.06em] text-(--brand-color) uppercase">
+					404
+				</p>
+				<h1 className="mt-2 mb-3 text-2xl leading-tight font-semibold tracking-[-0.03em] text-(--text-primary)">
+					Page not found
+				</h1>
+				<p className="m-0 mb-6 text-sm leading-relaxed text-(--text-secondary)">
+					That page doesn&apos;t exist. Head back to the cleaner to inspect and
+					strip hidden metadata locally in your browser.
+				</p>
+				<div className="flex flex-wrap items-center justify-center gap-2.5">
+					<Link
+						to="/"
+						className="touch-target inline-flex items-center justify-center rounded-xl bg-(--brand-color) px-4 py-2.5 text-sm font-semibold text-(--brand-text) no-underline hover:bg-(--brand-hover)"
+					>
+						Go to SynthIDClear
+					</Link>
+					<Link
+						to="/tools"
+						className="touch-target inline-flex items-center justify-center rounded-xl border border-(--border-color) bg-(--bg-surface) px-4 py-2.5 text-sm font-semibold text-(--text-primary) no-underline hover:border-(--text-primary)"
+					>
+						All tools
+					</Link>
+				</div>
+			</div>
+		</div>
+	);
+}
 
 function RootLayout() {
 	useEffect(() => {

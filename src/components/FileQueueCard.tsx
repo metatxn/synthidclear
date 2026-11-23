@@ -1,33 +1,89 @@
 import {
 	CheckCircle2,
-	Download,
 	FileText,
 	Film,
 	Loader2,
 	Music,
+	Trash2,
 	X,
 } from "lucide-react";
 import { useState } from "react";
-import { formatBytes } from "#/lib/format";
 import { isAudioFormat, isPdfFormat, isVideoFormat } from "#/lib/metadata";
 import { toSafeBlobUrl } from "#/lib/safeUrl";
 import type { ImageQueueItem } from "./types";
 
-interface FileQueueCardProps {
-	item: ImageQueueItem;
-	isSelected: boolean;
+interface BatchQueueStripProps {
+	items: ImageQueueItem[];
+	selectedId: string | null;
+	cleanedCount: number;
+	totalSignals: number;
+	isBusy: boolean;
 	onSelect: (id: string) => void;
 	onRemove: (id: string) => void;
-	onDownload: (item: ImageQueueItem) => void;
+	onClearAll: () => void;
 }
 
-export function FileQueueCard({
+export function BatchQueueStrip({
+	items,
+	selectedId,
+	cleanedCount,
+	totalSignals,
+	isBusy,
+	onSelect,
+	onRemove,
+	onClearAll,
+}: BatchQueueStripProps) {
+	return (
+		<div className="border-b border-(--border-color) bg-(--bg-surface)/60 px-4 py-3 sm:px-5">
+			<div className="mb-2.5 flex flex-wrap items-center justify-between gap-2">
+				<div className="flex flex-wrap items-center gap-2 text-xs">
+					<span className="font-semibold text-(--text-primary)">
+						Batch ({items.length} files)
+					</span>
+					<span className="tabular rounded-full border border-(--border-color) bg-(--bg-card) px-2 py-0.5 text-[11px] font-medium text-(--text-secondary)">
+						{cleanedCount > 0
+							? `${cleanedCount} of ${items.length} cleaned`
+							: `${totalSignals} ${totalSignals === 1 ? "signal" : "signals"} total`}
+					</span>
+				</div>
+
+				<button
+					type="button"
+					onClick={onClearAll}
+					disabled={isBusy}
+					className="touch-target inline-flex cursor-pointer items-center gap-1 rounded-lg px-2 py-1 text-xs font-medium text-(--text-secondary) hover:text-(--danger-color) disabled:cursor-not-allowed disabled:opacity-45"
+				>
+					<Trash2 className="h-3.5 w-3.5" aria-hidden="true" />
+					Clear all
+				</button>
+			</div>
+
+			<div className="custom-scroll flex gap-2 overflow-x-auto pb-0.5">
+				{items.map((item) => (
+					<BatchQueueChip
+						key={item.id}
+						item={item}
+						isSelected={selectedId === item.id}
+						onSelect={onSelect}
+						onRemove={onRemove}
+					/>
+				))}
+			</div>
+		</div>
+	);
+}
+
+function BatchQueueChip({
 	item,
 	isSelected,
 	onSelect,
 	onRemove,
-	onDownload,
-}: FileQueueCardProps) {
+}: {
+	item: ImageQueueItem;
+	isSelected: boolean;
+	onSelect: (id: string) => void;
+	onRemove: (id: string) => void;
+}) {
 	const [imgError, setImgError] = useState(false);
 	const metaCount = item.originalMeta?.strippableCount ?? 0;
 	const isVideo =
@@ -42,99 +98,63 @@ export function FileQueueCard({
 		isPdfFormat(item.originalMeta?.format) ||
 		item.file.type === "application/pdf" ||
 		/\.pdf$/i.test(item.file.name);
-	const formatBadge =
-		item.originalMeta?.format && item.originalMeta.format !== "unknown"
-			? item.originalMeta.format.toUpperCase()
-			: isPdf
-				? "PDF"
-				: isAudio
-					? "AUD"
-					: isVideo
-						? "VID"
-						: "IMG";
 
 	return (
 		<div
-			className={`group relative flex items-center gap-3 rounded-xl border p-2.5 transition-colors ${
+			className={`flex shrink-0 items-center gap-2 rounded-xl border p-1.5 pr-1 transition-colors ${
 				isSelected
-					? "border-(--brand-color) bg-(--bg-surface)"
-					: "border-(--border-color) bg-(--bg-card) hover:border-(--text-muted)"
+					? "border-(--brand-color) bg-(--bg-card) shadow-xs"
+					: "border-(--border-color) bg-(--bg-card)/70 hover:border-(--text-muted)"
 			}`}
 		>
 			<button
 				type="button"
 				onClick={() => onSelect(item.id)}
 				aria-current={isSelected ? "true" : undefined}
-				className="flex min-w-0 flex-1 cursor-pointer items-center gap-3 border-0 bg-transparent p-0 text-left"
+				className="flex cursor-pointer items-center gap-2 border-0 bg-transparent p-0 text-left"
 			>
 				{isPdf ? (
-					<div className="flex h-12 w-12 shrink-0 flex-col items-center justify-center rounded-lg border border-(--border-color) bg-(--bg-surface) text-(--text-secondary)">
+					<span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-(--border-color) bg-(--bg-surface) text-(--text-secondary)">
 						<FileText className="h-4 w-4" aria-hidden="true" />
-						<span className="font-mono text-[9px] font-semibold">PDF</span>
-					</div>
+					</span>
 				) : isAudio ? (
-					<div className="flex h-12 w-12 shrink-0 flex-col items-center justify-center rounded-lg border border-(--border-color) bg-(--bg-surface) text-(--text-secondary)">
+					<span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-(--border-color) bg-(--bg-surface) text-(--text-secondary)">
 						<Music className="h-4 w-4" aria-hidden="true" />
-						<span className="font-mono text-[9px] font-semibold">
-							{formatBadge}
-						</span>
-					</div>
+					</span>
 				) : isVideo ? (
 					item.thumbnailUrl ? (
-						<div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-lg border border-(--border-color) bg-black">
-							<img
-								src={toSafeBlobUrl(item.thumbnailUrl)}
-								alt={item.file.name}
-								className="h-full w-full object-cover"
-							/>
-							<span className="absolute right-0.5 bottom-0.5 rounded bg-black/75 px-1 py-0 font-mono text-[8px] font-semibold text-white">
-								{formatBadge}
-							</span>
-						</div>
+						<img
+							src={toSafeBlobUrl(item.thumbnailUrl)}
+							alt=""
+							className="h-9 w-9 shrink-0 rounded-lg border border-(--border-color) bg-black object-cover"
+						/>
 					) : (
-						<div className="flex h-12 w-12 shrink-0 flex-col items-center justify-center rounded-lg border border-(--border-color) bg-(--bg-surface) text-(--text-secondary)">
+						<span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-(--border-color) bg-(--bg-surface) text-(--text-secondary)">
 							<Film className="h-4 w-4" aria-hidden="true" />
-							<span className="font-mono text-[9px] font-semibold">
-								{formatBadge}
-							</span>
-						</div>
+						</span>
 					)
 				) : imgError ? (
-					<div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg border border-(--border-color) bg-(--bg-surface) font-mono text-[10px] font-semibold text-(--text-secondary)">
-						{formatBadge}
-					</div>
+					<span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-(--border-color) bg-(--bg-surface) font-mono text-[9px] font-semibold text-(--text-secondary)">
+						IMG
+					</span>
 				) : (
 					<img
 						src={toSafeBlobUrl(item.previewUrl)}
-						alt={item.file.name}
+						alt=""
 						onError={() => setImgError(true)}
-						className="h-12 w-12 shrink-0 rounded-lg border border-(--border-color) bg-(--bg-surface) object-cover"
+						className="h-9 w-9 shrink-0 rounded-lg border border-(--border-color) bg-(--bg-surface) object-cover"
 					/>
 				)}
 
-				<div className="min-w-0 flex-1 space-y-0.5">
-					<div className="truncate text-sm font-medium text-(--text-primary)">
+				<div className="max-w-32 min-w-0">
+					<span className="block truncate text-xs font-medium text-(--text-primary)">
 						{item.file.name}
-					</div>
-
-					<div className="tabular text-xs whitespace-nowrap text-(--text-muted)">
-						{item.cleanResult ? (
-							<>
-								{formatBytes(item.cleanResult.originalSize)} →{" "}
-								<strong className="font-semibold text-(--text-primary)">
-									{formatBytes(item.cleanResult.cleanedSize)}
-								</strong>
-							</>
-						) : (
-							formatBytes(item.file.size)
-						)}
-					</div>
-
-					<div className="text-xs font-medium">
+					</span>
+					<span className="block text-[11px] font-medium">
 						{item.status === "scanning" && (
 							<span className="inline-flex items-center gap-1 text-(--text-muted)">
 								<Loader2 className="h-3 w-3 animate-spin" aria-hidden="true" />
-								Checking file…
+								Scanning…
 							</span>
 						)}
 						{item.status === "cleaning" && (
@@ -144,47 +164,37 @@ export function FileQueueCard({
 							</span>
 						)}
 						{item.status === "ready" && (
-							<span className="text-(--brand-color)">
+							<span
+								className={
+									metaCount > 0 ? "text-(--brand-color)" : "text-(--text-muted)"
+								}
+							>
 								{metaCount > 0
-									? `${metaCount} hidden ${metaCount === 1 ? "item" : "items"} found`
-									: "No hidden items found"}
+									? `${metaCount} ${metaCount === 1 ? "signal" : "signals"}`
+									: "Clean"}
 							</span>
 						)}
 						{item.status === "cleaned" && (
 							<span className="inline-flex items-center gap-1 text-(--success-color)">
 								<CheckCircle2 className="h-3 w-3" aria-hidden="true" />
-								{item.cleanResult?.stripScope === "ai-only"
-									? "AI Tags Cleaned"
-									: "Clean & Ready"}
+								Done
 							</span>
 						)}
 						{item.status === "error" && (
 							<span className="text-(--danger-color)">Error</span>
 						)}
-					</div>
+					</span>
 				</div>
 			</button>
 
-			<div className="flex shrink-0 items-center gap-1">
-				{item.status === "cleaned" && (
-					<button
-						type="button"
-						onClick={() => onDownload(item)}
-						aria-label={`Download cleaned ${item.file.name}`}
-						className="touch-target inline-flex cursor-pointer items-center justify-center rounded-lg border border-(--border-color) bg-(--bg-card) p-1.5 text-(--text-primary) hover:border-(--text-primary)"
-					>
-						<Download className="h-4 w-4" aria-hidden="true" />
-					</button>
-				)}
-				<button
-					type="button"
-					onClick={() => onRemove(item.id)}
-					aria-label={`Remove ${item.file.name}`}
-					className="touch-target inline-flex cursor-pointer items-center justify-center rounded-lg border border-transparent p-1.5 text-(--text-muted) hover:text-(--danger-color)"
-				>
-					<X className="h-4 w-4" aria-hidden="true" />
-				</button>
-			</div>
+			<button
+				type="button"
+				onClick={() => onRemove(item.id)}
+				aria-label={`Remove ${item.file.name}`}
+				className="touch-target inline-flex cursor-pointer items-center justify-center rounded-lg border border-transparent p-1 text-(--text-muted) hover:text-(--danger-color)"
+			>
+				<X className="h-3.5 w-3.5" aria-hidden="true" />
+			</button>
 		</div>
 	);
 }
