@@ -31,10 +31,9 @@ const FAQS: readonly FaqItem[] = [
 export const Route = createFileRoute("/veo-video-metadata")({
 	head: () =>
 		buildRouteHead({
-			title:
-				"Google Veo Video Metadata: MP4 Tags vs. SynthID Watermarks | SynthIDClear",
+			title: "Google Veo Video Metadata vs. SynthID (2026) | SynthIDClear",
 			description:
-				"Inspect and losslessly remove container metadata and C2PA tags from Google Veo MP4 videos in your browser, with clear guidance on SynthID video & audio watermarks.",
+				"Inspect and losslessly remove MP4 container metadata & C2PA tags from Google Veo videos in your browser, plus honest facts on SynthID video/audio watermarks.",
 			path: PATH,
 		}),
 	component: VeoVideoMetadataPage,

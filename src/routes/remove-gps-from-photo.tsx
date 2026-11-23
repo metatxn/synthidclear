@@ -53,9 +53,9 @@ const GPS_LOCATIONS = [
 export const Route = createFileRoute("/remove-gps-from-photo")({
 	head: () =>
 		buildRouteHead({
-			title: "Remove GPS from Photos & Videos Privately Online | SynthIDClear",
+			title: "Remove GPS from Photo & Video (No Upload) | SynthIDClear",
 			description:
-				"Find and delete exact GPS coordinates and location tags from JPEG, HEIC, PNG, WebP, MP4, and MOV files locally in your browser with zero uploads and zero quality loss.",
+				"Check and delete exact GPS coordinates and location tags from JPEG, HEIC, PNG, MP4 & MOV files locally in your browser. Free, lossless & 100% private.",
 			path: PATH,
 		}),
 	component: RemoveGpsPage,

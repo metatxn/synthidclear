@@ -9,10 +9,9 @@ const PATH = "/guides";
 export const Route = createFileRoute("/guides")({
 	head: () =>
 		buildRouteHead({
-			title:
-				"Platform & AI Metadata Guides — Instagram, TikTok, ChatGPT, Gemini & More | SynthIDClear",
+			title: "AI Metadata & Platform Label Guides (2026) | SynthIDClear",
 			description:
-				"Learn what AI metadata Instagram, TikTok, ChatGPT, Gemini, Photoshop Firefly, Midjourney, Sora, and Google Veo read or write, and what metadata cleaning can and cannot remove.",
+				"Learn what AI metadata Instagram, TikTok, ChatGPT, Gemini, Photoshop Firefly, Midjourney, Sora & Veo read or write — plus our 2026 AI Metadata Matrix.",
 			path: PATH,
 		}),
 	component: GuidesHubPage,
@@ -53,6 +52,29 @@ function GuidesHubPage() {
 					<ArrowRight className="h-4 w-4" aria-hidden="true" />
 				</Link>
 			</section>
+
+			<Link
+				to="/ai-metadata-matrix"
+				className="group flex flex-col justify-between gap-4 rounded-2xl border border-(--brand-color)/30 bg-(--bg-surface) p-5 text-(--text-primary) no-underline hover:border-(--brand-color) sm:flex-row sm:items-center"
+			>
+				<div className="space-y-1">
+					<span className="inline-block text-xs font-semibold tracking-wide text-(--brand-color) uppercase">
+						2026 Reference Table
+					</span>
+					<h2 className="m-0 text-lg font-semibold text-(--text-primary) group-hover:text-(--brand-color)">
+						2026 AI Metadata Matrix: C2PA, Prompts &amp; SynthID by Generator
+					</h2>
+					<p className="m-0 text-sm text-(--text-secondary)">
+						Compare ChatGPT, Sora, Gemini, Veo, Adobe Firefly, Photoshop,
+						Midjourney, ComfyUI, Stable Diffusion, Flux &amp; Runway side by
+						side.
+					</p>
+				</div>
+				<span className="inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold text-(--brand-color)">
+					View matrix
+					<ArrowRight className="h-4 w-4" aria-hidden="true" />
+				</span>
+			</Link>
 
 			<section aria-labelledby="social-guides-heading" className="space-y-4">
 				<div className="space-y-1">

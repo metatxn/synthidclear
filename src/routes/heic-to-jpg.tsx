@@ -55,10 +55,9 @@ const HEIC_JPG_BENEFITS = [
 export const Route = createFileRoute("/heic-to-jpg")({
 	head: () =>
 		buildRouteHead({
-			title:
-				"HEIC to JPG Converter — Private, In-Browser & Metadata-Clean | SynthIDClear",
+			title: "HEIC to JPG Converter (Free, Private, Clean) | SynthIDClear",
 			description:
-				"Convert iPhone HEIC and HEIF photos to clean JPG, PNG, or WebP locally in Chrome, Firefox, Edge, and Safari with GPS and EXIF metadata automatically stripped.",
+				"Convert iPhone HEIC & HEIF photos to clean JPG, PNG, or WebP in Chrome, Firefox, Edge & Safari. Strips GPS & EXIF automatically with zero server uploads.",
 			path: PATH,
 		}),
 	component: HeicToJpgPage,

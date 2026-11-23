@@ -31,10 +31,9 @@ const FAQS: readonly FaqItem[] = [
 export const Route = createFileRoute("/gemini-image-metadata")({
 	head: () =>
 		buildRouteHead({
-			title:
-				"Gemini & Imagen Image Metadata: XMP/C2PA vs. SynthID | SynthIDClear",
+			title: "Gemini & Imagen Metadata vs. SynthID (2026) | SynthIDClear",
 			description:
-				"See what metadata Google Gemini and Imagen images carry (IPTC, XMP, C2PA), how to remove those tags losslessly in your browser, and how they differ from SynthID.",
+				"See what metadata Google Gemini & Imagen images carry (IPTC, XMP, C2PA), remove those tags losslessly in your browser, and see how they differ from SynthID.",
 			path: PATH,
 		}),
 	component: GeminiImageMetadataPage,

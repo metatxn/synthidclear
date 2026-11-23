@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AiMetadataCheckerRouteImport } from './routes/ai-metadata-checker'
+import { Route as AiMetadataMatrixRouteImport } from './routes/ai-metadata-matrix'
 import { Route as AiOnlyMetadataRemoverRouteImport } from './routes/ai-only-metadata-remover'
 import { Route as ChatgptImageMetadataRouteImport } from './routes/chatgpt-image-metadata'
 import { Route as GeminiImageMetadataRouteImport } from './routes/gemini-image-metadata'
@@ -42,6 +43,11 @@ const IndexRoute = IndexRouteImport.update({
 const AiMetadataCheckerRoute = AiMetadataCheckerRouteImport.update({
   id: '/ai-metadata-checker',
   path: '/ai-metadata-checker',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AiMetadataMatrixRoute = AiMetadataMatrixRouteImport.update({
+  id: '/ai-metadata-matrix',
+  path: '/ai-metadata-matrix',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AiOnlyMetadataRemoverRoute = AiOnlyMetadataRemoverRouteImport.update({
@@ -158,6 +164,7 @@ const VideoMetadataRemoverRoute = VideoMetadataRemoverRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/ai-metadata-checker': typeof AiMetadataCheckerRoute
+  '/ai-metadata-matrix': typeof AiMetadataMatrixRoute
   '/ai-only-metadata-remover': typeof AiOnlyMetadataRemoverRoute
   '/chatgpt-image-metadata': typeof ChatgptImageMetadataRoute
   '/gemini-image-metadata': typeof GeminiImageMetadataRoute
@@ -184,6 +191,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/ai-metadata-checker': typeof AiMetadataCheckerRoute
+  '/ai-metadata-matrix': typeof AiMetadataMatrixRoute
   '/ai-only-metadata-remover': typeof AiOnlyMetadataRemoverRoute
   '/chatgpt-image-metadata': typeof ChatgptImageMetadataRoute
   '/gemini-image-metadata': typeof GeminiImageMetadataRoute
@@ -211,6 +219,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/ai-metadata-checker': typeof AiMetadataCheckerRoute
+  '/ai-metadata-matrix': typeof AiMetadataMatrixRoute
   '/ai-only-metadata-remover': typeof AiOnlyMetadataRemoverRoute
   '/chatgpt-image-metadata': typeof ChatgptImageMetadataRoute
   '/gemini-image-metadata': typeof GeminiImageMetadataRoute
@@ -239,6 +248,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/ai-metadata-checker'
+    | '/ai-metadata-matrix'
     | '/ai-only-metadata-remover'
     | '/chatgpt-image-metadata'
     | '/gemini-image-metadata'
@@ -265,6 +275,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/ai-metadata-checker'
+    | '/ai-metadata-matrix'
     | '/ai-only-metadata-remover'
     | '/chatgpt-image-metadata'
     | '/gemini-image-metadata'
@@ -291,6 +302,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/ai-metadata-checker'
+    | '/ai-metadata-matrix'
     | '/ai-only-metadata-remover'
     | '/chatgpt-image-metadata'
     | '/gemini-image-metadata'
@@ -318,6 +330,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AiMetadataCheckerRoute: typeof AiMetadataCheckerRoute
+  AiMetadataMatrixRoute: typeof AiMetadataMatrixRoute
   AiOnlyMetadataRemoverRoute: typeof AiOnlyMetadataRemoverRoute
   ChatgptImageMetadataRoute: typeof ChatgptImageMetadataRoute
   GeminiImageMetadataRoute: typeof GeminiImageMetadataRoute
@@ -356,6 +369,13 @@ declare module '@tanstack/react-router' {
       path: '/ai-metadata-checker'
       fullPath: '/ai-metadata-checker'
       preLoaderRoute: typeof AiMetadataCheckerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ai-metadata-matrix': {
+      id: '/ai-metadata-matrix'
+      path: '/ai-metadata-matrix'
+      fullPath: '/ai-metadata-matrix'
+      preLoaderRoute: typeof AiMetadataMatrixRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/ai-only-metadata-remover': {
@@ -518,6 +538,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AiMetadataCheckerRoute: AiMetadataCheckerRoute,
+  AiMetadataMatrixRoute: AiMetadataMatrixRoute,
   AiOnlyMetadataRemoverRoute: AiOnlyMetadataRemoverRoute,
   ChatgptImageMetadataRoute: ChatgptImageMetadataRoute,
   GeminiImageMetadataRoute: GeminiImageMetadataRoute,

@@ -41,10 +41,9 @@ const TOOL_GROUPS: ReadonlyArray<{
 export const Route = createFileRoute("/tools")({
 	head: () =>
 		buildRouteHead({
-			title:
-				"All Free Metadata Tools — AI Tags, C2PA, EXIF, GPS, HEIC & Video | SynthIDClear",
+			title: "All Free Metadata Tools — C2PA, EXIF, PDF | SynthIDClear",
 			description:
-				"Browse every free, 100% browser-based metadata cleaner and checker from SynthIDClear: C2PA remover, AI-only remover, AI metadata checker, EXIF/GPS scrubber, HEIC & MP4 cleaner.",
+				"Browse every free, 100% browser-based metadata cleaner and checker: C2PA remover, AI-only remover, AI metadata checker, EXIF/GPS scrubber, HEIC, PDF & MP4.",
 			path: PATH,
 		}),
 	component: ToolsHubPage,

@@ -45,9 +45,9 @@ const HOME_FAQS: readonly FaqItem[] = [
 export const Route = createFileRoute("/")({
 	head: () =>
 		buildRouteHead({
-			title: "SynthIDClear — Remove Hidden AI Tags from Photos & Videos",
+			title: "SynthIDClear — Remove AI Metadata & EXIF (No Upload)",
 			description:
-				"Remove AI tags, C2PA, prompts, GPS, and camera data from PNG, JPEG, WebP, HEIC, AVIF, MP4, and MOV files locally in your browser with zero quality loss.",
+				"Free, private metadata cleaner for PNG, JPEG, WebP, HEIC, AVIF, MP4, MOV & PDF. Strip C2PA, AI tags, prompts & GPS locally in your browser with zero quality loss.",
 			path: "/",
 		}),
 	component: HomePage,

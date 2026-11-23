@@ -32,10 +32,9 @@ const FAQS: readonly FaqItem[] = [
 export const Route = createFileRoute("/photoshop-ai-metadata")({
 	head: () =>
 		buildRouteHead({
-			title:
-				"Photoshop & Adobe Firefly AI Metadata: Remove C2PA & Keep EXIF | SynthIDClear",
+			title: "Photoshop Generative Fill AI Tags: Keep EXIF | SynthIDClear",
 			description:
-				"Remove C2PA Content Credentials and compositeWithTrainedAlgorithmicMedia tags added by Photoshop Generative Fill or Adobe Firefly while keeping camera EXIF intact.",
+				"Remove C2PA Content Credentials & compositeWithTrainedAlgorithmicMedia tags added by Photoshop Generative Fill or Firefly while keeping camera EXIF intact.",
 			path: PATH,
 		}),
 	component: PhotoshopAiMetadataPage,

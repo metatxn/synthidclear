@@ -31,9 +31,9 @@ const EXIF_FAQS: readonly FaqItem[] = [
 export const Route = createFileRoute("/strip-exif-online")({
 	head: () =>
 		buildRouteHead({
-			title: "Remove EXIF & GPS Location Online Privately | SynthIDClear",
+			title: "EXIF Cleaner: Remove Photo EXIF (No Upload) | SynthIDClear",
 			description:
-				"Scrub EXIF camera data, GPS coordinates, and location tags from JPEG, PNG, WebP, HEIC, and AVIF photos locally in your browser with original quality kept.",
+				"Scrub EXIF camera data, serial numbers, timestamps, XMP & GPS from JPEG, PNG, WebP, HEIC & AVIF photos locally in your browser with original colors kept.",
 			path: "/strip-exif-online",
 		}),
 	component: StripExifPage,

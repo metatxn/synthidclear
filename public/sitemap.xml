@@ -2,146 +2,102 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 	<url>
 		<loc>https://synthidclear.com/</loc>
-		<lastmod>2026-11-22</lastmod>
-		<changefreq>weekly</changefreq>
-		<priority>1.0</priority>
+		<lastmod>2026-11-23T04:30:00+00:00</lastmod>
 	</url>
 	<url>
 		<loc>https://synthidclear.com/tools</loc>
-		<lastmod>2026-11-22</lastmod>
-		<changefreq>weekly</changefreq>
-		<priority>0.9</priority>
+		<lastmod>2026-11-23T04:30:00+00:00</lastmod>
 	</url>
 	<url>
 		<loc>https://synthidclear.com/remove-c2pa-metadata</loc>
-		<lastmod>2026-11-22</lastmod>
-		<changefreq>weekly</changefreq>
-		<priority>0.9</priority>
+		<lastmod>2026-11-23T04:30:00+00:00</lastmod>
 	</url>
 	<url>
 		<loc>https://synthidclear.com/ai-only-metadata-remover</loc>
-		<lastmod>2026-11-22</lastmod>
-		<changefreq>weekly</changefreq>
-		<priority>0.9</priority>
+		<lastmod>2026-11-23T04:30:00+00:00</lastmod>
 	</url>
 	<url>
 		<loc>https://synthidclear.com/ai-metadata-checker</loc>
-		<lastmod>2026-11-22</lastmod>
-		<changefreq>weekly</changefreq>
-		<priority>0.9</priority>
+		<lastmod>2026-11-23T04:30:00+00:00</lastmod>
 	</url>
 	<url>
 		<loc>https://synthidclear.com/strip-exif-online</loc>
-		<lastmod>2026-11-22</lastmod>
-		<changefreq>weekly</changefreq>
-		<priority>0.9</priority>
+		<lastmod>2026-11-23T04:30:00+00:00</lastmod>
 	</url>
 	<url>
 		<loc>https://synthidclear.com/remove-gps-from-photo</loc>
-		<lastmod>2026-11-22</lastmod>
-		<changefreq>weekly</changefreq>
-		<priority>0.9</priority>
+		<lastmod>2026-11-23T04:30:00+00:00</lastmod>
 	</url>
 	<url>
 		<loc>https://synthidclear.com/png-prompt-remover</loc>
-		<lastmod>2026-11-22</lastmod>
-		<changefreq>weekly</changefreq>
-		<priority>0.9</priority>
+		<lastmod>2026-11-22T12:00:00+00:00</lastmod>
 	</url>
 	<url>
 		<loc>https://synthidclear.com/heic-to-jpg</loc>
-		<lastmod>2026-11-22</lastmod>
-		<changefreq>weekly</changefreq>
-		<priority>0.9</priority>
+		<lastmod>2026-11-23T04:30:00+00:00</lastmod>
 	</url>
 	<url>
 		<loc>https://synthidclear.com/heic-metadata-remover</loc>
-		<lastmod>2026-11-22</lastmod>
-		<changefreq>weekly</changefreq>
-		<priority>0.9</priority>
+		<lastmod>2026-11-23T04:30:00+00:00</lastmod>
 	</url>
 	<url>
 		<loc>https://synthidclear.com/pdf-metadata-remover</loc>
-		<lastmod>2026-11-22</lastmod>
-		<changefreq>weekly</changefreq>
-		<priority>0.9</priority>
+		<lastmod>2026-11-23T04:30:00+00:00</lastmod>
 	</url>
 	<url>
 		<loc>https://synthidclear.com/video-metadata-remover</loc>
-		<lastmod>2026-11-22</lastmod>
-		<changefreq>weekly</changefreq>
-		<priority>0.9</priority>
+		<lastmod>2026-11-23T04:30:00+00:00</lastmod>
 	</url>
 	<url>
 		<loc>https://synthidclear.com/guides</loc>
-		<lastmod>2026-11-22</lastmod>
-		<changefreq>monthly</changefreq>
-		<priority>0.8</priority>
+		<lastmod>2026-11-23T04:30:00+00:00</lastmod>
+	</url>
+	<url>
+		<loc>https://synthidclear.com/ai-metadata-matrix</loc>
+		<lastmod>2026-11-23T04:30:00+00:00</lastmod>
 	</url>
 	<url>
 		<loc>https://synthidclear.com/instagram-ai-label</loc>
-		<lastmod>2026-11-22</lastmod>
-		<changefreq>monthly</changefreq>
-		<priority>0.8</priority>
+		<lastmod>2026-11-21T12:00:00+00:00</lastmod>
 	</url>
 	<url>
 		<loc>https://synthidclear.com/tiktok-ai-label</loc>
-		<lastmod>2026-11-22</lastmod>
-		<changefreq>monthly</changefreq>
-		<priority>0.8</priority>
+		<lastmod>2026-11-21T12:00:00+00:00</lastmod>
 	</url>
 	<url>
 		<loc>https://synthidclear.com/chatgpt-image-metadata</loc>
-		<lastmod>2026-11-22</lastmod>
-		<changefreq>monthly</changefreq>
-		<priority>0.8</priority>
+		<lastmod>2026-11-21T12:00:00+00:00</lastmod>
 	</url>
 	<url>
 		<loc>https://synthidclear.com/gemini-image-metadata</loc>
-		<lastmod>2026-11-22</lastmod>
-		<changefreq>monthly</changefreq>
-		<priority>0.8</priority>
+		<lastmod>2026-11-23T04:30:00+00:00</lastmod>
 	</url>
 	<url>
 		<loc>https://synthidclear.com/photoshop-ai-metadata</loc>
-		<lastmod>2026-11-22</lastmod>
-		<changefreq>monthly</changefreq>
-		<priority>0.8</priority>
+		<lastmod>2026-11-23T04:30:00+00:00</lastmod>
 	</url>
 	<url>
 		<loc>https://synthidclear.com/midjourney-metadata</loc>
-		<lastmod>2026-11-22</lastmod>
-		<changefreq>monthly</changefreq>
-		<priority>0.8</priority>
+		<lastmod>2026-11-23T04:30:00+00:00</lastmod>
 	</url>
 	<url>
 		<loc>https://synthidclear.com/sora-video-metadata</loc>
-		<lastmod>2026-11-22</lastmod>
-		<changefreq>monthly</changefreq>
-		<priority>0.8</priority>
+		<lastmod>2026-11-21T12:00:00+00:00</lastmod>
 	</url>
 	<url>
 		<loc>https://synthidclear.com/veo-video-metadata</loc>
-		<lastmod>2026-11-22</lastmod>
-		<changefreq>monthly</changefreq>
-		<priority>0.8</priority>
+		<lastmod>2026-11-23T04:30:00+00:00</lastmod>
 	</url>
 	<url>
 		<loc>https://synthidclear.com/how-it-works</loc>
-		<lastmod>2026-11-22</lastmod>
-		<changefreq>monthly</changefreq>
-		<priority>0.7</priority>
+		<lastmod>2026-11-21T12:00:00+00:00</lastmod>
 	</url>
 	<url>
 		<loc>https://synthidclear.com/privacy</loc>
-		<lastmod>2026-11-22</lastmod>
-		<changefreq>monthly</changefreq>
-		<priority>0.4</priority>
+		<lastmod>2026-11-23T05:10:00+00:00</lastmod>
 	</url>
 	<url>
 		<loc>https://synthidclear.com/terms</loc>
-		<lastmod>2026-11-22</lastmod>
-		<changefreq>monthly</changefreq>
-		<priority>0.4</priority>
+		<lastmod>2026-11-23T05:10:00+00:00</lastmod>
 	</url>
 </urlset>

@@ -54,10 +54,9 @@ const PDF_LAYERS = [
 export const Route = createFileRoute("/pdf-metadata-remover")({
 	head: () =>
 		buildRouteHead({
-			title:
-				"PDF Metadata Remover — Clean Author, Producer & XMP Privately | SynthIDClear",
+			title: "PDF Metadata Remover — Free, Private & Local | SynthIDClear",
 			description:
-				"Inspect and remove hidden PDF metadata (Author, Creator, Producer, Title, dates, XMP streams, and PieceInfo) 100% locally in your browser with zero uploads.",
+				"Remove hidden PDF Author, Title, Producer, dates, XMP & PieceInfo locally in your browser. Zero uploads, layout untouched, verified 0 metadata remaining.",
 			path: PATH,
 		}),
 	component: PdfMetadataRemoverPage,
