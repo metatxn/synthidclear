@@ -99,7 +99,7 @@ export function CleanerWorkspace({
 							Queue ({state.items.length})
 						</h2>
 						{hideDropzone && (
-							<div>
+							<div className="relative inline-flex">
 								<input
 									id={addMoreId}
 									type="file"

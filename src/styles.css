@@ -252,13 +252,15 @@ p {
 }
 
 /* High-contrast accessible focus rings */
-:where(a:any-link, button, input, select, summary, [tabindex]):focus-visible {
+:where(a:any-link, button, input, select, summary, [tabindex]):focus-visible,
+input[type="file"].visually-hidden:focus-visible + label {
 	outline: 2px solid var(--brand-color);
 	outline-offset: 2px;
 }
 
-/* Canonical accessible visually-hidden utility (opts out on focus/active for skip links) */
-.visually-hidden:where(:not(:focus-within, :active)) {
+/* Canonical accessible visually-hidden utility; skip links opt out on focus/active */
+.visually-hidden:not(.skip-link),
+.skip-link:where(:not(:focus-within, :active)) {
 	position: absolute !important;
 	clip-path: inset(50%) !important;
 	overflow: hidden !important;
@@ -270,7 +272,7 @@ p {
 	white-space: nowrap !important;
 }
 
-.skip-link:focus-visible {
+.skip-link:is(:focus-within, :active) {
 	position: fixed;
 	inset-block-start: 0.75rem;
 	inset-inline-start: 0.75rem;
