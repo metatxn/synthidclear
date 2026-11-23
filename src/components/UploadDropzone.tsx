@@ -69,15 +69,6 @@ export function UploadDropzone({
 			onDrop={handleDrop}
 			className="rounded-2xl border border-(--border-color) bg-(--bg-card) p-3"
 		>
-			<input
-				id={inputId}
-				type="file"
-				accept={accept}
-				multiple={!singleFile}
-				onChange={handleFileChange}
-				className="visually-hidden"
-			/>
-
 			<div
 				className={`flex flex-col items-center justify-center gap-3.5 rounded-xl border-2 border-dashed px-6 py-8 text-center transition-colors ${
 					isDragging
@@ -97,13 +88,23 @@ export function UploadDropzone({
 				</div>
 
 				<div className="flex flex-wrap items-center justify-center gap-2.5 pt-1">
-					<label
-						htmlFor={inputId}
-						className="touch-target inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-(--brand-color) px-5 py-2.5 text-sm font-semibold text-(--brand-text) hover:bg-(--brand-hover)"
-					>
-						<FileImage className="h-4 w-4" aria-hidden="true" />
-						{singleFile ? "Choose a file" : "Choose Files"}
-					</label>
+					<div className="relative inline-flex">
+						<input
+							id={inputId}
+							type="file"
+							accept={accept}
+							multiple={!singleFile}
+							onChange={handleFileChange}
+							className="visually-hidden"
+						/>
+						<label
+							htmlFor={inputId}
+							className="touch-target inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-(--brand-color) px-5 py-2.5 text-sm font-semibold text-(--brand-text) hover:bg-(--brand-hover)"
+						>
+							<FileImage className="h-4 w-4" aria-hidden="true" />
+							{singleFile ? "Choose a file" : "Choose Files"}
+						</label>
+					</div>
 
 					{!hideSampleButton && onLoadSample && (
 						<button

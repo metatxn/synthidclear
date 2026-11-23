@@ -84,15 +84,6 @@ export function LandingHero({
 					onDrop={handleDrop}
 					className="mt-8 rounded-2xl border border-(--border-color) bg-(--bg-card) p-3 shadow-sm"
 				>
-					<input
-						id={inputId}
-						type="file"
-						accept={ACCEPTED_MEDIA_ACCEPT}
-						multiple
-						onChange={handleFileChange}
-						className="visually-hidden"
-					/>
-
 					<div
 						className={`flex flex-col items-center justify-center gap-4 rounded-xl border-2 border-dashed px-6 py-10 transition-colors sm:py-12 ${
 							isDragging
@@ -114,13 +105,23 @@ export function LandingHero({
 						</div>
 
 						<div className="flex flex-wrap items-center justify-center gap-3 pt-1">
-							<label
-								htmlFor={inputId}
-								className="touch-target inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-(--brand-color) px-6 py-2.5 text-sm font-semibold text-(--brand-text) hover:bg-(--brand-hover)"
-							>
-								<FileImage className="h-4 w-4" aria-hidden="true" />
-								{queuedCount > 0 ? "Add More Files" : "Choose Files"}
-							</label>
+							<div className="relative inline-flex">
+								<input
+									id={inputId}
+									type="file"
+									accept={ACCEPTED_MEDIA_ACCEPT}
+									multiple
+									onChange={handleFileChange}
+									className="visually-hidden"
+								/>
+								<label
+									htmlFor={inputId}
+									className="touch-target inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl bg-(--brand-color) px-6 py-2.5 text-sm font-semibold text-(--brand-text) hover:bg-(--brand-hover)"
+								>
+									<FileImage className="h-4 w-4" aria-hidden="true" />
+									{queuedCount > 0 ? "Add More Files" : "Choose Files"}
+								</label>
+							</div>
 
 							<button
 								type="button"
